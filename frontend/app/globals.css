@@ -40,6 +40,16 @@ body {
   overflow-x: hidden;
 }
 
+/* Hide scrollbar for horizontal scroll (Prime Video style) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

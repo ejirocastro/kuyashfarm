@@ -14,12 +14,11 @@ export function Hero() {
         <div
           className="h-full w-full bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2070')",
+            backgroundImage: "url('/herokuyash.jpg')",
           }}
         />
         {/* Dark Overlay for text readability */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* Content */}
@@ -28,6 +27,38 @@ export function Hero() {
           <span className="block">Farming</span>
           <span className="block">for a future</span>
         </h1>
+
+        {/* CTA Buttons */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+          <a
+            href="/categories"
+            className="group relative overflow-hidden rounded-full bg-green-600 px-8 py-4 font-sans text-base font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-green-700 hover:shadow-2xl"
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Visit Our Farm
+              <svg
+                className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </span>
+          </a>
+
+          <a
+            href="#about"
+            className="rounded-full border-2 border-white/80 bg-white/10 px-8 py-4 font-sans text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white hover:bg-white/20"
+          >
+            Learn More
+          </a>
+        </div>
       </div>
 
       {/* Scroll Indicator */}

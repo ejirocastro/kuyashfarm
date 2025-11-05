@@ -13,24 +13,17 @@ export function Mission() {
           {/* Text Content */}
           <div className="space-y-6">
             <h2 className="font-serif text-3xl font-bold leading-tight text-[#2d5f3f] md:text-4xl lg:text-5xl">
-              Our mission began with a seed
+              About Kuyash Farms
             </h2>
             <div className="space-y-4 font-sans text-base leading-relaxed text-gray-700 md:text-lg">
               <p>
-                To cultivate a future where land is for nurtured, farmers are
-                empowered, and nature thrives in harmony. We support rural
-                communities to build sustainable agricultural practices.
+                Kuyash Farms is a leading, innovative integrated farm dedicated to producing premium-quality food crops and livestock through sustainable agricultural practices. Our approach combines modern technology with the principles of environmental stewardship to ensure long-term food security and ecosystem balance.
               </p>
               <p>
-                We believe agriculture is more than just a vocation—it's a way
-                of life. Through innovative solutions and deep commitment to
-                sustainability, we're helping to shape the future of farming for
-                generations to come.
+                At Kuyash Farms, we operate a fully integrated farming system that includes poultry production, cattle and sheep rearing, fish farming, vegetable cultivation, oil palm plantations, and food processing. By connecting every aspect of agriculture — from crop production to livestock management — we maximize efficiency, reduce waste, and deliver fresh, high-quality products to our customers.
               </p>
               <p className="italic text-gray-600">
-                "Our approach combines traditional farming wisdom with modern
-                technology to create resilient farming systems that benefit both
-                people and the planet."
+                "Driven by innovation and sustainability, Kuyash Farms is shaping the future of agribusiness — one harvest at a time."
               </p>
             </div>
           </div>

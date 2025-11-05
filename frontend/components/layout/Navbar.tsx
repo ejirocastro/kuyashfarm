@@ -25,19 +25,16 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
+          ? "bg-[#2d5f3f]/95 backdrop-blur-md shadow-md"
+          : "bg-[#2d5f3f]"
       )}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <a
-            href="#home"
-            className={cn(
-              "font-serif text-2xl font-bold transition-colors duration-300",
-              isScrolled ? "text-[#2d5f3f]" : "text-white"
-            )}
+            href="/"
+            className="font-serif text-2xl font-bold text-white transition-colors duration-300"
           >
             {SITE_CONFIG.name}
           </a>
@@ -47,23 +44,13 @@ export function Navbar() {
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
-                href={link.href}
-                className={cn(
-                  "font-sans text-sm font-medium transition-colors duration-300 hover:text-[#6b9d7a]",
-                  isScrolled ? "text-gray-700" : "text-white/90"
-                )}
+                href={link.label === "Home" ? "/" : link.href}
+                className="font-sans text-sm font-medium text-white/90 transition-colors duration-300 hover:text-white"
               >
                 {link.label}
               </a>
             ))}
-            <button
-              className={cn(
-                "rounded-full px-6 py-2 font-medium transition-all duration-300",
-                isScrolled
-                  ? "bg-[#2d5f3f] text-white hover:bg-[#4a7c59]"
-                  : "bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm"
-              )}
-            >
+            <button className="rounded-full bg-white/20 px-6 py-2 font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/30">
               Get Started
             </button>
           </div>
@@ -71,10 +58,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={cn(
-              "md:hidden p-2 rounded-md transition-colors",
-              isScrolled ? "text-gray-700" : "text-white"
-            )}
+            className="md:hidden p-2 rounded-md text-white transition-colors"
             aria-label="Toggle menu"
           >
             <svg
@@ -97,19 +81,19 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white py-4">
+          <div className="md:hidden border-t border-white/20 bg-[#2d5f3f] py-4">
             <div className="flex flex-col space-y-4">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.label}
-                  href={link.href}
+                  href={link.label === "Home" ? "/" : link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-sans text-sm font-medium text-gray-700 hover:text-[#2d5f3f] transition-colors"
+                  className="font-sans text-sm font-medium text-white/90 hover:text-white transition-colors"
                 >
                   {link.label}
                 </a>
               ))}
-              <button className="w-full rounded-full bg-[#2d5f3f] px-6 py-2 text-white font-medium hover:bg-[#4a7c59] transition-colors">
+              <button className="w-full rounded-full bg-white/20 px-6 py-2 text-white font-medium hover:bg-white/30 transition-colors backdrop-blur-sm">
                 Get Started
               </button>
             </div>

@@ -19,13 +19,13 @@ export function Services() {
       <Container>
         {/* Section Header */}
         <div className="mb-16 max-w-3xl">
-          <p className="mb-4 font-sans text-sm uppercase tracking-wider text-gray-500">
-            Our Services that Cultivate Sustainable Growth
+          <p className="mb-4 font-sans text-xs uppercase tracking-wider text-gray-500">
+            Our Services for a Greener Future
           </p>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-[#2d5f3f] md:text-4xl lg:text-5xl">
-            Empowering Farmers with
+          <h2 className="font-serif text-2xl font-bold leading-tight text-[#2d5f3f] md:text-3xl lg:text-4xl">
+            Empowering communities through
             <br />
-            Sustainable Solutions
+            sustainable agriculture and innovation.
           </h2>
         </div>
 

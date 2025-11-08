@@ -6,6 +6,8 @@ import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { AuthModal } from "@/components/auth/AuthModal";
 import CartButton from "@/components/cart/CartButton";
 import CartDrawer from "@/components/cart/CartDrawer";
+import { User, LogOut, Settings, Package } from "lucide-react";
+import Link from "next/link";
 
 /**
  * Responsive Navbar with scroll effect
@@ -15,6 +17,8 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Mock auth state - will be replaced with real auth
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,12 +61,67 @@ export function Navbar() {
                 </a>
               ))}
               <CartButton onClick={() => setIsCartOpen(true)} />
-              <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className="rounded-full bg-white/20 px-6 py-2 font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/30"
-              >
-                Sign In
-              </button>
+
+              {/* User Menu or Sign In */}
+              {isLoggedIn ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/30"
+                  >
+                    <User className="w-4 h-4" />
+                    <span>Account</span>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                      <Link
+                        href="/profile"
+                        className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <User className="w-4 h-4" />
+                        <span>My Profile</span>
+                      </Link>
+                      <Link
+                        href="/profile?tab=orders"
+                        className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <Package className="w-4 h-4" />
+                        <span>My Orders</span>
+                      </Link>
+                      <Link
+                        href="/profile?tab=settings"
+                        className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <Settings className="w-4 h-4" />
+                        <span>Settings</span>
+                      </Link>
+                      <hr className="my-2" />
+                      <button
+                        onClick={() => {
+                          setIsLoggedIn(false);
+                          setIsUserMenuOpen(false);
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors w-full text-left"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="rounded-full bg-white/20 px-6 py-2 font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/30"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
 
             {/* Mobile Menu and Cart Buttons */}
@@ -106,15 +165,48 @@ export function Navbar() {
                     {link.label}
                   </a>
                 ))}
-                <button
-                  onClick={() => {
-                    setIsAuthModalOpen(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full rounded-full bg-white/20 px-6 py-2 text-white font-medium hover:bg-white/30 transition-colors backdrop-blur-sm"
-                >
-                  Sign In
-                </button>
+
+                {/* Mobile User Menu */}
+                {isLoggedIn ? (
+                  <>
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-2 font-sans text-sm font-medium text-white/90 hover:text-white transition-colors"
+                    >
+                      <User className="w-4 h-4" />
+                      <span>My Profile</span>
+                    </Link>
+                    <Link
+                      href="/profile?tab=orders"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-2 font-sans text-sm font-medium text-white/90 hover:text-white transition-colors"
+                    >
+                      <Package className="w-4 h-4" />
+                      <span>My Orders</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setIsLoggedIn(false);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 font-sans text-sm font-medium text-red-300 hover:text-red-200 transition-colors text-left"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsAuthModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full rounded-full bg-white/20 px-6 py-2 text-white font-medium hover:bg-white/30 transition-colors backdrop-blur-sm"
+                  >
+                    Sign In
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -122,7 +214,14 @@ export function Navbar() {
       </nav>
 
       {/* Auth Modal */}
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={() => {
+          setIsLoggedIn(true);
+          setIsAuthModalOpen(false);
+        }}
+      />
 
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />

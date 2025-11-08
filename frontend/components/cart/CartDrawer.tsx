@@ -187,9 +187,11 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 </div>
               </div>
 
-              <Button className="w-full mb-3" size="lg">
-                Proceed to Checkout
-              </Button>
+              <Link href="/checkout">
+                <Button className="w-full mb-3" size="lg" onClick={onClose}>
+                  Proceed to Checkout
+                </Button>
+              </Link>
               <button
                 onClick={onClose}
                 className="w-full py-3 text-primary hover:bg-primary/10 rounded-lg transition-colors font-semibold"

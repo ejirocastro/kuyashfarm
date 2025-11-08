@@ -5,9 +5,10 @@ import { useState } from "react";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
-export function AuthModal({ isOpen, onClose }: AuthModalProps) {
+export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
@@ -27,7 +28,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setTimeout(() => {
       console.log(isLogin ? "Login" : "Sign up", formData);
       setIsLoading(false);
-      onClose();
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        onClose();
+      }
     }, 1500);
   };
 

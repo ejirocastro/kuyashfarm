@@ -757,7 +757,6 @@ export default function CheckoutPage() {
                 <div className="hidden lg:block">
                   <Button
                     type="submit"
-                    onClick={handleSubmit}
                     className="w-full"
                     size="lg"
                     disabled={isProcessing}

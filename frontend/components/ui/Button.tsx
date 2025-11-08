@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
   href?: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 /**
@@ -22,17 +23,18 @@ export function Button({
   onClick,
   href,
   type = "button",
+  disabled = false,
 }: ButtonProps) {
   const baseStyles =
     "inline-flex items-center justify-center font-medium transition-all duration-300 rounded-full";
 
   const variants = {
     primary:
-      "bg-[#2d5f3f] text-white hover:bg-[#4a7c59] hover:shadow-lg hover:scale-105",
+      "bg-[#2d5f3f] text-white hover:bg-[#4a7c59] hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
     secondary:
-      "bg-white text-[#2d5f3f] border-2 border-[#2d5f3f] hover:bg-[#2d5f3f] hover:text-white hover:shadow-lg hover:scale-105",
+      "bg-white text-[#2d5f3f] border-2 border-[#2d5f3f] hover:bg-[#2d5f3f] hover:text-white hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
     outline:
-      "border-2 border-white text-white hover:bg-white hover:text-[#2d5f3f] hover:shadow-lg hover:scale-105",
+      "border-2 border-white text-white hover:bg-white hover:text-[#2d5f3f] hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
   };
 
   const sizes = {
@@ -52,7 +54,7 @@ export function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   );

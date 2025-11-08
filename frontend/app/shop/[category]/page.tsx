@@ -5,8 +5,10 @@ import { Footer } from "@/components/layout/Footer";
 import { PRODUCTS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useParams } from "next/navigation";
+import { useCartStore } from "@/lib/store/useCartStore";
+import { ShoppingCart, Check } from "lucide-react";
 
 /**
  * Shop Page - Airbnb-style product listing with infinite scroll
@@ -15,9 +17,8 @@ export default function ShopPage() {
   const params = useParams();
   const category = params.category as string;
   const [searchQuery, setSearchQuery] = useState("");
-  const [displayCount, setDisplayCount] = useState(8); // Start with 8 products
-  const [isLoading, setIsLoading] = useState(false);
-  const loaderRef = useRef<HTMLDivElement>(null);
+  const addItem = useCartStore((state) => state.addItem);
+  const [addedToCart, setAddedToCart] = useState<number | null>(null);
 
   // Get products for this category
   const products = PRODUCTS[category as keyof typeof PRODUCTS] || [];
@@ -27,41 +28,13 @@ export default function ShopPage() {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Products to display (with infinite scroll)
-  const displayedProducts = filteredProducts.slice(0, displayCount);
+  // Handle add to cart with animation feedback
+  const handleAddToCart = (product: any) => {
+    addItem(product, category);
+    setAddedToCart(product.id);
+    setTimeout(() => setAddedToCart(null), 2000);
+  };
 
-  // Infinite scroll observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (first.isIntersecting && displayCount < filteredProducts.length) {
-          setIsLoading(true);
-          setTimeout(() => {
-            setDisplayCount((prev) => prev + 8);
-            setIsLoading(false);
-          }, 500);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const currentLoader = loaderRef.current;
-    if (currentLoader) {
-      observer.observe(currentLoader);
-    }
-
-    return () => {
-      if (currentLoader) {
-        observer.unobserve(currentLoader);
-      }
-    };
-  }, [displayCount, filteredProducts.length]);
-
-  // Reset display count when search changes
-  useEffect(() => {
-    setDisplayCount(8);
-  }, [searchQuery]);
 
   // Category title formatting
   const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
@@ -137,31 +110,34 @@ export default function ShopPage() {
                   {filteredProducts.map((product) => (
                     <div
                       key={product.id}
-                      className="group flex-shrink-0 w-[280px] cursor-pointer"
+                      className="group shrink-0 w-[280px]"
                     >
                       {/* Product Image Card */}
-                      <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-2xl">
+                      <div className="relative mb-4 aspect-4/3 overflow-hidden rounded-2xl">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
-                        {/* Bookmark Button */}
-                        <button className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-md transition-all hover:scale-110">
-                          <svg
-                            className="h-4 w-4 text-gray-800"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                            />
-                          </svg>
+                        {/* Add to Cart Button */}
+                        <button
+                          onClick={() => handleAddToCart(product)}
+                          disabled={addedToCart === product.id}
+                          className={`absolute right-4 top-4 flex h-10 items-center justify-center rounded-full shadow-lg transition-all hover:scale-110 ${
+                            addedToCart === product.id
+                              ? 'bg-green-600 text-white px-4'
+                              : 'bg-white text-gray-800 w-10 hover:bg-primary hover:text-white'
+                          }`}
+                        >
+                          {addedToCart === product.id ? (
+                            <>
+                              <Check className="h-4 w-4 mr-1" />
+                              <span className="text-xs font-semibold">Added</span>
+                            </>
+                          ) : (
+                            <ShoppingCart className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
 
@@ -172,7 +148,7 @@ export default function ShopPage() {
                           <h3 className="font-sans text-sm font-semibold text-gray-900 line-clamp-2">
                             {product.name}
                           </h3>
-                          <div className="flex items-center gap-1 flex-shrink-0">
+                          <div className="flex items-center gap-1 shrink-0">
                             <svg
                               className="h-3.5 w-3.5 text-gray-900"
                               fill="currentColor"
@@ -186,12 +162,23 @@ export default function ShopPage() {
                           </div>
                         </div>
 
-                        {/* Price */}
-                        <div>
-                          <span className="font-sans text-base font-semibold text-gray-900">
-                            ${product.price}
-                          </span>
-                          <span className="text-sm text-gray-500"> {product.unit}</span>
+                        {/* Price and Description */}
+                        <p className="text-xs text-gray-600 line-clamp-2">
+                          {product.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="font-sans text-base font-semibold text-gray-900">
+                              ${product.price}
+                            </span>
+                            <span className="text-sm text-gray-500"> {product.unit}</span>
+                          </div>
+                          <button
+                            onClick={() => handleAddToCart(product)}
+                            className="px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-full hover:bg-secondary transition-colors"
+                          >
+                            Add to Cart
+                          </button>
                         </div>
                       </div>
                     </div>

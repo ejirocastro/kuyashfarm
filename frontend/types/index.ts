@@ -32,3 +32,30 @@ export interface BlogPost {
   date: string;
   category: string;
 }
+
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  unit: string;
+  image: string;
+  description: string;
+  inStock: boolean;
+  rating: number;
+  category?: string;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+  category: string;
+}
+
+export interface CartStore {
+  items: CartItem[];
+  addItem: (product: Product, category: string) => void;
+  removeItem: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
+  getTotalItems: () => number;
+  getTotalPrice: () => number;
+}

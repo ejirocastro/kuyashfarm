@@ -35,7 +35,7 @@ export function Hero() {
             className="group relative overflow-hidden rounded-full bg-green-600 px-8 py-4 font-sans text-base font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-green-700 hover:shadow-2xl"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
-              Visit Our Farm
+              Shop Now
               <svg
                 className="h-5 w-5 transition-transform group-hover:translate-x-1"
                 fill="none"

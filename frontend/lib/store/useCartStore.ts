@@ -6,6 +6,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CartStore, Product, CartItem } from '@/types';
+import { calculatePrice, getCurrentUser } from '@/lib/utils';
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -70,10 +71,14 @@ export const useCartStore = create<CartStore>()(
       },
 
       getTotalPrice: () => {
-        return get().items.reduce(
-          (total, item) => total + item.price * item.quantity,
-          0
-        );
+        const user = getCurrentUser();
+        const userType = user?.userType || 'retail';
+
+        return get().items.reduce((total, item) => {
+          // Calculate price based on quantity and user type
+          const pricePerUnit = calculatePrice(item, item.quantity, userType);
+          return total + pricePerUnit * item.quantity;
+        }, 0);
       },
     }),
     {

@@ -5,10 +5,16 @@ import { Footer } from "@/components/layout/Footer";
 import { PRODUCTS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { ShoppingCart, Check } from "lucide-react";
+import { Product } from "@/types";
+import { formatPrice, getCurrentUser } from "@/lib/utils";
+import { createApplication } from "@/lib/admin-utils";
+import { WholesaleBanner } from "@/components/banners/WholesaleBanner";
+import { WholesaleVerifiedBanner } from "@/components/banners/WholesaleVerifiedBanner";
+import { WholesaleApplicationModal } from "@/components/modals/WholesaleApplicationModal";
 
 /**
  * Shop Page - Airbnb-style product listing with infinite scroll
@@ -19,6 +25,13 @@ export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const addItem = useCartStore((state) => state.addItem);
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
+  const [user, setUser] = useState<{ userType: 'retail' | 'wholesale_pending' | 'wholesale_verified' } | null>(null);
+  const [showWholesaleModal, setShowWholesaleModal] = useState(false);
+
+  // Get user on mount
+  useEffect(() => {
+    setUser(getCurrentUser());
+  }, []);
 
   // Get products for this category
   const products = PRODUCTS[category as keyof typeof PRODUCTS] || [];
@@ -29,12 +42,47 @@ export default function ShopPage() {
   );
 
   // Handle add to cart with animation feedback
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     addItem(product, category);
     setAddedToCart(product.id);
     setTimeout(() => setAddedToCart(null), 2000);
   };
 
+  // Handle wholesale application
+  const handleWholesaleApplication = (businessName: string, businessAddress: string) => {
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+      console.log('Creating application for user:', currentUser);
+
+      // Create application record
+      const userId = currentUser.id || `user_${Date.now()}`;
+      const userName = currentUser.name || 'User';
+      const userEmail = currentUser.email || '';
+
+      const application = createApplication(
+        userId,
+        userName,
+        userEmail,
+        businessName,
+        businessAddress
+      );
+
+      console.log('Application created:', application);
+      console.log('Checking localStorage after creation:', localStorage.getItem('wholesale_applications'));
+
+      // Update user status to pending
+      const updatedUser = {
+        ...currentUser,
+        userType: 'wholesale_pending' as const,
+        businessInfo: { businessName, businessAddress },
+      };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      setShowWholesaleModal(false);
+
+      alert('Application submitted! We will review your request within 1-2 business days.');
+    }
+  };
 
   // Category title formatting
   const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
@@ -100,6 +148,29 @@ export default function ShopPage() {
               </div>
             </div>
           </div>
+
+          {/* Wholesale Banner - Only show to retail users */}
+          {user?.userType === 'retail' && (
+            <div className="mb-6">
+              <WholesaleBanner onApply={() => setShowWholesaleModal(true)} />
+            </div>
+          )}
+
+          {/* Pending Status Banner */}
+          {user?.userType === 'wholesale_pending' && (
+            <div className="mb-6 rounded-lg bg-amber-50 border border-amber-200 p-4">
+              <p className="text-sm text-amber-800">
+                <strong>Application Pending:</strong> Your wholesale application is under review. You'll be notified once verified.
+              </p>
+            </div>
+          )}
+
+          {/* Verified Wholesale Banner */}
+          {user?.userType === 'wholesale_verified' && (
+            <div className="mb-6">
+              <WholesaleVerifiedBanner />
+            </div>
+          )}
 
           {/* Products Horizontal Scroll - Prime Video Style */}
           <div className="py-8">
@@ -169,7 +240,7 @@ export default function ShopPage() {
                         <div className="flex items-center justify-between">
                           <div>
                             <span className="font-sans text-base font-semibold text-gray-900">
-                              ${product.price}
+                              {formatPrice(product.price)}
                             </span>
                             <span className="text-sm text-gray-500"> {product.unit}</span>
                           </div>
@@ -214,6 +285,13 @@ export default function ShopPage() {
         </div>
       </main>
       <Footer />
+
+      {/* Wholesale Application Modal */}
+      <WholesaleApplicationModal
+        isOpen={showWholesaleModal}
+        onClose={() => setShowWholesaleModal(false)}
+        onSubmit={handleWholesaleApplication}
+      />
     </>
   );
 }

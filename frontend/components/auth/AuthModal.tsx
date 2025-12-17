@@ -27,6 +27,35 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
     // Simulate API call
     setTimeout(() => {
       console.log(isLogin ? "Login" : "Sign up", formData);
+
+      // Admin email list (in production, this would be checked server-side)
+      const adminEmails = ['admin@kuyashfarm.com', 'staff@kuyashfarm.com'];
+      const isAdminEmail = adminEmails.includes(formData.email.toLowerCase());
+
+      // Check if there's a user type update from admin approval/rejection
+      let userType: 'retail' | 'wholesale_pending' | 'wholesale_verified' = 'retail';
+      try {
+        const userUpdatesStr = localStorage.getItem('user_updates');
+        if (userUpdatesStr) {
+          const userUpdates = JSON.parse(userUpdatesStr);
+          if (userUpdates[formData.email]) {
+            userType = userUpdates[formData.email];
+          }
+        }
+      } catch (e) {
+        console.error('Error checking user updates:', e);
+      }
+
+      // Store user with retail type by default (or updated type if approved)
+      const userData = {
+        id: isAdminEmail ? 'admin_1' : undefined,
+        name: formData.name || (isAdminEmail ? "Admin User" : "User"),
+        email: formData.email,
+        userType: userType,
+        isAdmin: isAdminEmail, // Automatically set admin flag for admin emails
+      };
+      localStorage.setItem('user', JSON.stringify(userData));
+
       setIsLoading(false);
       if (onSuccess) {
         onSuccess();

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { formatPrice } from "@/lib/utils";
 import {
   User,
   Mail,
@@ -628,7 +629,7 @@ export default function ProfilePage() {
                           </span>
                           <div className="flex items-center gap-4">
                             <span className="text-lg font-bold text-gray-900">
-                              ${order.total.toFixed(2)}
+                              {formatPrice(order.total)}
                             </span>
                             <Button variant="outline" size="sm">
                               View Details

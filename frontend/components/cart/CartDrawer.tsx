@@ -9,7 +9,8 @@ import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store/useCartStore';
-import { useEffect } from 'react';
+import { formatPrice, calculatePrice, getCurrentUser } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
 
 interface CartDrawerProps {
@@ -21,6 +22,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, removeItem, updateQuantity, getTotalPrice, clearCart } =
     useCartStore();
   const totalPrice = getTotalPrice();
+  const [user, setUser] = useState(getCurrentUser());
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
@@ -108,12 +110,32 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <p className="text-sm text-gray-500 capitalize">
                         {item.category}
                       </p>
-                      <p className="text-primary font-bold mt-1">
-                        ${item.price.toFixed(2)}{' '}
-                        <span className="text-xs text-gray-500">
-                          {item.unit}
-                        </span>
-                      </p>
+                      {(() => {
+                        const userType = user?.userType || 'retail';
+                        const actualPrice = calculatePrice(item, item.quantity, userType);
+                        const isWholesale = actualPrice < item.price;
+
+                        return (
+                          <div>
+                            {isWholesale && (
+                              <p className="text-xs text-gray-400 line-through">
+                                {formatPrice(item.price)}
+                              </p>
+                            )}
+                            <p className={`font-bold mt-1 ${isWholesale ? 'text-green-600' : 'text-primary'}`}>
+                              {formatPrice(actualPrice)}{' '}
+                              <span className="text-xs text-gray-500">
+                                {item.unit}
+                              </span>
+                              {isWholesale && (
+                                <span className="text-xs ml-1 bg-green-100 text-green-800 px-1.5 py-0.5 rounded">
+                                  Wholesale
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                        );
+                      })()}
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-2 mt-2">
@@ -172,7 +194,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
                   <span className="font-semibold">
-                    ${totalPrice.toFixed(2)}
+                    {formatPrice(totalPrice)}
                   </span>
                 </div>
                 <div className="flex justify-between text-gray-600">
@@ -183,7 +205,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 </div>
                 <div className="border-t border-gray-300 pt-3 flex justify-between text-lg font-bold text-primary">
                   <span>Total</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>{formatPrice(totalPrice)}</span>
                 </div>
               </div>
 

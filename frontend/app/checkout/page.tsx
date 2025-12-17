@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -66,7 +67,7 @@ export default function CheckoutPage() {
     city: "",
     state: "",
     zipCode: "",
-    country: "USA",
+    country: "Nigeria",
     paymentMethod: "card",
     cardNumber: "",
     cardName: "",
@@ -81,8 +82,8 @@ export default function CheckoutPage() {
   const [orderNumber, setOrderNumber] = useState("");
 
   const subtotal = getTotalPrice();
-  const shipping = subtotal > 50 ? 0 : 10;
-  const tax = subtotal * 0.08; // 8% tax
+  const shipping = subtotal > 80000 ? 0 : 15000; // Free shipping over ₦80,000, otherwise ₦15,000
+  const tax = subtotal * 0.075; // 7.5% VAT (Nigerian tax rate)
   const total = subtotal + shipping + tax;
 
   // Handle input changes
@@ -218,22 +219,22 @@ export default function CheckoutPage() {
               <div className="space-y-4 text-left mb-8">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-semibold">
-                    {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                    {shipping === 0 ? "FREE" : formatPrice(shipping)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Tax</span>
-                  <span className="font-semibold">${tax.toFixed(2)}</span>
+                  <span className="text-gray-600">Tax (7.5% VAT)</span>
+                  <span className="font-semibold">{formatPrice(tax)}</span>
                 </div>
                 <div className="border-t pt-4 flex justify-between">
                   <span className="font-bold text-lg">Total Paid</span>
                   <span className="font-bold text-lg text-green-600">
-                    ${total.toFixed(2)}
+                    {formatPrice(total)}
                   </span>
                 </div>
               </div>
@@ -475,10 +476,10 @@ export default function CheckoutPage() {
                         onChange={handleInputChange}
                         className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       >
-                        <option value="USA">United States</option>
-                        <option value="Canada">Canada</option>
-                        <option value="UK">United Kingdom</option>
-                        <option value="Australia">Australia</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="South Africa">South Africa</option>
                       </select>
                     </div>
                   </div>
@@ -682,7 +683,7 @@ export default function CheckoutPage() {
                     size="lg"
                     disabled={isProcessing}
                   >
-                    {isProcessing ? "Processing..." : `Place Order - $${total.toFixed(2)}`}
+                    {isProcessing ? "Processing..." : `Place Order - ${formatPrice(total)}`}
                   </Button>
                 </div>
               </form>
@@ -711,7 +712,7 @@ export default function CheckoutPage() {
                         </h3>
                         <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                         <p className="text-sm font-semibold text-green-600">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          {formatPrice(item.price * item.quantity)}
                         </p>
                       </div>
                     </div>
@@ -722,7 +723,7 @@ export default function CheckoutPage() {
                 <div className="space-y-3 pb-4 border-b border-gray-200">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                    <span className="font-semibold">{formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Shipping</span>
@@ -730,18 +731,18 @@ export default function CheckoutPage() {
                       {shipping === 0 ? (
                         <span className="text-green-600">FREE</span>
                       ) : (
-                        `$${shipping.toFixed(2)}`
+                        formatPrice(shipping)
                       )}
                     </span>
                   </div>
-                  {subtotal <= 50 && (
+                  {subtotal <= 80000 && (
                     <p className="text-xs text-amber-600">
-                      Add ${(50 - subtotal).toFixed(2)} more for free shipping!
+                      Add {formatPrice(80000 - subtotal)} more for free shipping!
                     </p>
                   )}
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Tax (8%)</span>
-                    <span className="font-semibold">${tax.toFixed(2)}</span>
+                    <span className="text-gray-600">Tax (7.5% VAT)</span>
+                    <span className="font-semibold">{formatPrice(tax)}</span>
                   </div>
                 </div>
 
@@ -749,7 +750,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between items-center pt-4 mb-6">
                   <span className="text-lg font-bold text-gray-900">Total</span>
                   <span className="text-2xl font-bold text-green-600">
-                    ${total.toFixed(2)}
+                    {formatPrice(total)}
                   </span>
                 </div>
 
@@ -758,7 +759,7 @@ export default function CheckoutPage() {
                   <Button
                     type="submit"
                     className="w-full"
-                    size="lg"
+                    size="md"
                     disabled={isProcessing}
                   >
                     {isProcessing ? "Processing..." : "Place Order"}

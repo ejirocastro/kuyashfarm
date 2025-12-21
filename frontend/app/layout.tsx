@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Betàni - Farming for a Future",
+  title: "Kuyash Integrated Farm - Farming for a Future",
   description: "Cultivating a sustainable future through innovative agriculture and empowering rural communities.",
 };
 

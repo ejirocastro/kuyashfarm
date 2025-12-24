@@ -15,10 +15,10 @@ export function Stats() {
               key={index}
               className="group text-center transition-transform duration-300 hover:scale-105"
             >
-              <div className="mb-2 font-serif text-4xl font-bold text-[#2d5f3f] md:text-5xl">
+              <div className="mb-2 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#2d5f3f]">
                 {stat.value}
               </div>
-              <div className="font-sans text-sm text-gray-600 md:text-base">
+              <div className="font-sans text-sm sm:text-base text-gray-600">
                 {stat.label}
               </div>
             </div>

@@ -161,7 +161,7 @@ export default function ProfilePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">My Account</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">My Account</h1>
             <p className="text-gray-600">Manage your profile and preferences</p>
           </div>
 
@@ -178,8 +178,8 @@ export default function ProfilePage() {
                       fill
                       className="rounded-full object-cover"
                     />
-                    <button className="absolute bottom-0 right-0 p-1.5 bg-green-600 rounded-full text-white hover:bg-green-700 transition-colors">
-                      <Edit2 className="w-3 h-3" />
+                    <button className="absolute bottom-0 right-0 p-2.5 bg-green-600 rounded-full text-white hover:bg-green-700 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Edit profile picture">
+                      <Edit2 className="w-4 h-4" />
                     </button>
                   </div>
                   <h2 className="text-xl font-bold text-gray-900">

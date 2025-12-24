@@ -180,11 +180,11 @@ export default function ShopPage() {
             {filteredProducts.length > 0 ? (
               <div className="relative">
                 {/* Horizontal Scrollable Container */}
-                <div className="scrollbar-hide flex gap-6 overflow-x-auto pb-4 scroll-smooth">
+                <div className="scrollbar-hide flex gap-4 sm:gap-6 overflow-x-auto pb-4 scroll-smooth">
                   {filteredProducts.map((product) => (
                     <div
                       key={product.id}
-                      className="group shrink-0 w-[280px]"
+                      className="group shrink-0 w-[260px] sm:w-[280px]"
                     >
                       {/* Product Image Card */}
                       <div className="relative mb-4 aspect-4/3 overflow-hidden rounded-2xl">

@@ -184,7 +184,7 @@ export function Navbar() {
               <CartButton onClick={() => setIsCartOpen(true)} />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-md text-white transition-colors"
+                className="p-3 rounded-md text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Toggle menu"
               >
                 <svg

@@ -13,10 +13,10 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-6">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <h3 className="mb-4 font-serif text-3xl font-bold">
+            <h3 className="mb-4 font-serif text-2xl sm:text-3xl font-bold">
               {SITE_CONFIG.name}
             </h3>
-            <p className="mb-6 max-w-sm font-sans text-sm leading-relaxed text-gray-400">
+            <p className="mb-6 max-w-sm font-sans text-sm sm:text-base leading-relaxed text-gray-400">
               {SITE_CONFIG.description}
             </p>
 

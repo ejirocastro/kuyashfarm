@@ -393,7 +393,7 @@ export default function CheckoutPage() {
             <span>Continue Shopping</span>
           </Link>
 
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Checkout</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">Checkout</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Forms */}

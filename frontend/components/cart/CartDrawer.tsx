@@ -143,19 +143,19 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                           onClick={() =>
                             updateQuantity(item.id, item.quantity - 1)
                           }
-                          className="p-1 hover:bg-white rounded transition-colors"
+                          className="p-2.5 hover:bg-white rounded transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-4 h-4 text-primary" />
                         </button>
-                        <span className="w-8 text-center font-semibold">
+                        <span className="min-w-[2rem] text-center font-semibold">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
                           }
-                          className="p-1 hover:bg-white rounded transition-colors"
+                          className="p-2.5 hover:bg-white rounded transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-4 h-4 text-primary" />

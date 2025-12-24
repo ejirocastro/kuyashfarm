@@ -82,14 +82,14 @@ export function ChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-[#2d5f3f] text-white rounded-full p-4 shadow-lg hover:bg-[#4a7c59] transition-all duration-300 hover:scale-110 group"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-[#2d5f3f] text-white rounded-full p-3 sm:p-4 shadow-lg hover:bg-[#4a7c59] transition-all duration-300 hover:scale-110 group"
           aria-label="Open chat"
         >
           <MessageCircle className="w-6 h-6" />
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse" />
 
-          {/* Tooltip */}
-          <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          {/* Tooltip - hidden on mobile */}
+          <span className="hidden sm:block absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Chat with us
           </span>
         </button>
@@ -97,7 +97,7 @@ export function ChatWidget() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
+        <div className="fixed inset-x-4 bottom-4 sm:inset-x-auto sm:bottom-6 sm:right-6 z-50 w-auto sm:w-96 h-[calc(100vh-2rem)] sm:h-[600px] max-h-[700px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#2d5f3f] to-[#4a7c59] text-white p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -111,7 +111,7 @@ export function ChatWidget() {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors"
+              className="text-white/80 hover:text-white transition-colors p-2 -m-2"
               aria-label="Close chat"
             >
               <X className="w-5 h-5" />

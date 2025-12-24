@@ -177,7 +177,7 @@ export default function BecomeDistributorPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
               <Truck className="w-8 h-8 text-primary" />
             </div>
-            <h1 className="font-serif text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               Distributor Registration
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -383,14 +383,14 @@ export default function BecomeDistributorPage() {
                       <label className="block text-sm font-medium text-gray-900 mb-3">
                         Specialty Areas *
                       </label>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {specialtyOptions.map((specialty) => (
-                          <label key={specialty} className="flex items-center gap-2 cursor-pointer">
+                          <label key={specialty} className="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition-colors">
                             <input
                               type="checkbox"
                               checked={specialtyAreas.includes(specialty)}
                               onChange={() => handleSpecialtyToggle(specialty)}
-                              className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                              className="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary"
                             />
                             <span className="text-sm text-gray-700">{specialty}</span>
                           </label>

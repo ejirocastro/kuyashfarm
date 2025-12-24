@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getCurrentUser } from "@/lib/utils";
 import {
   Package,
   MapPin,
@@ -31,133 +31,192 @@ export default function OrdersPage() {
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<OrderStatus | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [orders, setOrders] = useState<Order[]>([]);
   const { addItem } = useCartStore();
 
-  // Mock orders data
-  const [orders] = useState<Order[]>([
-    {
-      id: "1",
-      orderNumber: "ORD-2024-001",
-      date: "2024-01-15",
-      status: "delivered",
-      total: 140000,
-      itemCount: 5,
-      items: [
-        {
-          id: 1,
-          name: "Fresh Organic Eggs",
-          price: 9500,
-          quantity: 2,
-          image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",
-          unit: "dozen",
-        },
-        {
-          id: 2,
-          name: "Grass-Fed Whole Milk",
-          price: 6000,
-          quantity: 3,
-          image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400",
-          unit: "liter",
-        },
-      ],
-      shipping: {
-        name: "John Doe",
-        address: "123 Main Street, Apt 4B",
-        city: "New York",
-        state: "NY",
-        zipCode: "10001",
-      },
-      tracking: {
-        number: "1Z999AA10123456784",
-        carrier: "UPS",
-        url: "https://www.ups.com/track?tracknum=1Z999AA10123456784",
-      },
-      timeline: [
-        { status: "Order Placed", date: "2024-01-15 10:30 AM", completed: true },
-        { status: "Processing", date: "2024-01-15 11:00 AM", completed: true },
-        { status: "Shipped", date: "2024-01-16 09:15 AM", completed: true },
-        { status: "Out for Delivery", date: "2024-01-17 08:00 AM", completed: true },
-        { status: "Delivered", date: "2024-01-17 02:30 PM", completed: true },
-      ],
-    },
-    {
-      id: "2",
-      orderNumber: "ORD-2024-002",
-      date: "2024-01-22",
-      status: "shipped",
-      total: 198000,
-      itemCount: 8,
-      items: [
-        {
-          id: 3,
-          name: "Organic Free-Range Chicken",
-          price: 20000,
-          quantity: 2,
-          image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400",
-          unit: "kg",
-        },
-        {
-          id: 4,
-          name: "Farm Fresh Vegetables",
-          price: 18000,
-          quantity: 1,
-          image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400",
-          unit: "basket",
-        },
-      ],
-      shipping: {
-        name: "John Doe",
-        address: "123 Main Street, Apt 4B",
-        city: "New York",
-        state: "NY",
-        zipCode: "10001",
-      },
-      tracking: {
-        number: "1Z999AA10123456785",
-        carrier: "UPS",
-        url: "https://www.ups.com/track?tracknum=1Z999AA10123456785",
-      },
-      timeline: [
-        { status: "Order Placed", date: "2024-01-22 03:45 PM", completed: true },
-        { status: "Processing", date: "2024-01-22 04:00 PM", completed: true },
-        { status: "Shipped", date: "2024-01-23 10:30 AM", completed: true },
-        { status: "Out for Delivery", date: "Estimated 2024-01-24", completed: false },
-        { status: "Delivered", date: "Pending", completed: false },
-      ],
-    },
-    {
-      id: "3",
-      orderNumber: "ORD-2024-003",
-      date: "2024-02-01",
-      status: "processing",
-      total: 90000,
-      itemCount: 3,
-      items: [
-        {
-          id: 5,
-          name: "Artisan Cheese Selection",
-          price: 14000,
-          quantity: 1,
-          image: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=400",
-          unit: "pack",
-        },
-      ],
-      shipping: {
-        name: "John Doe",
-        address: "456 Business Ave, Suite 100",
-        city: "Brooklyn",
-        state: "NY",
-        zipCode: "11201",
-      },
-      timeline: [
-        { status: "Order Placed", date: "2024-02-01 11:20 AM", completed: true },
-        { status: "Processing", date: "In Progress", completed: false },
-        { status: "Shipped", date: "Pending", completed: false },
-        { status: "Out for Delivery", date: "Pending", completed: false },
-        { status: "Delivered", date: "Pending", completed: false },
-      ],
-    },
-  ]);
+  // Load orders from localStorage on mount
+  useEffect(() => {
+    const currentUser = getCurrentUser();
+    const userEmail = currentUser?.email;
+
+    try {
+      const ordersStr = localStorage.getItem('kuyash-orders');
+      let userOrders: Order[] = [];
+
+      if (ordersStr) {
+        const allOrders: Order[] = JSON.parse(ordersStr);
+
+        // Filter orders by current user's email if logged in
+        userOrders = userEmail
+          ? allOrders.filter(order => order.userEmail === userEmail)
+          : allOrders;
+      }
+
+      // If user has no orders, show mock data for demonstration
+      if (userOrders.length === 0) {
+        // Mock orders for demonstration when user has no orders
+        const mockOrders: Order[] = [
+          {
+            id: "mock_1",
+            orderNumber: "ORD-2024-001",
+            date: "2024-01-15T10:30:00Z",
+            status: "delivered",
+            subtotal: 125000,
+            shipping: 15000,
+            tax: 9375,
+            total: 149375,
+            itemCount: 5,
+            userEmail: userEmail || "demo@example.com",
+            shippingAddress: {
+              name: "John Doe",
+              address: "123 Main Street, Apt 4B",
+              city: "Lagos",
+              state: "Lagos State",
+              zipCode: "100001",
+              phone: "+234 123 456 7890",
+            },
+            paymentMethod: "Credit Card",
+            items: [
+              {
+                id: 12,
+                name: "Fresh Eggs",
+                price: 9500,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",
+                unit: "per dozen",
+                category: "poultry",
+              },
+              {
+                id: 13,
+                name: "Fresh Milk",
+                price: 6000,
+                quantity: 3,
+                image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+                unit: "per liter",
+                category: "dairy",
+              },
+            ],
+            tracking: {
+              number: "1Z999AA10123456784",
+              carrier: "UPS",
+              url: "https://www.ups.com/track?tracknum=1Z999AA10123456784",
+              estimatedDelivery: "2024-01-17",
+            },
+            timeline: [
+              { status: "Order Placed", date: "2024-01-15T10:30:00Z", completed: true },
+              { status: "Processing", date: "2024-01-15T11:00:00Z", completed: true },
+              { status: "Shipped", date: "2024-01-16T09:15:00Z", completed: true },
+              { status: "Delivered", date: "2024-01-17T14:30:00Z", completed: true },
+            ],
+          },
+          {
+            id: "mock_2",
+            orderNumber: "ORD-2024-002",
+            date: "2024-01-22T15:45:00Z",
+            status: "shipped",
+            subtotal: 180000,
+            shipping: 0,
+            tax: 13500,
+            total: 193500,
+            itemCount: 8,
+            userEmail: userEmail || "demo@example.com",
+            shippingAddress: {
+              name: "John Doe",
+              address: "123 Main Street, Apt 4B",
+              city: "Lagos",
+              state: "Lagos State",
+              zipCode: "100001",
+              phone: "+234 123 456 7890",
+            },
+            paymentMethod: "PayPal",
+            items: [
+              {
+                id: 11,
+                name: "Free-Range Chicken",
+                price: 20000,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400",
+                unit: "per kg",
+                category: "poultry",
+              },
+              {
+                id: 1,
+                name: "Organic Tomatoes",
+                price: 7500,
+                quantity: 6,
+                image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
+                unit: "per kg",
+                category: "vegetables",
+              },
+            ],
+            tracking: {
+              number: "1Z999AA10123456785",
+              carrier: "DHL",
+              estimatedDelivery: "2024-01-24",
+            },
+            timeline: [
+              { status: "Order Placed", date: "2024-01-22T15:45:00Z", completed: true },
+              { status: "Processing", date: "2024-01-22T16:00:00Z", completed: true },
+              { status: "Shipped", date: "2024-01-23T10:30:00Z", completed: true },
+              { status: "Delivered", date: "", completed: false },
+            ],
+          },
+          {
+            id: "mock_3",
+            orderNumber: "ORD-2024-003",
+            date: "2024-02-01T11:20:00Z",
+            status: "processing",
+            subtotal: 76000,
+            shipping: 15000,
+            tax: 5700,
+            total: 96700,
+            itemCount: 3,
+            userEmail: userEmail || "demo@example.com",
+            shippingAddress: {
+              name: "John Doe",
+              address: "456 Business Ave, Suite 100",
+              city: "Abuja",
+              state: "FCT",
+              zipCode: "900001",
+              phone: "+234 987 654 3210",
+            },
+            paymentMethod: "Cash on Delivery",
+            items: [
+              {
+                id: 14,
+                name: "Organic Cheese",
+                price: 14000,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+                unit: "per 500g",
+                category: "dairy",
+              },
+              {
+                id: 8,
+                name: "Organic Apples",
+                price: 7500,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+                unit: "per kg",
+                category: "fruits",
+              },
+            ],
+            timeline: [
+              { status: "Order Placed", date: "2024-02-01T11:20:00Z", completed: true },
+              { status: "Processing", date: "", completed: false },
+              { status: "Shipped", date: "", completed: false },
+              { status: "Delivered", date: "", completed: false },
+            ],
+          },
+        ];
+        setOrders(mockOrders);
+      } else {
+        setOrders(userOrders);
+      }
+    } catch (error) {
+      console.error('Failed to load orders:', error);
+    }
+  }, []);
 
   const filteredOrders = orders
     .filter((order) => filterStatus === "all" || order.status === filterStatus)
@@ -212,7 +271,7 @@ export default function OrdersPage() {
           inStock: true,
           rating: 4.5,
         },
-        "dairy" // This would need to be dynamic in a real app
+        item.category // Use the category stored with the order item
       );
     });
   };
@@ -437,12 +496,12 @@ export default function OrdersPage() {
                             </h4>
                             <div className="p-4 bg-gray-50 rounded-lg text-sm">
                               <p className="font-semibold text-gray-900">
-                                {order.shipping.name}
+                                {order.shippingAddress.name}
                               </p>
-                              <p className="text-gray-600">{order.shipping.address}</p>
+                              <p className="text-gray-600">{order.shippingAddress.address}</p>
                               <p className="text-gray-600">
-                                {order.shipping.city}, {order.shipping.state}{" "}
-                                {order.shipping.zipCode}
+                                {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
+                                {order.shippingAddress.zipCode}
                               </p>
                             </div>
                           </div>

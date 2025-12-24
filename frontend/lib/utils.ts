@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { User, UserType } from "./types";
 
 /**
  * Utility function to merge Tailwind CSS classes
@@ -37,7 +38,7 @@ export function formatPrice(amount: number): string {
 /**
  * Calculate price based on quantity and user verification status
  * Retail users always see retail price
- * Verified wholesale users get bulk pricing when quantity qualifies
+ * Verified wholesale and distributor users get bulk pricing when quantity qualifies
  */
 export function calculatePrice(
   product: {
@@ -45,10 +46,10 @@ export function calculatePrice(
     bulkPricing?: readonly { readonly minQuantity: number; readonly pricePerUnit: number }[]
   },
   quantity: number,
-  userType: 'retail' | 'wholesale_pending' | 'wholesale_verified'
+  userType: UserType
 ): number {
   // Retail and pending users always get retail price
-  if (userType !== 'wholesale_verified') {
+  if (userType !== 'wholesale_verified' && userType !== 'distributor_verified') {
     return product.price;
   }
 
@@ -71,17 +72,7 @@ export function calculatePrice(
 /**
  * Get current user from localStorage
  */
-export function getCurrentUser(): {
-  userType: 'retail' | 'wholesale_pending' | 'wholesale_verified';
-  name?: string;
-  email?: string;
-  id?: string;
-  isAdmin?: boolean;
-  businessInfo?: {
-    businessName: string;
-    businessAddress: string;
-  };
-} | null {
+export function getCurrentUser(): User | null {
   if (typeof window === 'undefined') return null;
 
   try {

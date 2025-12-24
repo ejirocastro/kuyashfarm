@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useCartStore } from "@/lib/store/useCartStore";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getCurrentUser, calculatePrice } from "@/lib/utils";
 import Image from "next/image";
+import type { Order, OrderItem } from "@/lib/types";
 import Link from "next/link";
 import {
   CreditCard,
@@ -21,7 +22,11 @@ import {
   Banknote
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { FormField } from "@/components/ui/FormField";
+import { FormSelect } from "@/components/ui/FormSelect";
+import { FormTextarea } from "@/components/ui/FormTextarea";
 import { useRouter } from "next/navigation";
+import { checkStockAvailability, deductInventory, createNotification } from "@/lib/inventory-manager";
 
 type PaymentMethod = "card" | "paypal" | "cod";
 
@@ -154,14 +159,130 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
+    // Check stock availability for all items BEFORE processing
+    const stockIssues: string[] = [];
+    for (const item of items) {
+      const stockCheck = checkStockAvailability(item.id, item.quantity);
+      if (!stockCheck.available) {
+        stockIssues.push(`${item.name}: Only ${stockCheck.currentStock} available (you have ${item.quantity} in cart)`);
+      }
+    }
+
+    if (stockIssues.length > 0) {
+      setIsProcessing(false);
+      createNotification({
+        type: 'error',
+        title: 'Insufficient Stock',
+        message: `Some items in your cart are out of stock: ${stockIssues.join(', ')}`,
+      });
+      return;
+    }
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Generate order number
     const newOrderNumber = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
+
+    // Get current user
+    const currentUser = getCurrentUser();
+    const userEmail = currentUser?.email || formData.email;
+    const userId = currentUser?.id || `guest_${Date.now()}`;
+    const userType = currentUser?.userType || 'retail';
+
+    // Convert cart items to order items with actual prices paid
+    const orderItems: OrderItem[] = items.map((item) => ({
+      id: item.id,
+      name: item.name,
+      price: calculatePrice(item, item.quantity, userType), // Actual price paid per unit
+      quantity: item.quantity,
+      image: item.image,
+      unit: item.unit,
+      category: item.category,
+    }));
+
+    // DEDUCT INVENTORY for all items
+    for (const item of items) {
+      const success = deductInventory(item.id, item.quantity);
+      if (!success) {
+        setIsProcessing(false);
+        createNotification({
+          type: 'error',
+          title: 'Inventory Error',
+          message: `Failed to process ${item.name}. Please try again.`,
+        });
+        return;
+      }
+    }
+
+    // Create order object
+    const newOrder: Order = {
+      id: `order_${Date.now()}`,
+      orderNumber: newOrderNumber,
+      date: new Date().toISOString(),
+      status: 'pending',
+      subtotal: subtotal,
+      shipping: shipping,
+      tax: tax,
+      total: total,
+      items: orderItems,
+      itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+      userEmail: userEmail,
+      userId: userId,
+      shippingAddress: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode,
+        phone: formData.phone,
+      },
+      paymentMethod: formData.paymentMethod === 'card' ? 'Credit Card' :
+                     formData.paymentMethod === 'paypal' ? 'PayPal' : 'Cash on Delivery',
+      timeline: [
+        {
+          status: 'Order Placed',
+          date: new Date().toISOString(),
+          completed: true,
+        },
+        {
+          status: 'Processing',
+          date: '',
+          completed: false,
+        },
+        {
+          status: 'Shipped',
+          date: '',
+          completed: false,
+        },
+        {
+          status: 'Delivered',
+          date: '',
+          completed: false,
+        },
+      ],
+    };
+
+    // Save order to localStorage
+    try {
+      const existingOrdersStr = localStorage.getItem('kuyash-orders');
+      const existingOrders: Order[] = existingOrdersStr ? JSON.parse(existingOrdersStr) : [];
+      existingOrders.unshift(newOrder); // Add new order at the beginning
+      localStorage.setItem('kuyash-orders', JSON.stringify(existingOrders));
+    } catch (error) {
+      console.error('Failed to save order:', error);
+    }
+
     setOrderNumber(newOrderNumber);
     setOrderComplete(true);
     setIsProcessing(false);
+
+    // Show success notification
+    createNotification({
+      type: 'success',
+      title: 'Order Placed Successfully!',
+      message: `Your order ${newOrderNumber} has been confirmed.`,
+    });
 
     // Clear cart after successful order
     setTimeout(() => {
@@ -290,198 +411,113 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* First Name */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        First Name *
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={formData.firstName}
-                          onChange={handleInputChange}
-                          className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                            errors.firstName ? "border-red-500" : "border-gray-300"
-                          }`}
-                          placeholder="John"
-                        />
-                      </div>
-                      {errors.firstName && (
-                        <p className="mt-1 text-sm text-red-500">{errors.firstName}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="First Name"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      error={errors.firstName}
+                      placeholder="John"
+                      icon={User}
+                      required
+                    />
 
-                    {/* Last Name */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name *
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="lastName"
-                          value={formData.lastName}
-                          onChange={handleInputChange}
-                          className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                            errors.lastName ? "border-red-500" : "border-gray-300"
-                          }`}
-                          placeholder="Doe"
-                        />
-                      </div>
-                      {errors.lastName && (
-                        <p className="mt-1 text-sm text-red-500">{errors.lastName}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="Last Name"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      error={errors.lastName}
+                      placeholder="Doe"
+                      icon={User}
+                      required
+                    />
 
-                    {/* Email */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email *
-                      </label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                            errors.email ? "border-red-500" : "border-gray-300"
-                          }`}
-                          placeholder="john@example.com"
-                        />
-                      </div>
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="Email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      error={errors.email}
+                      placeholder="john@example.com"
+                      icon={Mail}
+                      required
+                      autoComplete="email"
+                    />
 
-                    {/* Phone */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number *
-                      </label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                            errors.phone ? "border-red-500" : "border-gray-300"
-                          }`}
-                          placeholder="(555) 123-4567"
-                        />
-                      </div>
-                      {errors.phone && (
-                        <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="Phone Number"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      error={errors.phone}
+                      placeholder="+234 123 456 7890"
+                      icon={Phone}
+                      required
+                      autoComplete="tel"
+                    />
 
-                    {/* Address */}
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Street Address *
-                      </label>
-                      <div className="relative">
-                        <MapPin className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                            errors.address ? "border-red-500" : "border-gray-300"
-                          }`}
-                          placeholder="123 Main Street, Apt 4B"
-                        />
-                      </div>
-                      {errors.address && (
-                        <p className="mt-1 text-sm text-red-500">{errors.address}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="Street Address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      error={errors.address}
+                      placeholder="123 Main Street, Apt 4B"
+                      icon={MapPin}
+                      required
+                      className="md:col-span-2"
+                      autoComplete="street-address"
+                    />
 
-                    {/* City */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        City *
-                      </label>
-                      <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                          errors.city ? "border-red-500" : "border-gray-300"
-                        }`}
-                        placeholder="New York"
-                      />
-                      {errors.city && (
-                        <p className="mt-1 text-sm text-red-500">{errors.city}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="City"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      error={errors.city}
+                      placeholder="Lagos"
+                      required
+                      autoComplete="address-level2"
+                    />
 
-                    {/* State */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        State *
-                      </label>
-                      <input
-                        type="text"
-                        name="state"
-                        value={formData.state}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                          errors.state ? "border-red-500" : "border-gray-300"
-                        }`}
-                        placeholder="NY"
-                      />
-                      {errors.state && (
-                        <p className="mt-1 text-sm text-red-500">{errors.state}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="State"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleInputChange}
+                      error={errors.state}
+                      placeholder="Lagos State"
+                      required
+                      autoComplete="address-level1"
+                    />
 
-                    {/* ZIP Code */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        ZIP Code *
-                      </label>
-                      <input
-                        type="text"
-                        name="zipCode"
-                        value={formData.zipCode}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                          errors.zipCode ? "border-red-500" : "border-gray-300"
-                        }`}
-                        placeholder="10001"
-                      />
-                      {errors.zipCode && (
-                        <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>
-                      )}
-                    </div>
+                    <FormField
+                      label="ZIP Code"
+                      name="zipCode"
+                      value={formData.zipCode}
+                      onChange={handleInputChange}
+                      error={errors.zipCode}
+                      placeholder="100001"
+                      required
+                      autoComplete="postal-code"
+                    />
 
-                    {/* Country */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Country *
-                      </label>
-                      <select
-                        name="country"
-                        value={formData.country}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      >
-                        <option value="Nigeria">Nigeria</option>
-                        <option value="Ghana">Ghana</option>
-                        <option value="Kenya">Kenya</option>
-                        <option value="South Africa">South Africa</option>
-                      </select>
-                    </div>
+                    <FormSelect
+                      label="Country"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleInputChange}
+                      options={[
+                        { value: "Nigeria", label: "Nigeria" },
+                        { value: "Ghana", label: "Ghana" },
+                        { value: "Kenya", label: "Kenya" },
+                        { value: "South Africa", label: "South Africa" },
+                      ]}
+                      required
+                    />
                   </div>
                 </div>
 
@@ -549,97 +585,54 @@ export default function CheckoutPage() {
                   {/* Card Details (only show if card is selected) */}
                   {formData.paymentMethod === "card" && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Card Number */}
-                      <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Card Number *
-                        </label>
-                        <div className="relative">
-                          <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <input
-                            type="text"
-                            name="cardNumber"
-                            value={formData.cardNumber}
-                            onChange={handleInputChange}
-                            maxLength={19}
-                            className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                              errors.cardNumber ? "border-red-500" : "border-gray-300"
-                            }`}
-                            placeholder="1234 5678 9012 3456"
-                          />
-                        </div>
-                        {errors.cardNumber && (
-                          <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>
-                        )}
-                      </div>
+                      <FormField
+                        label="Card Number"
+                        name="cardNumber"
+                        value={formData.cardNumber}
+                        onChange={handleInputChange}
+                        error={errors.cardNumber}
+                        placeholder="1234 5678 9012 3456"
+                        icon={CreditCard}
+                        required
+                        className="md:col-span-2"
+                        autoComplete="cc-number"
+                      />
 
-                      {/* Cardholder Name */}
-                      <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Cardholder Name *
-                        </label>
-                        <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <input
-                            type="text"
-                            name="cardName"
-                            value={formData.cardName}
-                            onChange={handleInputChange}
-                            className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                              errors.cardName ? "border-red-500" : "border-gray-300"
-                            }`}
-                            placeholder="John Doe"
-                          />
-                        </div>
-                        {errors.cardName && (
-                          <p className="mt-1 text-sm text-red-500">{errors.cardName}</p>
-                        )}
-                      </div>
+                      <FormField
+                        label="Cardholder Name"
+                        name="cardName"
+                        value={formData.cardName}
+                        onChange={handleInputChange}
+                        error={errors.cardName}
+                        placeholder="John Doe"
+                        icon={User}
+                        required
+                        className="md:col-span-2"
+                        autoComplete="cc-name"
+                      />
 
-                      {/* Expiry Date */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Expiry Date *
-                        </label>
-                        <input
-                          type="text"
-                          name="expiryDate"
-                          value={formData.expiryDate}
-                          onChange={handleInputChange}
-                          maxLength={5}
-                          className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                            errors.expiryDate ? "border-red-500" : "border-gray-300"
-                          }`}
-                          placeholder="MM/YY"
-                        />
-                        {errors.expiryDate && (
-                          <p className="mt-1 text-sm text-red-500">{errors.expiryDate}</p>
-                        )}
-                      </div>
+                      <FormField
+                        label="Expiry Date"
+                        name="expiryDate"
+                        value={formData.expiryDate}
+                        onChange={handleInputChange}
+                        error={errors.expiryDate}
+                        placeholder="MM/YY"
+                        required
+                        autoComplete="cc-exp"
+                      />
 
-                      {/* CVV */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          CVV *
-                        </label>
-                        <div className="relative">
-                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <input
-                            type="text"
-                            name="cvv"
-                            value={formData.cvv}
-                            onChange={handleInputChange}
-                            maxLength={4}
-                            className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                              errors.cvv ? "border-red-500" : "border-gray-300"
-                            }`}
-                            placeholder="123"
-                          />
-                        </div>
-                        {errors.cvv && (
-                          <p className="mt-1 text-sm text-red-500">{errors.cvv}</p>
-                        )}
-                      </div>
+                      <FormField
+                        label="CVV"
+                        name="cvv"
+                        value={formData.cvv}
+                        onChange={handleInputChange}
+                        error={errors.cvv}
+                        placeholder="123"
+                        icon={Lock}
+                        required
+                        autoComplete="cc-csc"
+                      />
                     </div>
                   )}
 
@@ -662,16 +655,14 @@ export default function CheckoutPage() {
 
                 {/* Order Notes */}
                 <div className="bg-white rounded-2xl shadow-sm p-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Order Notes (Optional)
-                  </label>
-                  <textarea
+                  <FormTextarea
+                    label="Order Notes"
                     name="notes"
                     value={formData.notes}
                     onChange={handleInputChange}
-                    rows={4}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                     placeholder="Any special instructions for your order..."
+                    rows={4}
+                    maxLength={500}
                   />
                 </div>
 

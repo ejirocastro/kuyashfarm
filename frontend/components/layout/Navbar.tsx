@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, getCurrentUser } from "@/lib/utils";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { AuthModal } from "@/components/auth/AuthModal";
 import CartButton from "@/components/cart/CartButton";
 import CartDrawer from "@/components/cart/CartDrawer";
-import { User, LogOut, Settings, Package } from "lucide-react";
+import { User, LogOut, Settings, Package, Truck } from "lucide-react";
 import Link from "next/link";
+import type { User as UserType } from "@/lib/types";
+import { getTierDisplayName, getTierBadgeColor } from "@/lib/distributor-utils";
 
 /**
  * Responsive Navbar with scroll effect
@@ -18,7 +20,21 @@ export function Navbar() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Mock auth state - will be replaced with real auth
+  const [user, setUser] = useState<UserType | null>(null);
+
+  // Check user authentication status
+  useEffect(() => {
+    const currentUser = getCurrentUser();
+    setUser(currentUser);
+
+    // Listen for user changes (login/logout)
+    const handleStorageChange = () => {
+      setUser(getCurrentUser());
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +44,13 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    setIsUserMenuOpen(false);
+    window.location.href = '/';
+  };
 
   return (
     <>
@@ -63,19 +86,19 @@ export function Navbar() {
               <CartButton onClick={() => setIsCartOpen(true)} />
 
               {/* User Menu or Sign In */}
-              {isLoggedIn ? (
+              {user ? (
                 <div className="relative">
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                     className="flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/30"
                   >
                     <User className="w-4 h-4" />
-                    <span>Account</span>
+                    <span>{user.name || 'Account'}</span>
                   </button>
 
                   {/* Dropdown Menu */}
                   {isUserMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50">
                       <Link
                         href="/profile"
                         className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
@@ -85,13 +108,49 @@ export function Navbar() {
                         <span>My Profile</span>
                       </Link>
                       <Link
-                        href="/profile?tab=orders"
+                        href="/orders"
                         className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
                         <Package className="w-4 h-4" />
                         <span>My Orders</span>
                       </Link>
+
+                      {/* Become a Distributor - Only show if not already a distributor */}
+                      {user.userType !== 'distributor_pending' && user.userType !== 'distributor_verified' && (
+                        <>
+                          <hr className="my-2" />
+                          <Link
+                            href="/become-distributor"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-2 px-4 py-2 text-primary hover:bg-green-50 transition-colors"
+                          >
+                            <Truck className="w-4 h-4" />
+                            <span>Become a Distributor</span>
+                          </Link>
+                        </>
+                      )}
+
+                      {/* Show distributor status if applicable */}
+                      {user.userType === 'distributor_pending' && (
+                        <div className="px-4 py-2 text-sm text-amber-600 bg-amber-50 mx-2 my-1 rounded">
+                          Distributor application pending
+                        </div>
+                      )}
+                      {user.userType === 'distributor_verified' && (
+                        <div className="px-4 py-2 mx-2 my-1">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-green-600">✓ Verified Distributor</span>
+                          </div>
+                          {user.distributorInfo?.tier && (
+                            <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${getTierBadgeColor(user.distributorInfo.tier)}`}>
+                              {getTierDisplayName(user.distributorInfo.tier)}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      <hr className="my-2" />
                       <Link
                         href="/profile?tab=settings"
                         className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
@@ -100,12 +159,8 @@ export function Navbar() {
                         <Settings className="w-4 h-4" />
                         <span>Settings</span>
                       </Link>
-                      <hr className="my-2" />
                       <button
-                        onClick={() => {
-                          setIsLoggedIn(false);
-                          setIsUserMenuOpen(false);
-                        }}
+                        onClick={handleLogout}
                         className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors w-full text-left"
                       >
                         <LogOut className="w-4 h-4" />
@@ -167,7 +222,7 @@ export function Navbar() {
                 ))}
 
                 {/* Mobile User Menu */}
-                {isLoggedIn ? (
+                {user ? (
                   <>
                     <Link
                       href="/profile"
@@ -178,16 +233,48 @@ export function Navbar() {
                       <span>My Profile</span>
                     </Link>
                     <Link
-                      href="/profile?tab=orders"
+                      href="/orders"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="flex items-center gap-2 font-sans text-sm font-medium text-white/90 hover:text-white transition-colors"
                     >
                       <Package className="w-4 h-4" />
                       <span>My Orders</span>
                     </Link>
+
+                    {/* Become a Distributor - Only show if not already a distributor */}
+                    {user.userType !== 'distributor_pending' && user.userType !== 'distributor_verified' && (
+                      <Link
+                        href="/become-distributor"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-2 font-sans text-sm font-medium text-green-300 hover:text-green-200 transition-colors"
+                      >
+                        <Truck className="w-4 h-4" />
+                        <span>Become a Distributor</span>
+                      </Link>
+                    )}
+
+                    {/* Show distributor status if applicable */}
+                    {user.userType === 'distributor_pending' && (
+                      <div className="px-3 py-2 text-xs text-amber-300 bg-white/10 rounded">
+                        Distributor application pending
+                      </div>
+                    )}
+                    {user.userType === 'distributor_verified' && (
+                      <div className="px-3 py-2 bg-white/10 rounded space-y-2">
+                        <div className="text-xs text-green-300 font-medium">
+                          ✓ Verified Distributor
+                        </div>
+                        {user.distributorInfo?.tier && (
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold border ${getTierBadgeColor(user.distributorInfo.tier)}`}>
+                            {getTierDisplayName(user.distributorInfo.tier)}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
                     <button
                       onClick={() => {
-                        setIsLoggedIn(false);
+                        handleLogout();
                         setIsMobileMenuOpen(false);
                       }}
                       className="flex items-center gap-2 font-sans text-sm font-medium text-red-300 hover:text-red-200 transition-colors text-left"
@@ -218,7 +305,7 @@ export function Navbar() {
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         onSuccess={() => {
-          setIsLoggedIn(true);
+          setUser(getCurrentUser());
           setIsAuthModalOpen(false);
         }}
       />

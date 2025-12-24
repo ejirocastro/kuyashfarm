@@ -1,22 +1,45 @@
-import { SITE_CONFIG } from "@/lib/constants";
+"use client";
+
+import { useState, useEffect } from "react";
 
 /**
- * Hero Section - Full-width background with centered text
+ * Hero Section - Full-width background with cross-fade image transition
  */
 export function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const heroImages = [
+    { url: '/herokuyash.jpg', position: 'center' },
+    { url: '/trancision.jpg', position: 'center' }
+  ];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(intervalId);
+  }, [heroImages.length]);
+
   return (
     <section
       id="home"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
-      {/* Background Image with Overlay */}
+      {/* Background Images with Cross-Fade Transition */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="h-full w-full bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/herokuyash.jpg')",
-          }}
-        />
+        {heroImages.map((image, index) => (
+          <div
+            key={image.url}
+            className={`absolute inset-0 h-full w-full bg-cover bg-no-repeat transition-opacity duration-1000 ease-in-out ${
+              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `url('${image.url}')`,
+              backgroundPosition: image.position,
+            }}
+          />
+        ))}
         {/* Dark Overlay for text readability */}
         <div className="absolute inset-0 bg-black/20" />
       </div>

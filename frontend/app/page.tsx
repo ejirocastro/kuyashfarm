@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Stats } from "@/components/sections/Stats";
 import { Mission } from "@/components/sections/Mission";
 import { Services } from "@/components/sections/Services";
+import { InventoryShowcase } from "@/components/sections/InventoryShowcase";
 import { Collaboration } from "@/components/sections/Collaboration";
 import { Blog } from "@/components/sections/Blog";
 import { Goals } from "@/components/sections/Goals";
@@ -21,6 +22,7 @@ export default function Home() {
         <Stats />
         <Mission />
         <Services />
+        <InventoryShowcase />
         <Collaboration />
         <Blog />
         <Goals />

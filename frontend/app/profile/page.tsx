@@ -11,21 +11,17 @@ import {
   MapPin,
   Lock,
   Bell,
-  CreditCard,
-  Package,
   Settings,
   Edit2,
   Save,
   X,
   Plus,
   Trash2,
-  Check,
-  Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 
-type TabType = "profile" | "addresses" | "orders" | "settings";
+type TabType = "profile" | "addresses" | "settings";
 
 interface Address {
   id: number;
@@ -47,14 +43,6 @@ interface UserProfile {
   phone: string;
   avatar: string;
   memberSince: string;
-}
-
-interface Order {
-  id: string;
-  date: string;
-  status: "delivered" | "processing" | "shipped" | "cancelled";
-  total: number;
-  items: number;
 }
 
 /**
@@ -103,30 +91,6 @@ export default function ProfilePage() {
     },
   ]);
 
-  const [orders] = useState<Order[]>([
-    {
-      id: "ORD-2024-001",
-      date: "2024-01-15",
-      status: "delivered",
-      total: 87.5,
-      items: 5,
-    },
-    {
-      id: "ORD-2024-002",
-      date: "2024-01-22",
-      status: "processing",
-      total: 124.0,
-      items: 8,
-    },
-    {
-      id: "ORD-2024-003",
-      date: "2024-02-01",
-      status: "shipped",
-      total: 56.25,
-      items: 3,
-    },
-  ]);
-
   const [settings, setSettings] = useState({
     emailNotifications: true,
     smsNotifications: false,
@@ -150,7 +114,6 @@ export default function ProfilePage() {
   const tabs = [
     { id: "profile" as TabType, label: "Profile", icon: User },
     { id: "addresses" as TabType, label: "Addresses", icon: MapPin },
-    { id: "orders" as TabType, label: "Orders", icon: Package },
     { id: "settings" as TabType, label: "Settings", icon: Settings },
   ];
 
@@ -189,19 +152,6 @@ export default function ProfilePage() {
         isDefault: addr.id === id,
       }))
     );
-  };
-
-  const getStatusColor = (status: Order["status"]) => {
-    switch (status) {
-      case "delivered":
-        return "bg-green-100 text-green-700";
-      case "processing":
-        return "bg-yellow-100 text-yellow-700";
-      case "shipped":
-        return "bg-blue-100 text-blue-700";
-      case "cancelled":
-        return "bg-red-100 text-red-700";
-    }
   };
 
   return (
@@ -587,57 +537,6 @@ export default function ProfilePage() {
                         </div>
                       ))}
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Orders Tab */}
-              {activeTab === "orders" && (
-                <div className="bg-white rounded-2xl shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    Order History
-                  </h2>
-
-                  <div className="space-y-4">
-                    {orders.map((order) => (
-                      <div
-                        key={order.id}
-                        className="p-6 border border-gray-200 rounded-lg hover:border-green-300 transition-colors"
-                      >
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-4">
-                            <Package className="w-8 h-8 text-green-600" />
-                            <div>
-                              <h3 className="font-bold text-gray-900">{order.id}</h3>
-                              <p className="text-sm text-gray-500">
-                                Placed on {new Date(order.date).toLocaleDateString()}
-                              </p>
-                            </div>
-                          </div>
-                          <span
-                            className={`px-3 py-1 rounded-full text-sm font-semibold capitalize ${getStatusColor(
-                              order.status
-                            )}`}
-                          >
-                            {order.status}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600">
-                            {order.items} item{order.items > 1 ? "s" : ""}
-                          </span>
-                          <div className="flex items-center gap-4">
-                            <span className="text-lg font-bold text-gray-900">
-                              {formatPrice(order.total)}
-                            </span>
-                            <Button variant="outline" size="sm">
-                              View Details
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </div>
               )}

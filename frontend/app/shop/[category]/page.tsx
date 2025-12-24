@@ -2,19 +2,21 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { PRODUCTS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/lib/store/useCartStore";
-import { ShoppingCart, Check } from "lucide-react";
+import { ShoppingCart, Check, Bell } from "lucide-react";
 import { Product } from "@/types";
 import { formatPrice, getCurrentUser } from "@/lib/utils";
+import type { User } from "@/lib/types";
 import { createApplication } from "@/lib/admin-utils";
 import { WholesaleBanner } from "@/components/banners/WholesaleBanner";
 import { WholesaleVerifiedBanner } from "@/components/banners/WholesaleVerifiedBanner";
 import { WholesaleApplicationModal } from "@/components/modals/WholesaleApplicationModal";
+import { StockBadge } from "@/components/ui/StockBadge";
+import { getAllProducts, subscribeToRestock } from "@/lib/inventory-manager";
 
 /**
  * Shop Page - Airbnb-style product listing with infinite scroll
@@ -25,7 +27,7 @@ export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const addItem = useCartStore((state) => state.addItem);
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
-  const [user, setUser] = useState<{ userType: 'retail' | 'wholesale_pending' | 'wholesale_verified' } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [showWholesaleModal, setShowWholesaleModal] = useState(false);
 
   // Get user on mount
@@ -33,8 +35,9 @@ export default function ShopPage() {
     setUser(getCurrentUser());
   }, []);
 
-  // Get products for this category
-  const products = PRODUCTS[category as keyof typeof PRODUCTS] || [];
+  // Get products for this category from inventory (real-time stock data)
+  const allInventoryProducts = getAllProducts();
+  const products = allInventoryProducts.filter((p) => p.category === category);
 
   // Filter products based on search
   const filteredProducts = products.filter((product) =>
@@ -191,25 +194,31 @@ export default function ShopPage() {
                           fill
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
-                        {/* Add to Cart Button */}
-                        <button
-                          onClick={() => handleAddToCart(product)}
-                          disabled={addedToCart === product.id}
-                          className={`absolute right-4 top-4 flex h-10 items-center justify-center rounded-full shadow-lg transition-all hover:scale-110 ${
-                            addedToCart === product.id
-                              ? 'bg-green-600 text-white px-4'
-                              : 'bg-white text-gray-800 w-10 hover:bg-primary hover:text-white'
-                          }`}
-                        >
-                          {addedToCart === product.id ? (
-                            <>
-                              <Check className="h-4 w-4 mr-1" />
-                              <span className="text-xs font-semibold">Added</span>
-                            </>
-                          ) : (
-                            <ShoppingCart className="h-4 w-4" />
-                          )}
-                        </button>
+                        {/* Add to Cart Button / Stock Badge on Image */}
+                        {product.stock > 0 ? (
+                          <button
+                            onClick={() => handleAddToCart(product)}
+                            disabled={addedToCart === product.id}
+                            className={`absolute right-4 top-4 flex h-10 items-center justify-center rounded-full shadow-lg transition-all hover:scale-110 ${
+                              addedToCart === product.id
+                                ? 'bg-green-600 text-white px-4'
+                                : 'bg-white text-gray-800 w-10 hover:bg-primary hover:text-white'
+                            }`}
+                          >
+                            {addedToCart === product.id ? (
+                              <>
+                                <Check className="h-4 w-4 mr-1" />
+                                <span className="text-xs font-semibold">Added</span>
+                              </>
+                            ) : (
+                              <ShoppingCart className="h-4 w-4" />
+                            )}
+                          </button>
+                        ) : (
+                          <div className="absolute right-4 top-4 bg-gray-900 bg-opacity-75 text-white px-3 py-1.5 rounded-full text-xs font-semibold">
+                            Out of Stock
+                          </div>
+                        )}
                       </div>
 
                       {/* Product Details */}
@@ -237,19 +246,45 @@ export default function ShopPage() {
                         <p className="text-xs text-gray-600 line-clamp-2">
                           {product.description}
                         </p>
-                        <div className="flex items-center justify-between">
+
+                        {/* Stock Badge */}
+                        <div className="mt-2">
+                          <StockBadge product={product} showQuantity={true} />
+                        </div>
+
+                        <div className="flex items-center justify-between mt-2">
                           <div>
                             <span className="font-sans text-base font-semibold text-gray-900">
                               {formatPrice(product.price)}
                             </span>
                             <span className="text-sm text-gray-500"> {product.unit}</span>
                           </div>
-                          <button
-                            onClick={() => handleAddToCart(product)}
-                            className="px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-full hover:bg-secondary transition-colors"
-                          >
-                            Add to Cart
-                          </button>
+                          {product.stock > 0 ? (
+                            <button
+                              onClick={() => handleAddToCart(product)}
+                              className="px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-full hover:bg-secondary transition-colors"
+                            >
+                              Add to Cart
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                const currentUser = getCurrentUser();
+                                const userId = currentUser?.id || `guest_${Date.now()}`;
+                                const userEmail = currentUser?.email || 'guest@example.com';
+
+                                if (currentUser && currentUser.id && currentUser.email) {
+                                  subscribeToRestock(product.id, userId, userEmail);
+                                } else {
+                                  alert('Please log in to get restock notifications');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-1"
+                            >
+                              <Bell className="w-3 h-3" />
+                              Notify Me
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

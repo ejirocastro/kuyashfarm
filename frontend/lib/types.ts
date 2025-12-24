@@ -14,6 +14,11 @@ export interface Product {
   description: string;
   inStock: boolean;
   rating: number;
+  category: string; // Product category for organization
+  stock: number; // Current available quantity
+  lowStockThreshold: number; // Alert when stock drops below this
+  reorderPoint: number; // Suggested reorder quantity
+  lastRestocked?: string; // Last restock date (ISO string)
 }
 
 export interface CartItem extends Product {
@@ -38,6 +43,7 @@ export interface OrderItem {
   quantity: number;
   image: string;
   unit: string;
+  category: string; // Product category for reordering
 }
 
 export interface ShippingAddress {
@@ -55,9 +61,15 @@ export interface Order {
   date: string;
   status: OrderStatus;
   total: number; // Total in NGN (Nigerian Naira)
+  subtotal: number; // Subtotal before shipping and tax
+  shipping: number; // Shipping cost
+  tax: number; // Tax amount
   items: OrderItem[];
   itemCount: number;
-  shipping: ShippingAddress;
+  userEmail: string; // Email of user who placed order
+  userId?: string; // ID of user who placed order
+  shippingAddress: ShippingAddress;
+  paymentMethod: string; // Payment method used
   tracking?: {
     number: string;
     carrier: string;
@@ -69,4 +81,96 @@ export interface Order {
     date: string;
     completed: boolean;
   }[];
+}
+
+// Notification types
+export type NotificationType = "success" | "warning" | "error" | "info";
+
+export interface Notification {
+  id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  timestamp: Date;
+  read: boolean;
+}
+
+// Restock subscription for "Notify Me" feature
+export interface RestockSubscription {
+  id: string;
+  productId: number;
+  userId: string;
+  userEmail: string;
+  subscribedAt: string;
+}
+
+// Email template
+export interface EmailTemplate {
+  to: string;
+  subject: string;
+  body: string;
+  sentAt?: string;
+}
+
+// Inventory restock history
+export interface RestockHistory {
+  id: string;
+  productId: number;
+  quantity: number;
+  previousStock: number;
+  newStock: number;
+  restockedBy: string; // Admin user ID
+  restockedAt: string;
+  notes?: string;
+}
+
+// User types
+export type UserType =
+  | 'retail'
+  | 'wholesale_pending'
+  | 'wholesale_verified'
+  | 'distributor_pending'
+  | 'distributor_verified';
+
+// Distributor tier based on geographic coverage
+export type DistributorTier = 'tier1' | 'tier2' | 'tier3';
+
+export interface User {
+  id?: string;
+  name?: string;
+  email?: string;
+  userType: UserType;
+  isAdmin?: boolean;
+  businessInfo?: {
+    businessName: string;
+    businessAddress: string;
+  };
+  distributorInfo?: {
+    businessName: string;
+    businessAddress: string;
+    distributionArea: string;
+    yearsInBusiness: string;
+    expectedVolume: string;
+    tier?: DistributorTier;
+  };
+}
+
+// Distributor Application
+export interface DistributorApplication {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  businessName: string;
+  businessAddress: string;
+  distributionArea: string;
+  yearsInBusiness: string;
+  expectedVolume: string;
+  additionalInfo?: string;
+  tier?: DistributorTier;
+  status: 'pending' | 'approved' | 'rejected';
+  submittedAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
+  reviewNotes?: string;
 }

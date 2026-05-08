@@ -9,8 +9,10 @@ export function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const heroImages = [
-    { url: '/herokuyash.jpg', position: 'center' },
-    { url: '/trancision.jpg', position: 'center' }
+    { url: '/images/backgrounds/hero-kuyash.jpg', position: 'center' },
+    { url: '/images/backgrounds/hero-transition.jpg', position: 'center' },
+    { url: '/images/backgrounds/sunset.jpeg', position: 'top' },
+    { url: '/images/backgrounds/dam.jpeg', position: 'center' },
   ];
 
   useEffect(() => {

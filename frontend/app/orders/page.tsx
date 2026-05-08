@@ -270,6 +270,10 @@ export default function OrdersPage() {
           description: "",
           inStock: true,
           rating: 4.5,
+          category: item.category,
+          stock: 999,
+          lowStockThreshold: 0,
+          reorderPoint: 0,
         },
         item.category // Use the category stored with the order item
       );

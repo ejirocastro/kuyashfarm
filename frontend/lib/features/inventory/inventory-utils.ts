@@ -3,8 +3,8 @@
  * Provides functions for tracking product inventory, sales data, and generating reports
  */
 
-import { Order, OrderItem } from "./types";
-import { PRODUCTS, FARM_CATEGORIES } from "./constants";
+import { Order, OrderItem } from "@/lib/types";
+import { PRODUCTS, FARM_CATEGORIES } from "@/lib/constants";
 
 export interface ProductStats {
   id: number;

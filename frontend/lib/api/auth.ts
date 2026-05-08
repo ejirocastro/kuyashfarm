@@ -4,7 +4,6 @@
  */
 
 import { apiClient } from './client';
-import { UserType, UserRole } from '@/lib/types';
 
 export interface AuthUser {
   id: string;

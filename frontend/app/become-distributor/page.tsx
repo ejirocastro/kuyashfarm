@@ -6,8 +6,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Truck, CheckCircle, Upload } from "lucide-react";
 import { getCurrentUser } from "@/lib/utils";
-import { createDistributorApplication } from "@/lib/distributor-utils";
-import { createNotification } from "@/lib/inventory-manager";
+import { createDistributorApplication } from "@/lib/features/distributor/distributor-utils";
+import { createNotification } from "@/lib/features/inventory/inventory-manager";
 import type { User } from "@/lib/types";
 
 /**

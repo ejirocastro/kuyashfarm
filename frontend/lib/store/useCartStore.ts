@@ -5,9 +5,9 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { CartStore, Product, CartItem } from '@/types';
+import { CartStore, Product, CartItem } from '@/lib/types';
 import { calculatePrice, getCurrentUser } from '@/lib/utils';
-import { checkStockAvailability, createNotification } from '@/lib/inventory-manager';
+import { checkStockAvailability, createNotification } from '@/lib/features/inventory/inventory-manager';
 
 export const useCartStore = create<CartStore>()(
   persist(

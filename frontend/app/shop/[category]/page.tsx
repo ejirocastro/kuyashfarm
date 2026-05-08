@@ -8,15 +8,14 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { ShoppingCart, Check, Bell } from "lucide-react";
-import { Product } from "@/types";
 import { formatPrice, getCurrentUser } from "@/lib/utils";
-import type { User } from "@/lib/types";
-import { createApplication } from "@/lib/admin-utils";
+import type { Product, User } from "@/lib/types";
+import { createApplication } from "@/lib/features/admin/admin-utils";
 import { WholesaleBanner } from "@/components/banners/WholesaleBanner";
 import { WholesaleVerifiedBanner } from "@/components/banners/WholesaleVerifiedBanner";
 import { WholesaleApplicationModal } from "@/components/modals/WholesaleApplicationModal";
 import { StockBadge } from "@/components/ui/StockBadge";
-import { getAllProducts, subscribeToRestock } from "@/lib/inventory-manager";
+import { getAllProducts, subscribeToRestock } from "@/lib/features/inventory/inventory-manager";
 
 /**
  * Shop Page - Airbnb-style product listing with infinite scroll

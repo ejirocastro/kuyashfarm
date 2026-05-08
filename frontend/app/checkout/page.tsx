@@ -26,7 +26,7 @@ import { FormField } from "@/components/ui/FormField";
 import { FormSelect } from "@/components/ui/FormSelect";
 import { FormTextarea } from "@/components/ui/FormTextarea";
 import { useRouter } from "next/navigation";
-import { checkStockAvailability, deductInventory, createNotification } from "@/lib/inventory-manager";
+import { checkStockAvailability, deductInventory, createNotification } from "@/lib/features/inventory/inventory-manager";
 
 type PaymentMethod = "card" | "paypal" | "cod";
 

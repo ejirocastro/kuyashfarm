@@ -9,8 +9,8 @@ import {
   getAllApplications,
   approveApplication,
   rejectApplication,
-} from "@/lib/admin-utils";
-import { WholesaleApplication } from "@/types";
+} from "@/lib/features/admin/admin-utils";
+import { WholesaleApplication } from "@/lib/types";
 import { CheckCircle, XCircle, ArrowLeft, Building2, Mail, User } from "lucide-react";
 
 /**

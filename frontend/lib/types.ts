@@ -5,6 +5,39 @@
  * Price format: Whole numbers (e.g., 7500 = ₦7,500.00)
  */
 
+// UI Component Types
+export interface Stat {
+  value: string;
+  label: string;
+}
+
+export interface Service {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface Goal {
+  id: number;
+  value: string;
+  label: string;
+}
+
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  category: string;
+}
+
+// Product and Cart Types
 export interface Product {
   id: number;
   name: string;
@@ -24,6 +57,16 @@ export interface Product {
 export interface CartItem extends Product {
   quantity: number;
   category: string;
+}
+
+export interface CartStore {
+  items: CartItem[];
+  addItem: (product: Product, category: string) => void;
+  removeItem: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
+  getTotalItems: () => number;
+  getTotalPrice: () => number;
 }
 
 export interface Category {
@@ -153,6 +196,20 @@ export interface User {
     expectedVolume: string;
     tier?: DistributorTier;
   };
+}
+
+// Wholesale Application
+export interface WholesaleApplication {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  businessName: string;
+  businessAddress: string;
+  status: 'pending' | 'approved' | 'rejected';
+  appliedAt: string;
+  reviewedAt?: string;
+  rejectionReason?: string;
 }
 
 // Distributor Application

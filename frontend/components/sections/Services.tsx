@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SERVICES } from "@/lib/constants";
 import Image from "next/image";
+import Link from "next/link";
 
 /**
  * Services Section - Grid layout with proper responsive design and hover effects
@@ -32,9 +33,10 @@ export function Services() {
         {/* Services Grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, index) => (
-            <div
+            <Link
               key={service.id}
-              className="group relative overflow-hidden rounded-lg bg-white shadow-md transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              href={`/services/${service.slug}`}
+              className="group relative overflow-hidden rounded-lg bg-white shadow-md transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-pointer"
             >
               {/* Background Image */}
               <div className="relative h-64 w-full overflow-hidden">
@@ -60,7 +62,7 @@ export function Services() {
 
               {/* Accent Border on Hover */}
               <div className="absolute bottom-0 left-0 h-1 w-0 bg-[#6b9d7a] transition-all duration-500 group-hover:w-full" />
-            </div>
+            </Link>
           ))}
         </div>
       </Container>

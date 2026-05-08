@@ -3,7 +3,7 @@
  * Frontend-only implementation using localStorage
  */
 
-import { WholesaleApplication, User } from "@/types";
+import { WholesaleApplication, User } from "@/lib/types";
 
 const APPLICATIONS_KEY = 'wholesale_applications';
 const USERS_KEY = 'all_users';

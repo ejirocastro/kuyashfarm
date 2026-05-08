@@ -5,7 +5,7 @@ import Link from "next/link";
 import { WholesaleBanner } from "@/components/banners/WholesaleBanner";
 import { WholesaleApplicationModal } from "@/components/modals/WholesaleApplicationModal";
 import { formatPrice, calculatePrice, getCurrentUser } from "@/lib/utils";
-import { createTestAdmin, createSampleApplications, createApplication } from "@/lib/admin-utils";
+import { createTestAdmin, createSampleApplications, createApplication } from "@/lib/features/admin/admin-utils";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 

@@ -76,7 +76,7 @@ export function InventoryShowcase() {
               {/* Screenshot Image */}
               <div className="relative bg-gray-50">
                 <Image
-                  src="/admin-dashboard.png"
+                  src="/images/screenshots/admin-dashboard.png"
                   alt="Kuyash Farm Inventory Management Dashboard"
                   width={1600}
                   height={1200}

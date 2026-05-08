@@ -3,8 +3,8 @@
  * Handles stock tracking, deduction, alerts, and restock subscriptions
  */
 
-import { Product, RestockSubscription, RestockHistory, Notification } from "./types";
-import { PRODUCTS } from "./constants";
+import { Product, RestockSubscription, RestockHistory, Notification } from "@/lib/types";
+import { PRODUCTS } from "@/lib/constants";
 
 // LocalStorage keys
 const INVENTORY_KEY = "kuyash_inventory";

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-import { ChatWidget } from "@/components/chat/ChatWidget";
-import { NotificationToast } from "@/components/ui/NotificationToast";
-import { AuthProvider } from "@/lib/context/AuthContext";
+import { ClientProviders } from "@/components/providers/ClientProviders";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -32,11 +30,9 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${inter.variable} antialiased`}
       >
-        <AuthProvider>
+        <ClientProviders>
           {children}
-          <ChatWidget />
-          <NotificationToast />
-        </AuthProvider>
+        </ClientProviders>
       </body>
     </html>
   );

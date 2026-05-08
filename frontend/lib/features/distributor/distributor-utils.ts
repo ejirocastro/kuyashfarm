@@ -3,7 +3,7 @@
  * Handles distributor application submission, retrieval, and approval workflow
  */
 
-import { DistributorApplication, User, DistributorTier } from "./types";
+import { DistributorApplication, User, DistributorTier } from "@/lib/types";
 
 const DISTRIBUTOR_APPLICATIONS_KEY = 'distributor_applications';
 

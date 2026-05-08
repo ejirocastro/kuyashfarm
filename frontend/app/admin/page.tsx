@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { isCurrentUserAdmin, getApplicationStats } from "@/lib/admin-utils";
-import { getInventoryOverview, getLastNMonthsSales, CategoryStats, ProductStats } from "@/lib/inventory-utils";
+import { isCurrentUserAdmin, getApplicationStats } from "@/lib/features/admin/admin-utils";
+import { getInventoryOverview, getLastNMonthsSales, CategoryStats, ProductStats } from "@/lib/features/inventory/inventory-utils";
 import { formatPrice, getCurrentUser } from "@/lib/utils";
 import { Users, FileText, CheckCircle, XCircle, TrendingUp, Package, ShoppingCart, DollarSign, BarChart3, AlertTriangle, Plus, Clock, Truck } from "lucide-react";
-import { getLowStockProducts, getOutOfStockProducts, getAllProducts, restockProduct } from "@/lib/inventory-manager";
+import { getLowStockProducts, getOutOfStockProducts, getAllProducts, restockProduct } from "@/lib/features/inventory/inventory-manager";
 import { StockBadge } from "@/components/ui/StockBadge";
 import type { Product, DistributorApplication } from "@/lib/types";
-import { getDistributorApplications, getDistributorApplicationStats, approveDistributorApplication, rejectDistributorApplication, getTierDisplayName, getTierBadgeColor } from "@/lib/distributor-utils";
+import { getDistributorApplications, getDistributorApplicationStats, approveDistributorApplication, rejectDistributorApplication, getTierDisplayName, getTierBadgeColor } from "@/lib/features/distributor/distributor-utils";
 
 /**
  * Admin Dashboard - Main control panel

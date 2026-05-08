@@ -20,31 +20,37 @@ export const SERVICES = [
     id: 1,
     title: "Crop & Vegetable Production",
     description: "Growing premium-quality crops and fresh vegetables using sustainable farming methods.",
+    slug: "crop-vegetable-production",
   },
   {
     id: 2,
     title: "Livestock & Poultry Farming",
     description: "Raising healthy cattle, sheep, and poultry with modern animal husbandry practices.",
+    slug: "livestock-poultry-farming",
   },
   {
     id: 3,
     title: "Fish Farming",
     description: "Sustainable aquaculture systems producing fresh, quality fish.",
+    slug: "fish-farming",
   },
   {
     id: 4,
     title: "Palm Oil Production",
     description: "Cultivating oil palm plantations for high-quality palm oil production.",
+    slug: "palm-oil-production",
   },
   {
     id: 5,
     title: "Food Processing & Packaging",
     description: "Processing and packaging farm products to deliver fresh, quality food to customers.",
+    slug: "food-processing-packaging",
   },
   {
     id: 6,
     title: "Agricultural E-Commerce",
     description: "Connecting farmers and consumers through innovative digital marketplace solutions.",
+    slug: "agricultural-ecommerce",
   },
 ] as const;
 
@@ -72,6 +78,7 @@ export const NAV_LINKS = [
   { label: "Projects", href: "#projects" },
   { label: "About Us", href: "#about" },
   { label: "Blog", href: "#blog" },
+  { label: "Academy", href: "/academy" },
 ] as const;
 
 export const FARM_CATEGORIES = [

@@ -9,7 +9,7 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import { User, LogOut, Settings, Package, Truck } from "lucide-react";
 import Link from "next/link";
 import type { User as UserType } from "@/lib/types";
-import { getTierDisplayName, getTierBadgeColor } from "@/lib/distributor-utils";
+import { getTierDisplayName, getTierBadgeColor } from "@/lib/features/distributor/distributor-utils";
 
 /**
  * Responsive Navbar with scroll effect
@@ -78,7 +78,11 @@ export function Navbar() {
                 <a
                   key={link.label}
                   href={link.label === "Home" ? "/" : link.href}
-                  className="font-sans text-sm font-medium text-white/90 transition-colors duration-300 hover:text-white"
+                  className={`font-sans text-sm font-medium transition-colors duration-300 hover:text-white ${
+                    link.label === "Academy"
+                      ? "bg-[#e8d5a3] text-[#1a3d2b] px-4 py-2 rounded-full font-semibold hover:bg-[#dfc98a]"
+                      : "text-white/90"
+                  }`}
                 >
                   {link.label}
                 </a>
@@ -184,7 +188,7 @@ export function Navbar() {
               <CartButton onClick={() => setIsCartOpen(true)} />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-3 rounded-md text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-3 rounded-md text-white transition-colors min-w-11 min-h-11 flex items-center justify-center"
                 aria-label="Toggle menu"
               >
                 <svg
@@ -215,7 +219,11 @@ export function Navbar() {
                     key={link.label}
                     href={link.label === "Home" ? "/" : link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-sans text-sm font-medium text-white/90 hover:text-white transition-colors"
+                    className={`font-sans text-sm font-medium transition-colors ${
+                      link.label === "Academy"
+                        ? "inline-block bg-[#e8d5a3] text-[#1a3d2b] px-4 py-2 rounded-full font-semibold hover:bg-[#dfc98a] w-fit"
+                        : "text-white/90 hover:text-white"
+                    }`}
                   >
                     {link.label}
                   </a>

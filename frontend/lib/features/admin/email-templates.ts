@@ -3,8 +3,8 @@
  * Ready for backend integration with email services (SendGrid, AWS SES, etc.)
  */
 
-import { Order, Product } from "./types";
-import { formatPrice } from "./utils";
+import { Order, Product } from "@/lib/types";
+import { formatPrice } from "@/lib/utils";
 
 export interface EmailTemplate {
   to: string;

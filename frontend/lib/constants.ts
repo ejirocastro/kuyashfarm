@@ -24,9 +24,9 @@ export const SERVICES = [
   },
   {
     id: 2,
-    title: "Livestock & Poultry Farming",
-    description: "Raising healthy cattle, sheep, and poultry with modern animal husbandry practices.",
-    slug: "livestock-poultry-farming",
+    title: "Livestock Farming",
+    description: "Raising healthy cattle, sheep and goats with modern animal husbandry practices.",
+    slug: "livestock",
   },
   {
     id: 3,
@@ -36,18 +36,6 @@ export const SERVICES = [
   },
   {
     id: 4,
-    title: "Palm Oil Production",
-    description: "Cultivating oil palm plantations for high-quality palm oil production.",
-    slug: "palm-oil-production",
-  },
-  {
-    id: 5,
-    title: "Food Processing & Packaging",
-    description: "Processing and packaging farm products to deliver fresh, quality food to customers.",
-    slug: "food-processing-packaging",
-  },
-  {
-    id: 6,
     title: "Agricultural E-Commerce",
     description: "Connecting farmers and consumers through innovative digital marketplace solutions.",
     slug: "agricultural-ecommerce",
@@ -73,10 +61,8 @@ export const GOALS = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
   { label: "Projects", href: "#projects" },
-  { label: "About Us", href: "#about" },
+  { label: "About Us", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Academy", href: "/academy" },
 ] as const;

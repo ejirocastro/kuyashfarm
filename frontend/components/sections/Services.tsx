@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Wheat, Beef, Fish, Droplets, Package, ShoppingBag } from "lucide-react";
+import { ArrowRight, Wheat, Beef, Fish, ShoppingBag } from "lucide-react";
 
 const SERVICE_META = [
   {
@@ -23,16 +23,6 @@ const SERVICE_META = [
     tag: "Aquaculture",
   },
   {
-    image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=800",
-    icon: Droplets,
-    tag: "Processing",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800",
-    icon: Package,
-    tag: "Value Chain",
-  },
-  {
     image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=800",
     icon: ShoppingBag,
     tag: "Digital",
@@ -41,7 +31,7 @@ const SERVICE_META = [
 
 export function Services() {
   return (
-    <section id="services" className="bg-[#faf8f5] py-24">
+    <section id="services" className="bg-[#faf8f5] py-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
 
         {/* Header */}

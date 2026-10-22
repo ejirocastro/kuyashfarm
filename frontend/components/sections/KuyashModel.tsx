@@ -154,65 +154,62 @@ function CenterLeaf({ cx, cy }: { cx: number; cy: number }) {
 
 const ICON_COMPONENTS = [LeafIcon, CowIcon, FishIcon, GearIcon, PlantIcon];
 
-// Build the circular arrow path for the orbit ring with arrowheads
-function buildOrbitPath() {
-  const r = ORBIT_R;
-  // We'll draw 5 arc segments, one between each adjacent node pair, with a gap near each node
-  const arcs: string[] = [];
-  const GAP_DEG = 18; // degrees to skip around each node
+// ── Pre-computed static geometry (module-level = identical on SSR and client) ──
 
-  for (let i = 0; i < NODES.length; i++) {
-    const startAngle = NODES[i].angle + GAP_DEG;
-    const endAngle = NODES[(i + 1) % NODES.length].angle - GAP_DEG;
+const GAP_DEG = 18;
 
-    const startRad = toRad(startAngle);
-    const endRad = toRad(endAngle);
-
-    const x1 = CX + r * Math.cos(startRad);
-    const y1 = CY + r * Math.sin(startRad);
-    const x2 = CX + r * Math.cos(endRad);
-    const y2 = CY + r * Math.sin(endRad);
-
-    // large-arc-flag: 0 if arc < 180 deg
-    let delta = endAngle - startAngle;
-    if (delta < 0) delta += 360;
-    const largeArc = delta > 180 ? 1 : 0;
-
-    arcs.push(`M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2}`);
-  }
-  return arcs;
+// Round to 4 dp to guarantee SSR/client floating-point parity
+function r4(n: number) {
+  return Math.round(n * 10000) / 10000;
 }
 
-// Arrowhead at a given angle along the orbit
-function OrbitArrow({ angle }: { angle: number }) {
-  const r = ORBIT_R;
-  const rad = toRad(angle);
-  const ax = CX + r * Math.cos(rad);
-  const ay = CY + r * Math.sin(rad);
-  // tangent direction (clockwise = perpendicular to radius, rotated +90)
-  const tx = -Math.sin(rad);
-  const ty = Math.cos(rad);
+const ARC_PATHS: string[] = NODES.map((node, i) => {
+  const startAngle = node.angle + GAP_DEG;
+  const endAngle   = NODES[(i + 1) % NODES.length].angle - GAP_DEG;
+
+  const startRad = toRad(startAngle);
+  const endRad   = toRad(endAngle);
+
+  const x1 = r4(CX + ORBIT_R * Math.cos(startRad));
+  const y1 = r4(CY + ORBIT_R * Math.sin(startRad));
+  const x2 = r4(CX + ORBIT_R * Math.cos(endRad));
+  const y2 = r4(CY + ORBIT_R * Math.sin(endRad));
+
+  let delta = endAngle - startAngle;
+  if (delta < 0) delta += 360;
+  const largeArc = delta > 180 ? 1 : 0;
+
+  return `M ${x1} ${y1} A ${ORBIT_R} ${ORBIT_R} 0 ${largeArc} 1 ${x2} ${y2}`;
+});
+
+interface ArrowPoints { points: string }
+
+const ARROW_POINTS: ArrowPoints[] = NODES.map((node, i) => {
+  const nextAngle = NODES[(i + 1) % NODES.length].angle;
+  let mid = (node.angle + nextAngle) / 2;
+  if (nextAngle < node.angle) mid = (node.angle + nextAngle + 360) / 2;
+
+  const rad  = toRad(mid);
+  const ax   = CX + ORBIT_R * Math.cos(rad);
+  const ay   = CY + ORBIT_R * Math.sin(rad);
+  const tx   = -Math.sin(rad);
+  const ty   = Math.cos(rad);
   const size = 6;
-  // arrowhead triangle points
-  const p1x = ax + tx * size;
-  const p1y = ay + ty * size;
-  const p2x = ax - tx * (size * 0.5) + Math.cos(rad) * (size * 0.6);
-  const p2y = ay - ty * (size * 0.5) + Math.sin(rad) * (size * 0.6);
-  const p3x = ax - tx * (size * 0.5) - Math.cos(rad) * (size * 0.6);
-  const p3y = ay - ty * (size * 0.5) - Math.sin(rad) * (size * 0.6);
-  return (
-    <polygon
-      points={`${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y}`}
-      fill="#a8d4b8"
-    />
-  );
-}
+
+  const p1x = r4(ax + tx * size);
+  const p1y = r4(ay + ty * size);
+  const p2x = r4(ax - tx * (size * 0.5) + Math.cos(rad) * (size * 0.6));
+  const p2y = r4(ay - ty * (size * 0.5) + Math.sin(rad) * (size * 0.6));
+  const p3x = r4(ax - tx * (size * 0.5) - Math.cos(rad) * (size * 0.6));
+  const p3y = r4(ay - ty * (size * 0.5) - Math.sin(rad) * (size * 0.6));
+
+  return { points: `${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y}` };
+});
 
 export function KuyashModel() {
-  const arcPaths = buildOrbitPath();
 
   return (
-    <section className="bg-white py-24 overflow-hidden">
+    <section className="bg-white py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -259,7 +256,7 @@ export function KuyashModel() {
               aria-label="Kuyash Integrated Farm ecosystem diagram"
             >
               {/* ── orbit arc segments ── */}
-              {arcPaths.map((d, i) => (
+              {ARC_PATHS.map((d, i) => (
                 <path
                   key={i}
                   d={d}
@@ -270,13 +267,9 @@ export function KuyashModel() {
               ))}
 
               {/* ── arrowheads at midpoint of each arc ── */}
-              {NODES.map((node, i) => {
-                const nextAngle = NODES[(i + 1) % NODES.length].angle;
-                let mid = (node.angle + nextAngle) / 2;
-                // handle wrap around 360
-                if (nextAngle < node.angle) mid = (node.angle + nextAngle + 360) / 2;
-                return <OrbitArrow key={i} angle={mid} />;
-              })}
+              {ARROW_POINTS.map((arrow, i) => (
+                <polygon key={i} points={arrow.points} fill="#a8d4b8" />
+              ))}
 
               {/* ── center circle ── */}
               <circle

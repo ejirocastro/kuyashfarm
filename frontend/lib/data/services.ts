@@ -35,6 +35,14 @@ export interface ServiceFeature {
   description: string;
 }
 
+export interface ServiceProduct {
+  label: string;
+  sub: string;
+  tag: string;
+  image: string;
+  href: string;
+}
+
 export interface ServiceContent {
   heroImage: string;
   heroVideo?: string;
@@ -46,6 +54,7 @@ export interface ServiceContent {
   features: ServiceFeature[];
   benefits: string[];
   gallery: string[];
+  products?: ServiceProduct[];
   beforeAfter?: {
     before: string;
     after: string;
@@ -142,40 +151,70 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
   },
 
-  "livestock-poultry-farming": {
-    heroImage: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=2087",
-    shopHref: "/shop/poultry",
+  "livestock": {
+    heroImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070",
+    shopHref: "/shop/all",
     overview:
-      "At Kuyash Integrated Farm, we raise healthy, high-quality livestock and poultry using modern animal husbandry practices. From free-range chickens to well-fed cattle and sheep, every animal is cared for in a clean, humane, and stress-free environment — ensuring premium quality meat, eggs, and dairy for our customers.",
+      "At Kuyash Integrated Farm, we raise healthy, high-quality cattle, sheep, and goats using modern animal husbandry practices. Every animal is cared for in a clean, humane, and stress-free environment — ensuring premium quality meat and dairy products for our customers.",
     stats: [
-      { value: "5,000+", label: "Poultry Birds Raised", description: "Free-range chickens and layers" },
-      { value: "200+", label: "Livestock Units", description: "Cattle, sheep, and goats" },
+      { value: "500+", label: "Cattle Head", description: "Premium beef and dairy breeds" },
+      { value: "800+", label: "Sheep & Goats", description: "Healthy, well-nourished stock" },
       { value: "100%", label: "Antibiotic-Free", description: "Natural rearing practices" },
       { value: "40%", label: "Lower Mortality Rate", description: "Through smart monitoring" },
     ],
+    products: [
+      {
+        label: "Beef",
+        sub: "Premium antibiotic-free beef from well-bred, grass-fed cattle. Tender, flavourful and traceable from farm to table.",
+        tag: "Cattle",
+        image: "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?q=80&w=800",
+        href: "/shop/all",
+      },
+      {
+        label: "Mutton",
+        sub: "Fresh, lean mutton from healthy, free-range sheep. Rich in protein and naturally raised without hormones.",
+        tag: "Sheep",
+        image: "https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=800",
+        href: "/shop/all",
+      },
+      {
+        label: "Goat Meat",
+        sub: "Tender, flavourful goat meat from our well-nourished herd. A staple of Nigerian cuisine, raised with care.",
+        tag: "Goat",
+        image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=800",
+        href: "/shop/all",
+      },
+      {
+        label: "Dairy",
+        sub: "Fresh milk and dairy products from our healthy dairy cattle herd — pure, natural and locally produced.",
+        tag: "Dairy",
+        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?q=80&w=800",
+        href: "/shop/all",
+      },
+    ],
     farmingProcess: [
-      { phase: "01", title: "Animal Selection & Breeding", description: "We source only the best breeds suited for our climate and production goals. Selective breeding programs ensure healthy genetics, disease resistance, and high yield performance.", icon: Users, duration: "Ongoing" },
-      { phase: "02", title: "Housing & Environment Setup", description: "Modern, ventilated pens and coops provide comfort and reduce stress. Proper spacing, bedding, and sanitation systems maintain a clean and safe living environment for all animals.", icon: Sprout, duration: "Permanent" },
+      { phase: "01", title: "Breed Selection", description: "We source only the best breeds suited for our climate and production goals. Selective breeding programs ensure healthy genetics, disease resistance, and high yield performance.", icon: Users, duration: "Ongoing" },
+      { phase: "02", title: "Housing & Environment", description: "Modern, ventilated pens provide comfort and reduce stress. Proper spacing, bedding, and sanitation systems maintain a clean and safe living environment for all animals.", icon: Sprout, duration: "Permanent" },
       { phase: "03", title: "Nutrition & Feed Management", description: "Balanced, nutrient-rich feed rations are formulated by our animal nutrition experts. We incorporate locally sourced grains, supplements, and forage to support optimal growth and health.", icon: Leaf, duration: "Daily" },
       { phase: "04", title: "Veterinary Care & Monitoring", description: "Regular health checks, vaccinations, and disease monitoring by licensed veterinarians. We use IoT-based ear tags and sensors to track animal vitals, weight, and movement in real time.", icon: BarChart3, duration: "Weekly" },
-      { phase: "05", title: "Harvest & Processing", description: "Humane slaughter practices following international standards. Our in-house processing facility ensures rapid, hygienic handling to preserve freshness and quality from farm to table.", icon: Package, duration: "As needed" },
+      { phase: "05", title: "Harvest & Processing", description: "Humane handling practices following international standards. Our in-house processing facility ensures rapid, hygienic handling to preserve freshness and quality from farm to table.", icon: Package, duration: "As needed" },
     ],
     technology: [
       { title: "Smart Livestock Tracking", description: "IoT-enabled ear tags and RFID systems monitor each animal's location, health status, and weight gain in real time, enabling early detection of illness and optimized feeding schedules.", icon: Cpu, metrics: "98% health detection accuracy" },
       { title: "Automated Feeding Systems", description: "Computer-controlled feeders dispense precise rations at scheduled intervals, reducing waste and ensuring every animal receives optimal nutrition throughout the day.", icon: Zap, metrics: "25% feed cost reduction" },
-      { title: "Climate-Controlled Housing", description: "Automated ventilation and temperature control systems maintain ideal living conditions for poultry and livestock, reducing mortality rates and improving production output.", icon: Cloud, metrics: "40% mortality rate reduction" },
+      { title: "Climate-Controlled Housing", description: "Automated ventilation and temperature control systems maintain ideal living conditions for our livestock, reducing mortality rates and improving production output.", icon: Cloud, metrics: "40% mortality rate reduction" },
       { title: "Data-Driven Herd Management", description: "AI-powered analytics process health and growth data across the herd to identify trends, predict yield, and guide management decisions for maximum efficiency.", icon: BarChart3, metrics: "30% productivity increase" },
     ],
     features: [
       { icon: Leaf, title: "Free-Range & Humane", description: "All animals are raised with ample space, natural light, and freedom of movement — meeting the highest standards of animal welfare." },
-      { icon: Award, title: "Certified Quality", description: "Our meat and poultry products meet national food safety and quality certification standards, from farm to your plate." },
+      { icon: Award, title: "Certified Quality", description: "Our meat and dairy products meet national food safety and quality certification standards, from farm to your plate." },
       { icon: TrendingUp, title: "High-Yield Breeds", description: "We select and breed animals for superior growth rates and production performance, ensuring consistent output and profitability." },
       { icon: Users, title: "Expert Animal Care", description: "A dedicated team of veterinarians and animal husbandry specialists ensures every animal receives the best possible care." },
     ],
     benefits: [
-      "Premium quality, antibiotic-free meat, eggs, and dairy",
-      "Humanely raised animals with free-range access",
-      "Consistent supply of fresh poultry and livestock products",
+      "Premium quality, antibiotic-free beef, mutton, and dairy",
+      "Humanely raised animals with free-range grazing access",
+      "Consistent supply of fresh livestock products year-round",
       "Full traceability from farm to processing to table",
       "Certified veterinary oversight and health records",
       "Nutritious feed formulations for superior animal health",
@@ -184,17 +223,17 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
     beforeAfter: {
       before: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070",
-      after: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=2087",
+      after: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070",
       title: "Modern Animal Husbandry",
       description: "See how our technology-driven approach transformed traditional livestock rearing into a clean, efficient, and high-yield farming operation.",
     },
     gallery: [
-      "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=2087",
-      "https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=2070",
-      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=2070",
-      "https://images.unsplash.com/photo-1516467508483-a7212febe31a?q=80&w=2073",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070",
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070",
       "https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=2074",
+      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=2070",
+      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2070",
+      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070",
     ],
   },
 

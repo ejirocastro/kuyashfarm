@@ -15,10 +15,9 @@ const QUICK_LINKS = [
 
 const BUSINESSES = [
   { label: "Crop & Vegetable Production", href: "/services/crop-vegetable-production" },
-  { label: "Livestock & Poultry", href: "/services/livestock-poultry-farming" },
+  { label: "Livestock",           href: "/services/livestock" },
+  { label: "Poultry",             href: "/services/poultry" },
   { label: "Fish Farming", href: "/services/fish-farming" },
-  { label: "Palm Oil Production", href: "/services/palm-oil-production" },
-  { label: "Food Processing", href: "/services/food-processing-packaging" },
   { label: "Agricultural E-Commerce", href: "/services/agricultural-ecommerce" },
 ];
 

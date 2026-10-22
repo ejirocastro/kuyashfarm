@@ -14,7 +14,7 @@ const STATS = [
 
 export function ImpactNumbers() {
   return (
-    <section className="bg-white py-24 border-t border-gray-100 overflow-hidden">
+    <section className="bg-white py-16 border-t border-gray-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
 
         {/* header row */}

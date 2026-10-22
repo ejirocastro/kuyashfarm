@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { cn, getCurrentUser } from "@/lib/utils";
-import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants";
 import { AuthModal } from "@/components/auth/AuthModal";
 import CartButton from "@/components/cart/CartButton";
 import CartDrawer from "@/components/cart/CartDrawer";
@@ -12,14 +13,34 @@ import type { User as UserType } from "@/lib/types";
 import { getTierDisplayName, getTierBadgeColor } from "@/lib/features/distributor/distributor-utils";
 import { motion, AnimatePresence } from "framer-motion";
 
+const PROJECTS_OUR = [
+  { label: "Crop Production",          href: "/services/crop-vegetable-production" },
+  { label: "Fisheries & Aquaculture",  href: "/services/fish-farming" },
+  { label: "Livestock",                 href: "/services/livestock" },
+  { label: "Poultry",                  href: "/services/poultry" },
+  { label: "Palm Oil Production",      href: "/services/palm-oil-production" },
+  { label: "Groundnut Oil Production", href: "/services/groundnut-oil-production" },
+];
+
+const PROJECTS_DEV = [
+  { label: "Palm Oil Refinery",    href: "/projects/palm-oil-refinery" },
+  { label: "Water Factory",        href: "/projects/water-factory" },
+  { label: "Soap & Tissue Factory",href: "/projects/soap-tissue-factory" },
+  { label: "Slaughter House",      href: "/projects/slaughter-house" },
+];
+
 export function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isProjectsOpen, setIsProjectsOpen] = useState(false);
+  const [isMobileProjectsOpen, setIsMobileProjectsOpen] = useState(false);
   const [user, setUser] = useState<UserType | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -35,11 +56,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* close dropdown on outside click */
+  /* close dropdowns on outside click */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsUserMenuOpen(false);
+      }
+      if (projectsRef.current && !projectsRef.current.contains(e.target as Node)) {
+        setIsProjectsOpen(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -51,6 +75,20 @@ export function Navbar() {
     const handler = () => { if (window.innerWidth >= 768) setIsMobileMenuOpen(false); };
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
+  }, []);
+
+  /* fix 1 — reset mobile projects accordion when mobile menu closes */
+  useEffect(() => {
+    if (!isMobileMenuOpen) setIsMobileProjectsOpen(false);
+  }, [isMobileMenuOpen]);
+
+  /* fix 4 — Escape closes Projects mega-menu */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsProjectsOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
   }, []);
 
   const handleLogout = () => {
@@ -76,7 +114,7 @@ export function Navbar() {
       >
         {/* thin brand accent line at very top */}
         <div className={cn(
-          "absolute top-0 left-0 right-0 h-[2px] bg-[#2d5f3f] transition-opacity duration-500",
+          "absolute top-0 left-0 right-0 h-0.5 bg-[#2d5f3f] transition-opacity duration-500",
           isScrolled ? "opacity-100" : "opacity-0"
         )} />
 
@@ -94,32 +132,157 @@ export function Navbar() {
                 </svg>
               </div>
               <span className="font-serif text-xl font-bold text-white tracking-tight">
-                {SITE_CONFIG.name}
+                Kuyash
               </span>
             </Link>
 
             {/* ── Desktop Nav ── */}
             <div className="hidden md:flex md:items-center md:gap-1">
-              {NAV_LINKS.map((link) => (
-                link.label === "Academy" ? (
+              {NAV_LINKS.map((link) => {
+                // resolve href: hash-only links go to / on non-home pages
+                const resolvedHref = link.href.startsWith("#") && pathname !== "/"
+                  ? `/${link.href}`
+                  : link.href;
+                // active state: exact match for real pages, always false for hash links
+                const isActive = !link.href.startsWith("#") && pathname === link.href;
+
+                return link.label === "Academy" ? (
                   <Link
                     key={link.label}
-                    href={link.href}
+                    href={resolvedHref}
                     className="ml-2 inline-flex items-center gap-1.5 bg-[#e8d5a3] text-[#1a3d2b] px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-[#dfc98a] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
+                ) : link.label === "Projects" ? (
+                  /* Projects mega-menu trigger */
+                  <div
+                    key="projects"
+                    ref={projectsRef}
+                    className="relative"
+                    onMouseEnter={() => setIsProjectsOpen(true)}
+                    onMouseLeave={() => setIsProjectsOpen(false)}
+                  >
+                    <button
+                      onClick={() => setIsProjectsOpen((v) => !v)}
+                      className={cn(
+                        "relative flex items-center gap-1 px-3 py-2 font-sans text-sm font-medium transition-colors duration-200 group",
+                        isProjectsOpen || pathname.startsWith("/projects") || pathname.startsWith("/services")
+                          ? "text-white"
+                          : "text-white/75 hover:text-white"
+                      )}
+                    >
+                      Projects
+                      <ChevronDown className={cn(
+                        "w-3 h-3 transition-transform duration-200",
+                        isProjectsOpen ? "rotate-180 text-white" : "text-white/50"
+                      )} />
+                      {/* active underline */}
+                      <span className={cn(
+                        "absolute bottom-1 left-3 right-5 h-px bg-[#6b9d7a] transition-transform duration-200 origin-left",
+                        isProjectsOpen || pathname.startsWith("/projects") || pathname.startsWith("/services")
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      )} />
+                    </button>
+
+                    {/* invisible bridge — fills gap between trigger bottom and panel top so mouse doesn't close menu mid-travel */}
+                    {isProjectsOpen && (
+                      <div className="absolute left-0 right-0 top-full h-3 pointer-events-auto" />
+                    )}
+
+                    {/* Mega-menu panel — anchored left to avoid viewport clip */}
+                    <AnimatePresence>
+                      {isProjectsOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                          className="absolute left-0 top-full mt-3 w-[420px] bg-[#080f0a]/96 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50"
+                        >
+                          {/* Header */}
+                          <div className="px-6 pt-5 pb-4 border-b border-white/[0.07]">
+                            <p className="font-serif text-sm font-semibold text-white tracking-tight">Projects</p>
+                            <p className="font-sans text-[11px] text-white/40 mt-0.5">Discover what Kuyash is building.</p>
+                          </div>
+
+                          {/* Two columns */}
+                          <div className="grid grid-cols-2 gap-0 divide-x divide-white/[0.07]">
+                            {/* Col 1 — Our Projects */}
+                            <div className="px-5 py-4">
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] mb-3">Our Projects</p>
+                              <ul className="space-y-0.5">
+                                {PROJECTS_OUR.map((p) => (
+                                  <li key={p.label}>
+                                    <Link
+                                      href={p.href}
+                                      onClick={() => setIsProjectsOpen(false)}
+                                      className={cn(
+                                        "block py-1.5 font-sans text-[13px] transition-all duration-150 hover:translate-x-0.5",
+                                        pathname === p.href
+                                          ? "text-white font-medium"
+                                          : "text-white/70 hover:text-white"
+                                      )}
+                                    >
+                                      {p.label}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            {/* Col 2 — In Development */}
+                            <div className="px-5 py-4">
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] mb-3">In Development</p>
+                              <ul className="space-y-0.5">
+                                {PROJECTS_DEV.map((p) => (
+                                  <li key={p.label}>
+                                    <Link
+                                      href={p.href}
+                                      onClick={() => setIsProjectsOpen(false)}
+                                      className="block py-1.5 font-sans text-[13px] text-white/50 hover:text-white/80 transition-all duration-150 hover:translate-x-0.5"
+                                    >
+                                      {p.label}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+
+                          {/* Footer link */}
+                          <div className="px-6 py-3 border-t border-white/[0.07]">
+                            <Link
+                              href="/projects"
+                              onClick={() => setIsProjectsOpen(false)}
+                              className="inline-flex items-center gap-1.5 font-sans text-[12px] font-semibold text-[#6b9d7a] hover:text-white transition-colors duration-150 group/explore"
+                            >
+                              Explore all projects
+                              <ChevronDown className="w-3 h-3 -rotate-90 group-hover/explore:translate-x-0.5 transition-transform duration-150" />
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 ) : (
-                  <a
+                  <Link
                     key={link.label}
-                    href={link.label === "Home" ? "/" : link.href}
-                    className="relative px-3 py-2 font-sans text-sm font-medium text-white/75 hover:text-white transition-colors duration-200 group"
+                    href={resolvedHref}
+                    className={cn(
+                      "relative px-3 py-2 font-sans text-sm font-medium transition-colors duration-200 group",
+                      isActive ? "text-white" : "text-white/75 hover:text-white"
+                    )}
                   >
                     {link.label}
-                    <span className="absolute bottom-1 left-3 right-3 h-px bg-[#6b9d7a] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                  </a>
-                )
-              ))}
+                    <span className={cn(
+                      "absolute bottom-1 left-3 right-3 h-px bg-[#6b9d7a] transition-transform duration-200 origin-left",
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    )} />
+                  </Link>
+                );
+              })}
             </div>
 
             {/* ── Right side ── */}
@@ -257,10 +420,63 @@ export function Navbar() {
                     >
                       {link.label}
                     </Link>
+                  ) : link.label === "Projects" ? (
+                    <div key="projects-mobile" className="border-b border-white/5">
+                      <button
+                        onClick={() => setIsMobileProjectsOpen((v) => !v)}
+                        className="w-full flex items-center justify-between px-2 py-2.5 font-sans text-sm font-medium text-white/75 hover:text-white transition-colors"
+                      >
+                        Projects
+                        <ChevronDown className={cn("w-3.5 h-3.5 text-white/40 transition-transform duration-200", isMobileProjectsOpen && "rotate-180")} />
+                      </button>
+                      <AnimatePresence>
+                        {isMobileProjectsOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pb-3 pl-2">
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] px-2 pt-1 pb-2">Our Projects</p>
+                              {PROJECTS_OUR.map((p) => (
+                                <Link
+                                  key={p.label}
+                                  href={p.href}
+                                  onClick={() => { setIsMobileMenuOpen(false); setIsMobileProjectsOpen(false); }}
+                                  className="block px-2 py-1.5 text-sm text-white/60 hover:text-white transition-colors"
+                                >
+                                  {p.label}
+                                </Link>
+                              ))}
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] px-2 pt-3 pb-2">In Development</p>
+                              {PROJECTS_DEV.map((p) => (
+                                <Link
+                                  key={p.label}
+                                  href={p.href}
+                                  onClick={() => { setIsMobileMenuOpen(false); setIsMobileProjectsOpen(false); }}
+                                  className="block px-2 py-1.5 text-sm text-white/40 hover:text-white/70 transition-colors"
+                                >
+                                  {p.label}
+                                </Link>
+                              ))}
+                              <Link
+                                href="/projects"
+                                onClick={() => { setIsMobileMenuOpen(false); setIsMobileProjectsOpen(false); }}
+                                className="inline-flex items-center gap-1 px-2 pt-3 text-[12px] font-semibold text-[#6b9d7a] hover:text-white transition-colors"
+                              >
+                                Explore all projects <ChevronDown className="w-3 h-3 -rotate-90" />
+                              </Link>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   ) : (
                     <a
                       key={link.label}
-                      href={link.label === "Home" ? "/" : link.href}
+                      href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="px-2 py-2.5 font-sans text-sm font-medium text-white/75 hover:text-white transition-colors border-b border-white/5 last:border-0"
                     >

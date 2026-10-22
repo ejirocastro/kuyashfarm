@@ -42,7 +42,7 @@ export default function CartButton({ onClick }: CartButtonProps) {
     >
       <ShoppingCart className="w-6 h-6 text-white" />
       {mounted && totalItems > 0 && (
-        <span className="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+        <span className="absolute -top-1 -right-1 bg-[#2d5f3f] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
           {totalItems > 99 ? '99+' : totalItems}
         </span>
       )}

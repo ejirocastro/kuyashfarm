@@ -31,6 +31,7 @@ const PROJECTS_DEV = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const alwaysDark = pathname === "/contact";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -55,6 +56,8 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navDark = alwaysDark || isScrolled;
 
   /* close dropdowns on outside click */
   useEffect(() => {
@@ -107,7 +110,7 @@ export function Navbar() {
       <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-500",
-          isScrolled
+          navDark
             ? "bg-[#080f0a]/95 backdrop-blur-md shadow-[0_1px_0_rgba(255,255,255,0.06)]"
             : "bg-transparent"
         )}

@@ -130,6 +130,18 @@ export default function PalmOilRefineryPage() {
             ))}
           </div>
 
+          {/* back-link — top-left, clear of navbar */}
+          <div className="absolute top-20 left-0 z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
+              <Link
+                href="/#projects"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" /> All Projects
+              </Link>
+            </motion.div>
+          </div>
+
           {/* bottom content */}
           <div className="absolute inset-x-0 bottom-0 z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pb-20">
             <motion.div
@@ -137,13 +149,6 @@ export default function PalmOilRefineryPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
             >
-              <Link
-                href="/#projects"
-                className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" /> All Projects
-              </Link>
-
               <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-3" style={{ color: MUTED }}>
                 Ongoing Project &nbsp;/&nbsp; Processing &amp; Value Addition
               </p>

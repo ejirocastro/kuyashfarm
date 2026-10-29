@@ -16,8 +16,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Kuyash Integrated Farm - Farming for a Future",
-  description: "Cultivating a sustainable future through innovative agriculture and empowering rural communities.",
+  title: { default: "Kuyash Integrated Farm", template: "%s | Kuyash Integrated Farm" },
+  description: "Kuyash Integrated Farm Ltd — growing crops, raising livestock, processing palm oil and building a sustainable agricultural future in Nasarawa State, Nigeria.",
+  metadataBase: new URL("https://kuyashfarm.com"),
+  openGraph: {
+    siteName: "Kuyash Integrated Farm",
+    type: "website",
+    locale: "en_NG",
+    images: [{ url: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1200", width: 1200, height: 630, alt: "Kuyash Integrated Farm" }],
+  },
+  twitter: { card: "summary_large_image", site: "@kuyashfarm" },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

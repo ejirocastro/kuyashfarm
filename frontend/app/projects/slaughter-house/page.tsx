@@ -155,6 +155,18 @@ export default function SlaughterHousePage() {
           <div className="absolute inset-0" style={{ backgroundColor: `${DARK}4d` }} />
           <div className="absolute inset-0 bg-linear-to-t from-[#080f0a]/85 via-[#080f0a]/15 to-transparent" />
 
+          {/* back-link — top-left, clear of navbar */}
+          <div className="absolute top-20 left-0 z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
+              <Link
+                href="/#projects"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" /> All Projects
+              </Link>
+            </motion.div>
+          </div>
+
           {/* bottom content */}
           <div className="absolute inset-x-0 bottom-0 z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pb-20">
             <motion.div
@@ -162,13 +174,6 @@ export default function SlaughterHousePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
             >
-              <Link
-                href="/#projects"
-                className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" /> All Projects
-              </Link>
-
               <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-4" style={{ color: MUTED }}>
                 Slaughterhouse &amp; Meat Processing
               </p>
@@ -185,7 +190,7 @@ export default function SlaughterHousePage() {
                 Kuyash Integrated Farm Ltd is developing a modern slaughterhouse and meat processing facility to ensure safe, hygienic and reliable meat supply — from our farms to your table.
               </p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                 <Link
                   href="#partnership"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
@@ -225,7 +230,7 @@ export default function SlaughterHousePage() {
                 </div>
 
                 {/* 4 pillars */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {FACILITY_PILLARS.map((p, i) => {
                     const Icon = p.icon;
                     return (
@@ -339,7 +344,7 @@ export default function SlaughterHousePage() {
                 </p>
 
                 {/* 4 safety pillars */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {SAFETY_PILLARS.map((p, i) => {
                     const Icon = p.icon;
                     return (
@@ -377,12 +382,12 @@ export default function SlaughterHousePage() {
                   </p>
                 </motion.div>
 
-                {/* 6-step horizontal flow */}
-                <div className="flex flex-wrap lg:flex-nowrap gap-y-6 lg:gap-y-0">
+                {/* 6-step flow — 2-col grid on mobile, horizontal on desktop */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-nowrap gap-5 lg:gap-0">
                   {PROCESS_STEPS.map((step, i) => {
                     const Icon = step.icon;
                     return (
-                      <div key={step.label} className="flex items-start flex-1 min-w-[110px]">
+                      <div key={step.label} className="flex items-start lg:flex-1">
                         <motion.div
                           {...fadeUp(i * 0.08)}
                           className="flex flex-col items-center text-center gap-2 flex-1"
@@ -390,7 +395,7 @@ export default function SlaughterHousePage() {
                           <div className="w-11 h-11 rounded-full flex items-center justify-center border" style={{ backgroundColor: "white", borderColor: BORDER }}>
                             <Icon className="w-4 h-4" style={{ color: BRAND }} />
                           </div>
-                          <p className="font-sans text-[10px] font-semibold leading-snug max-w-[80px]" style={{ color: DARK }}>{step.label}</p>
+                          <p className="font-sans text-[10px] font-semibold leading-snug" style={{ color: DARK }}>{step.label}</p>
                         </motion.div>
                         {i < PROCESS_STEPS.length - 1 && (
                           <div className="hidden lg:flex items-center pt-3.5 shrink-0">

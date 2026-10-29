@@ -80,6 +80,18 @@ export default function WaterFactoryPage() {
           <div className="absolute inset-0" style={{ backgroundColor: `${DARK}4d` }} />
           <div className="absolute inset-0 bg-linear-to-t from-[#080f0a]/85 via-[#080f0a]/15 to-transparent" />
 
+          {/* back-link — top-left, clear of navbar */}
+          <div className="absolute top-20 left-0 z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
+              <Link
+                href="/#projects"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" /> All Projects
+              </Link>
+            </motion.div>
+          </div>
+
           {/* bottom content */}
           <div className="absolute inset-x-0 bottom-0 z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pb-20">
             <motion.div
@@ -87,13 +99,6 @@ export default function WaterFactoryPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
             >
-              <Link
-                href="/#projects"
-                className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" /> All Projects
-              </Link>
-
               <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-4" style={{ color: MUTED }}>
                 Water Refinery
               </p>
@@ -111,7 +116,7 @@ export default function WaterFactoryPage() {
                 Kuyash Integrated Farm Ltd is developing a modern water refinery to produce high-quality, safe and refreshing drinking water for homes, businesses and communities across Nigeria.
               </p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                 <Link
                   href="#contact"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
@@ -155,7 +160,7 @@ export default function WaterFactoryPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {ABOUT_PILLARS.map((p, i) => {
                     const Icon = p.icon;
                     return (
@@ -206,11 +211,11 @@ export default function WaterFactoryPage() {
             </motion.div>
 
             {/* 6-step flow */}
-            <div className="flex flex-wrap lg:flex-nowrap gap-y-8 lg:gap-y-0">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-nowrap gap-5 lg:gap-0">
               {PROCESS_STEPS.map((step, i) => {
                 const Icon = step.icon;
                 return (
-                  <div key={step.label} className="flex items-start flex-1 min-w-[110px]">
+                  <div key={step.label} className="flex items-start lg:flex-1">
                     <motion.div
                       {...fadeUp(i * 0.08)}
                       className="flex flex-col items-center text-center gap-3 flex-1"
@@ -308,7 +313,7 @@ export default function WaterFactoryPage() {
                   We are committed to delivering water that is safe, clean and consistently high in quality. Our facility will be built with modern technology, strict hygiene standards and a focus on sustainability.
                 </p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {QUALITY_PILLARS.map((p, i) => {
                     const Icon = p.icon;
                     return (
@@ -412,7 +417,7 @@ export default function WaterFactoryPage() {
                 <p className="font-sans text-white/60 text-sm leading-relaxed mb-9 max-w-sm">
                   Partner with us or get in touch to learn more about our water refinery project and future supply opportunities.
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                   <a
                     href="mailto:info@kuyashfarm.com"
                     className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Palm Oil Refinery | Kuyash Projects",
+  title: "Palm Oil Refinery",
   description: "Kuyash is developing a palm oil refinery to process and add value to palm produce, strengthening local supply chains across Nigeria.",
   openGraph: {
     title: "Palm Oil Refinery | Kuyash Projects",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Soap & Tissue Factory | Kuyash Projects",
+  title: "Soap & Tissue Factory",
   description: "Kuyash produces high-quality soaps and tissue products using modern technology, natural ingredients and sustainable practices for homes and businesses across Nigeria.",
   openGraph: {
     title: "Soap & Tissue Factory | Kuyash Projects",

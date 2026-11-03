@@ -5,21 +5,19 @@ interface CardProps {
   children: ReactNode;
   className?: string;
   hover?: boolean;
+  as?: "div" | "article" | "li";
 }
 
-/**
- * Reusable Card component with optional hover effect
- */
-export function Card({ children, className, hover = false }: CardProps) {
+export function Card({ children, className, hover = false, as: Tag = "div" }: CardProps) {
   return (
-    <div
+    <Tag
       className={cn(
-        "rounded-lg bg-white p-6 shadow-md transition-all duration-300",
-        hover && "hover:scale-105 hover:shadow-xl",
+        "bg-white border border-border rounded-2xl transition-all duration-300",
+        hover && "hover:border-brand-border hover:shadow-[0_20px_40px_rgba(0,0,0,0.10)]",
         className
       )}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

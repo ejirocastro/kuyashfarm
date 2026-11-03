@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
-  title: "Kuyash Integrated Farm | Growing Food. Building Futures.",
+  title: { absolute: "Kuyash Integrated Farm | Growing Food. Building Futures." },
   description: "Kuyash Integrated Farm Ltd grows crops, raises livestock, farms fish, produces palm oil and trains the next generation of farmers — all from Nasarawa State, Nigeria.",
   openGraph: {
     title: "Kuyash Integrated Farm | Growing Food. Building Futures.",

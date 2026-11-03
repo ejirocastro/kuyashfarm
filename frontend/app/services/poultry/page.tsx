@@ -10,16 +10,9 @@ import {
   Award, Sprout, Bird,
 } from "lucide-react";
 
-// ─── brand constants ──────────────────────────────────────────────────────────
-const EASE = [0.16, 1, 0.3, 1] as const;
-const GOLD  = "#e8d5a3";
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.6, delay, ease: EASE },
-});
+import { colors as c, ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
+const GOLD   = c.gold;
+const fadeUp = (delay = 0) => _fadeUp(delay);
 
 // ─── data ─────────────────────────────────────────────────────────────────────
 
@@ -441,7 +434,7 @@ export default function PoultryPage() {
         {/* ── 6. STATS STRIP ───────────────────────────────────────────────── */}
         <section className="relative py-20 overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d7ad?q=80&w=2070"
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070"
             alt="Kuyash farm landscape"
             fill
             className="object-cover object-center"

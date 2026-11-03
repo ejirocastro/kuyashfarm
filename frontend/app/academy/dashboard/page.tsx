@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DashboardClient } from "./DashboardClient";
 
 export const metadata: Metadata = {
-  title: "Student Dashboard | Kuyash Farm Academy",
+  title: "Student Dashboard",
   description: "Manage your enrollments, upcoming classes, certificates, and payments.",
 };
 

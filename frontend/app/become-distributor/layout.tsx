@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Become a Distributor | Kuyash Integrated Farm",
+  title: "Become a Distributor",
   description: "Partner with Kuyash Integrated Farm as a distributor and bring quality farm products to your community. Apply to join our distribution network today.",
   openGraph: {
     title: "Become a Distributor | Kuyash Integrated Farm",

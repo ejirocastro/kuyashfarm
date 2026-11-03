@@ -7,23 +7,17 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ArrowRight, Leaf, Heart, Shield, Star } from "lucide-react";
 
-const EASE  = [0.16, 1, 0.3, 1] as const;
-const BRAND = "#2d5f3f";
-const DARK  = "#080f0a";
-const CREAM = "#faf8f5";
-const MUTED = "#6b9d7a";
-const BORDER = "#e8ede9";
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.6, delay, ease: EASE },
-});
+import { colors as c, ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
+const BRAND  = c.brand;
+const DARK   = c.dark;
+const CREAM  = c.cream;
+const MUTED  = c.muted;
+const BORDER = c.border;
+const fadeUp = (delay = 0) => _fadeUp(delay);
 
 function SectionLabel({ text }: { text: string }) {
   return (
-    <p className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: MUTED }}>
+    <p className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-muted">
       {text}
     </p>
   );

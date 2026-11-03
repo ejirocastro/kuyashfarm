@@ -5,14 +5,18 @@ interface SectionProps {
   children: ReactNode;
   className?: string;
   id?: string;
+  size?: "sm" | "md" | "lg";
 }
 
-/**
- * Section wrapper component for consistent spacing
- */
-export function Section({ children, className, id }: SectionProps) {
+const sizes = {
+  sm: "py-14",
+  md: "py-20",
+  lg: "py-24",
+};
+
+export function Section({ children, className, id, size = "md" }: SectionProps) {
   return (
-    <section id={id} className={cn("py-16 md:py-24 lg:py-32", className)}>
+    <section id={id} className={cn(sizes[size], className)}>
       {children}
     </section>
   );

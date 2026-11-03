@@ -4,7 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Blog — Kuyash Integrated Farm",
+  title: "Blog",
   description:
     "Research, practical guides and field-tested insights to help you farm better, smarter and sustainably.",
   openGraph: {

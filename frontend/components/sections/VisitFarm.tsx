@@ -10,7 +10,7 @@ export function VisitFarm() {
     <section className="relative min-h-[560px] flex items-center overflow-hidden">
       {/* background */}
       <Image
-        src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d7ad?q=80&w=1800"
+        src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1800"
         alt="Kuyash farm landscape"
         fill
         className="object-cover"

@@ -14,11 +14,12 @@ const QUICK_LINKS = [
 ];
 
 const BUSINESSES = [
-  { label: "Crop & Vegetable Production", href: "/services/crop-vegetable-production" },
-  { label: "Livestock",           href: "/services/livestock" },
-  { label: "Poultry",             href: "/services/poultry" },
-  { label: "Fish Farming", href: "/services/fish-farming" },
-  { label: "Agricultural E-Commerce", href: "/services/agricultural-ecommerce" },
+  { label: "Crop Production",          href: "/services/crop-vegetable-production" },
+  { label: "Fisheries & Aquaculture",  href: "/services/fish-farming" },
+  { label: "Livestock",                href: "/services/livestock" },
+  { label: "Poultry",                  href: "/services/poultry" },
+  { label: "Palm Oil Production",      href: "/services/palm-oil-production" },
+  { label: "Groundnut Oil Production", href: "/services/groundnut-oil-production" },
 ];
 
 const RESOURCES = [

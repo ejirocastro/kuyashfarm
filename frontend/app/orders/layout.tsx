@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "My Orders | Kuyash Integrated Farm",
+  title: "My Orders",
   description: "View and track your Kuyash orders.",
   robots: { index: false, follow: false },
 };

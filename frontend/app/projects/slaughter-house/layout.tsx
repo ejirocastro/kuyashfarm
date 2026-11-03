@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Slaughterhouse & Meat Processing | Kuyash Projects",
+  title: "Slaughterhouse & Meat Processing",
   description: "Kuyash Integrated Farm is developing a modern slaughterhouse and meat processing facility to deliver safe, hygienic and reliable meat supply across Nigeria.",
   openGraph: {
     title: "Slaughterhouse & Meat Processing | Kuyash Projects",

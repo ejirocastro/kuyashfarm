@@ -16,16 +16,8 @@ import {
   type Crop,
 } from "@/lib/data/crop-production";
 
-// ─── motion preset ────────────────────────────────────────────────────────────
-
-const EASE = [0.16, 1, 0.3, 1] as const;
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
-  transition: { duration: 0.55, delay, ease: EASE },
-});
+import { ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
+const fadeUp = (delay = 0) => _fadeUp(delay);
 
 // ─── sub-components ──────────────────────────────────────────────────────────
 
@@ -228,7 +220,7 @@ export default function CropProductionPage() {
                 className="font-serif font-bold text-white leading-[1.04] max-w-3xl mb-5"
                 style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)" }}
               >
-                Crop &amp; Vegetable<br />Production
+                Crop Production
               </h1>
               <p
                 className="font-sans text-white/70 leading-relaxed max-w-xl mb-10"

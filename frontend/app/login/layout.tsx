@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign In | Kuyash Integrated Farm",
+  title: "Sign In",
   description: "Sign in to your Kuyash account to manage your orders, track deliveries and access the Kuyash Academy.",
 };
 

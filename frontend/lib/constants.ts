@@ -18,27 +18,39 @@ export const STATS = [
 export const SERVICES = [
   {
     id: 1,
-    title: "Crop & Vegetable Production",
+    title: "Crop Production",
     description: "Growing premium-quality crops and fresh vegetables using sustainable farming methods.",
     slug: "crop-vegetable-production",
   },
   {
     id: 2,
-    title: "Livestock Farming",
+    title: "Fisheries & Aquaculture",
+    description: "Sustainable catfish and tilapia production from well-managed ponds and systems.",
+    slug: "fish-farming",
+  },
+  {
+    id: 3,
+    title: "Livestock",
     description: "Raising healthy cattle, sheep and goats with modern animal husbandry practices.",
     slug: "livestock",
   },
   {
-    id: 3,
-    title: "Fish Farming",
-    description: "Sustainable aquaculture systems producing fresh, quality fish.",
-    slug: "fish-farming",
+    id: 4,
+    title: "Poultry",
+    description: "Commercial poultry production with high management standards for eggs and broilers.",
+    slug: "poultry",
   },
   {
-    id: 4,
-    title: "Agricultural E-Commerce",
-    description: "Connecting farmers and consumers through innovative digital marketplace solutions.",
-    slug: "agricultural-ecommerce",
+    id: 5,
+    title: "Palm Oil Production",
+    description: "Processing fresh palm fruit into high-quality crude palm oil for food and industry.",
+    slug: "palm-oil-production",
+  },
+  {
+    id: 6,
+    title: "Groundnut Oil Production",
+    description: "Cold-pressed groundnut oil — pure, natural and nutritious — for homes and businesses.",
+    slug: "groundnut-oil-production",
   },
 ] as const;
 
@@ -61,7 +73,7 @@ export const GOALS = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Projects", href: "#projects" },
+  { label: "Our Work", href: "#our-work" },
   { label: "About Us", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Academy", href: "/academy" },

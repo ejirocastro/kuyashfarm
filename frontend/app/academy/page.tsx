@@ -15,7 +15,7 @@ import { AcademyFAQ } from "./sections/AcademyFAQ";
 import { AcademyNewsletter } from "./sections/AcademyNewsletter";
 
 export const metadata: Metadata = {
-  title: "Kuyash Farm Academy — Africa's Premier Agricultural Innovation Hub",
+  title: "Kuyash Farm Academy",
   description:
     "Practical, technology-driven agricultural education. Train on a real 40-acre farm with Nigeria's leading practitioners. NABTEB certified programs in crop production, livestock, aquaculture, agribusiness, precision agriculture, and more.",
   openGraph: {

@@ -6,9 +6,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle2 } from "lucide-react";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-const BRAND = "#2d5f3f";
-const DARK  = "#080f0a";
+import { colors as c, ease as EASE } from "@/lib/tokens";
+const BRAND = c.brand;
+const DARK  = c.dark;
 
 const TOPICS = [
   "General Enquiry",

@@ -12,11 +12,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cls = ACADEMY_CLASSES.find((c) => c.id === Number(id));
 
   if (!cls) {
-    return { title: "Class Not Found | Kuyash Academy" };
+    return { title: "Class Not Found" };
   }
 
   return {
-    title: `${cls.title} | Kuyash Academy`,
+    title: cls.title,
     description: cls.description,
     openGraph: {
       title: `${cls.title} | Kuyash Academy`,

@@ -7,12 +7,9 @@ interface ContainerProps {
   id?: string;
 }
 
-/**
- * Container component for consistent max-width and padding
- */
 export function Container({ children, className, id }: ContainerProps) {
   return (
-    <div id={id} className={cn("mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", className)}>
+    <div id={id} className={cn("mx-auto max-w-7xl px-6 md:px-12 lg:px-16", className)}>
       {children}
     </div>
   );

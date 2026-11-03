@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { cn, getCurrentUser } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
@@ -13,25 +13,38 @@ import type { User as UserType } from "@/lib/types";
 import { getTierDisplayName, getTierBadgeColor } from "@/lib/features/distributor/distributor-utils";
 import { motion, AnimatePresence } from "framer-motion";
 
-const PROJECTS_OUR = [
+const NAV_SERVICES = [
   { label: "Crop Production",          href: "/services/crop-vegetable-production" },
   { label: "Fisheries & Aquaculture",  href: "/services/fish-farming" },
-  { label: "Livestock",                 href: "/services/livestock" },
+  { label: "Livestock",                href: "/services/livestock" },
   { label: "Poultry",                  href: "/services/poultry" },
   { label: "Palm Oil Production",      href: "/services/palm-oil-production" },
   { label: "Groundnut Oil Production", href: "/services/groundnut-oil-production" },
 ];
 
-const PROJECTS_DEV = [
-  { label: "Palm Oil Refinery",    href: "/projects/palm-oil-refinery" },
-  { label: "Water Factory",        href: "/projects/water-factory" },
-  { label: "Soap & Tissue Factory",href: "/projects/soap-tissue-factory" },
-  { label: "Slaughter House",      href: "/projects/slaughter-house" },
+const NAV_PROJECTS = [
+  { label: "Palm Oil Refinery",     href: "/projects/palm-oil-refinery" },
+  { label: "Water Factory",         href: "/projects/water-factory" },
+  { label: "Soap & Tissue Factory", href: "/projects/soap-tissue-factory" },
+  { label: "Slaughter House",       href: "/projects/slaughter-house" },
 ];
 
 export function Navbar() {
+  return (
+    <Suspense fallback={<nav className="fixed top-0 left-0 right-0 z-40 h-16 bg-transparent" />}>
+      <NavbarInner />
+    </Suspense>
+  );
+}
+
+function NavbarInner() {
   const pathname = usePathname();
-  const alwaysDark = pathname === "/contact";
+  const LIGHT_TOP_PAGES = [
+    "/contact",
+    "/become-distributor",
+    "/services/groundnut-oil-production",
+  ];
+  const alwaysDark = LIGHT_TOP_PAGES.includes(pathname);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -157,10 +170,10 @@ export function Navbar() {
                   >
                     {link.label}
                   </Link>
-                ) : link.label === "Projects" ? (
-                  /* Projects mega-menu trigger */
+                ) : link.label === "Our Work" ? (
+                  /* Our Work mega-menu trigger */
                   <div
-                    key="projects"
+                    key="our-work"
                     ref={projectsRef}
                     className="relative"
                     onMouseEnter={() => setIsProjectsOpen(true)}
@@ -175,7 +188,7 @@ export function Navbar() {
                           : "text-white/75 hover:text-white"
                       )}
                     >
-                      Projects
+                      Our Work
                       <ChevronDown className={cn(
                         "w-3 h-3 transition-transform duration-200",
                         isProjectsOpen ? "rotate-180 text-white" : "text-white/50"
@@ -206,17 +219,17 @@ export function Navbar() {
                         >
                           {/* Header */}
                           <div className="px-6 pt-5 pb-4 border-b border-white/[0.07]">
-                            <p className="font-serif text-sm font-semibold text-white tracking-tight">Projects</p>
-                            <p className="font-sans text-[11px] text-white/40 mt-0.5">Discover what Kuyash is building.</p>
+                            <p className="font-serif text-sm font-semibold text-white tracking-tight">Our Work</p>
+                            <p className="font-sans text-[11px] text-white/40 mt-0.5">What Kuyash grows, raises and builds.</p>
                           </div>
 
                           {/* Two columns */}
                           <div className="grid grid-cols-2 gap-0 divide-x divide-white/[0.07]">
-                            {/* Col 1 — Our Projects */}
+                            {/* Col 1 — Active Services */}
                             <div className="px-5 py-4">
-                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] mb-3">Our Projects</p>
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] mb-3">Our Services</p>
                               <ul className="space-y-0.5">
-                                {PROJECTS_OUR.map((p) => (
+                                {NAV_SERVICES.map((p) => (
                                   <li key={p.label}>
                                     <Link
                                       href={p.href}
@@ -235,11 +248,11 @@ export function Navbar() {
                               </ul>
                             </div>
 
-                            {/* Col 2 — In Development */}
+                            {/* Col 2 — Coming Soon */}
                             <div className="px-5 py-4">
-                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] mb-3">In Development</p>
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] mb-3">Coming Soon</p>
                               <ul className="space-y-0.5">
-                                {PROJECTS_DEV.map((p) => (
+                                {NAV_PROJECTS.map((p) => (
                                   <li key={p.label}>
                                     <Link
                                       href={p.href}
@@ -252,18 +265,6 @@ export function Navbar() {
                                 ))}
                               </ul>
                             </div>
-                          </div>
-
-                          {/* Footer link */}
-                          <div className="px-6 py-3 border-t border-white/[0.07]">
-                            <Link
-                              href="/projects"
-                              onClick={() => setIsProjectsOpen(false)}
-                              className="inline-flex items-center gap-1.5 font-sans text-[12px] font-semibold text-[#6b9d7a] hover:text-white transition-colors duration-150 group/explore"
-                            >
-                              Explore all projects
-                              <ChevronDown className="w-3 h-3 -rotate-90 group-hover/explore:translate-x-0.5 transition-transform duration-150" />
-                            </Link>
                           </div>
                         </motion.div>
                       )}
@@ -423,13 +424,13 @@ export function Navbar() {
                     >
                       {link.label}
                     </Link>
-                  ) : link.label === "Projects" ? (
-                    <div key="projects-mobile" className="border-b border-white/5">
+                  ) : link.label === "Our Work" ? (
+                    <div key="our-work-mobile" className="border-b border-white/5">
                       <button
                         onClick={() => setIsMobileProjectsOpen((v) => !v)}
                         className="w-full flex items-center justify-between px-2 py-2.5 font-sans text-sm font-medium text-white/75 hover:text-white transition-colors"
                       >
-                        Projects
+                        Our Work
                         <ChevronDown className={cn("w-3.5 h-3.5 text-white/40 transition-transform duration-200", isMobileProjectsOpen && "rotate-180")} />
                       </button>
                       <AnimatePresence>
@@ -442,8 +443,8 @@ export function Navbar() {
                             className="overflow-hidden"
                           >
                             <div className="pb-3 pl-2">
-                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] px-2 pt-1 pb-2">Our Projects</p>
-                              {PROJECTS_OUR.map((p) => (
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] px-2 pt-1 pb-2">Our Services</p>
+                              {NAV_SERVICES.map((p) => (
                                 <Link
                                   key={p.label}
                                   href={p.href}
@@ -453,8 +454,8 @@ export function Navbar() {
                                   {p.label}
                                 </Link>
                               ))}
-                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] px-2 pt-3 pb-2">In Development</p>
-                              {PROJECTS_DEV.map((p) => (
+                              <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#6b9d7a] px-2 pt-3 pb-2">Coming Soon</p>
+                              {NAV_PROJECTS.map((p) => (
                                 <Link
                                   key={p.label}
                                   href={p.href}
@@ -464,13 +465,6 @@ export function Navbar() {
                                   {p.label}
                                 </Link>
                               ))}
-                              <Link
-                                href="/projects"
-                                onClick={() => { setIsMobileMenuOpen(false); setIsMobileProjectsOpen(false); }}
-                                className="inline-flex items-center gap-1 px-2 pt-3 text-[12px] font-semibold text-[#6b9d7a] hover:text-white transition-colors"
-                              >
-                                Explore all projects <ChevronDown className="w-3 h-3 -rotate-90" />
-                              </Link>
                             </div>
                           </motion.div>
                         )}

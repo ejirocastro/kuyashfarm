@@ -12,7 +12,7 @@ const TEAM_IMAGES = [
     className: "col-span-2 row-span-2",
   },
   {
-    src: "https://images.unsplash.com/photo-1595839093859-8b8fb26e0828?q=80&w=800",
+    src: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=800",
     alt: "Team members at harvest",
     className: "col-span-1 row-span-1",
   },

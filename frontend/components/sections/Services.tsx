@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Wheat, Beef, Fish, ShoppingBag } from "lucide-react";
+import { ArrowRight, Wheat, Beef, Fish, Bird, Droplets, Nut } from "lucide-react";
 
 const SERVICE_META = [
   {
@@ -13,19 +13,29 @@ const SERVICE_META = [
     tag: "Core Operations",
   },
   {
-    image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?q=80&w=800",
-    icon: Beef,
-    tag: "Livestock",
-  },
-  {
     image: "https://images.unsplash.com/photo-1535591273668-578e31182c4f?q=80&w=800",
     icon: Fish,
     tag: "Aquaculture",
   },
   {
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=800",
-    icon: ShoppingBag,
-    tag: "Digital",
+    image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?q=80&w=800",
+    icon: Beef,
+    tag: "Livestock",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=800",
+    icon: Bird,
+    tag: "Poultry",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=800",
+    icon: Droplets,
+    tag: "Processing",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1599599810694-b5b37304c041?q=80&w=800",
+    icon: Nut,
+    tag: "Processing",
   },
 ];
 

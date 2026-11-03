@@ -33,10 +33,10 @@ const ALL_FORMATS = ["Any Format", "Full-Time", "Part-Time", "Weekend"];
 const ALL_STATUS = ["Any Status", "Open", "Closing Soon", "Coming Soon"];
 const ALL_CERT = ["Any Certification", "NABTEB", "NAFDAC", "Industry", "Organic"];
 
-/* brand tokens */
-const BRAND = "#2d5f3f";
-const BRAND_BG = "#eef5f1";
-const BRAND_BORDER = "#c6dece";
+import { colors as c } from "@/lib/tokens";
+const BRAND        = c.brand;
+const BRAND_BG     = c.brandBg;
+const BRAND_BORDER = c.brandBorder;
 
 /* ─── animated counter ─── */
 function Counter({ to, suffix }: { to: number; suffix: string }) {

@@ -22,7 +22,7 @@ interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { ease as EASE } from "@/lib/tokens";
 
 const FADE_UP = {
   initial: { opacity: 0, y: 20 },

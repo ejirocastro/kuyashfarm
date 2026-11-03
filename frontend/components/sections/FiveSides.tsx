@@ -3,33 +3,19 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Wheat, Flower2, Bird, Fish, Beef } from "lucide-react";
+import { ArrowRight, Wheat, Bird, Fish, Beef, Droplets, Nut } from "lucide-react";
 
 const OPERATIONS = [
   {
     label: "Crop Production",
-    description: "Field crops and open-field production managed with best agronomic practices for high yield and quality.",
+    description: "Field crops, vegetables and fruits managed with precision irrigation and data-driven agronomy.",
     icon: Wheat,
     image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=800",
     href: "/services/crop-vegetable-production",
   },
   {
-    label: "Horticulture",
-    description: "Vegetable production, protected cultivation and variety trials across our screen houses.",
-    icon: Flower2,
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=800",
-    href: "/services/crop-vegetable-production",
-  },
-  {
-    label: "Poultry",
-    description: "Commercial poultry production with a 50,000 bird layer unit and high management standards.",
-    icon: Bird,
-    image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=800",
-    href: "/services/livestock-poultry-farming",
-  },
-  {
-    label: "Aquaculture",
-    description: "Catfish production with 200 tons per year capacity in well-managed ponds and systems.",
+    label: "Fisheries & Aquaculture",
+    description: "Catfish and tilapia production with 200 tons per year capacity in managed ponds.",
     icon: Fish,
     image: "https://images.unsplash.com/photo-1535591273668-578e31182c4f?q=80&w=800",
     href: "/services/fish-farming",
@@ -39,7 +25,28 @@ const OPERATIONS = [
     description: "Cattle and sheep rearing as part of our integrated livestock development program.",
     icon: Beef,
     image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?q=80&w=800",
-    href: "/services/livestock-poultry-farming",
+    href: "/services/livestock",
+  },
+  {
+    label: "Poultry",
+    description: "Commercial poultry production with a 50,000 bird layer unit and high management standards.",
+    icon: Bird,
+    image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=800",
+    href: "/services/poultry",
+  },
+  {
+    label: "Palm Oil Production",
+    description: "Processing fresh palm fruit into high-quality crude palm oil for food and industry.",
+    icon: Droplets,
+    image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=800",
+    href: "/services/palm-oil-production",
+  },
+  {
+    label: "Groundnut Oil",
+    description: "Cold-pressed groundnut oil — pure, natural and nutritious — for homes and businesses.",
+    icon: Nut,
+    image: "https://images.unsplash.com/photo-1599599810694-b5b37304c041?q=80&w=800",
+    href: "/services/groundnut-oil-production",
   },
 ];
 
@@ -47,7 +54,6 @@ export function FiveSides() {
   return (
     <section className="bg-[#faf8f5] py-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -61,12 +67,12 @@ export function FiveSides() {
           </p>
           <h2 className="font-serif font-bold text-[#080f0a] leading-tight"
             style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}>
-            Five Sides of One Farm
+            Six Sides of One Farm
           </h2>
         </motion.div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           {OPERATIONS.map((op, i) => {
             const Icon = op.icon;
             return (

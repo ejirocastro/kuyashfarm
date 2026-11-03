@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Water Factory | Kuyash Projects",
+  title: "Water Factory",
   description: "Kuyash is developing a modern water refinery to produce high-quality, safe and refreshing drinking water for homes, businesses and communities across Nigeria.",
   openGraph: {
     title: "Water Factory | Kuyash Projects",

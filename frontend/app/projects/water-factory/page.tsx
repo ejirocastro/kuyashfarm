@@ -12,22 +12,15 @@ import {
   Phone, Mail, Settings,
 } from "lucide-react";
 
-// ─── brand tokens ─────────────────────────────────────────────────────────────
-const EASE   = [0.16, 1, 0.3, 1] as const;
-const BRAND  = "#2d5f3f";
-const DARK   = "#080f0a";
-const DARK2  = "#1a3d2b";
-const CREAM  = "#faf8f5";
-const BORDER = "#e8ede9";
-const MUTED  = "#6b9d7a";
-const GOLD   = "#e8d5a3";
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.65, delay, ease: EASE },
-});
+import { colors as c, ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
+const BRAND  = c.brand;
+const DARK   = c.dark;
+const DARK2  = c.dark2;
+const CREAM  = c.cream;
+const BORDER = c.border;
+const MUTED  = c.muted;
+const GOLD   = c.gold;
+const fadeUp = (delay = 0) => _fadeUp(delay);
 
 // ─── data ─────────────────────────────────────────────────────────────────────
 

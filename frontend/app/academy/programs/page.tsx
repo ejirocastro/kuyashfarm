@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ProgramsClient } from "./ProgramsClient";
 
 export const metadata: Metadata = {
-  title: "Course Catalog | Kuyash Farm Academy",
+  title: "Course Catalog",
   description:
     "Browse 20 NABTEB-certified agricultural programs — from precision farming and aquaculture to agribusiness and sustainable agriculture. Find the right program for your career.",
 };

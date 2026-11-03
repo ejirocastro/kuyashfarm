@@ -8,11 +8,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const content = SERVICE_CONTENT[slug];
 
   if (!service || !content) {
-    return { title: "Service | Kuyash Integrated Farm" };
+    return { title: "Our Services" };
   }
 
   return {
-    title: `${service.title} | Kuyash Integrated Farm`,
+    title: service.title,
     description: service.description,
     openGraph: {
       title: `${service.title} | Kuyash Integrated Farm`,

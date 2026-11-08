@@ -1,6 +1,6 @@
 export default function DashboardLoading() {
   return (
-    <div className="min-h-screen bg-[#f9f8f6] flex">
+    <div className="min-h-screen bg-cream flex">
       {/* Sidebar skeleton */}
       <aside className="hidden lg:flex flex-col w-60 shrink-0 bg-white border-r border-gray-100 fixed inset-y-0 left-0">
         <div className="px-4 py-5 border-b border-gray-100 flex items-center gap-2.5">

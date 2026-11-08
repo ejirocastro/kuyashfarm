@@ -4,13 +4,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import { ACADEMY_FAQS } from "@/lib/data/academy";
+import { Container } from "@/components/ui";
 
 export function AcademyFAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section className="bg-white py-28 md:py-36">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
           {/* Left — sticky header */}
           <div className="lg:sticky lg:top-32">
@@ -18,7 +19,7 @@ export function AcademyFAQ() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-xs font-mono uppercase tracking-[0.2em] text-[#6b9d7a] mb-4"
+              className="text-xs font-mono uppercase tracking-[0.2em] text-muted mb-4"
             >
               Frequently Asked
             </motion.p>
@@ -27,11 +28,11 @@ export function AcademyFAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="font-serif text-4xl md:text-5xl font-bold text-[#080f0a] leading-tight mb-6"
+              className="font-serif text-4xl md:text-5xl font-bold text-dark leading-tight mb-6"
             >
               Questions we
               <br />
-              <span className="text-[#2d5f3f]">get asked most.</span>
+              <span className="text-brand">get asked most.</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
@@ -44,7 +45,7 @@ export function AcademyFAQ() {
             </motion.p>
             <a
               href="mailto:academy@kuyashfarm.com"
-              className="inline-flex items-center gap-2 bg-[#2d5f3f] text-white font-semibold px-6 py-3.5 rounded-full hover:bg-[#4a7c59] transition-colors duration-300 text-sm"
+              className="inline-flex items-center gap-2 bg-brand text-white font-semibold px-6 py-3.5 rounded-full hover:bg-brand-hover transition-colors duration-300 text-sm"
             >
               Contact Admissions
             </a>
@@ -61,7 +62,7 @@ export function AcademyFAQ() {
                 transition={{ duration: 0.4, delay: i * 0.06 }}
                 className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
                   open === i
-                    ? "border-[#2d5f3f]/30 bg-[#f0f7f3]"
+                    ? "border-brand/30 bg-brand-bg"
                     : "border-gray-100 bg-white hover:border-gray-200"
                 }`}
               >
@@ -69,12 +70,12 @@ export function AcademyFAQ() {
                   className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
                   onClick={() => setOpen(open === i ? null : i)}
                 >
-                  <span className="font-sans font-semibold text-[#080f0a] text-base leading-snug pr-4">
+                  <span className="font-sans font-semibold text-dark text-base leading-snug pr-4">
                     {faq.question}
                   </span>
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
-                      open === i ? "bg-[#2d5f3f] text-white" : "bg-gray-100 text-gray-500"
+                      open === i ? "bg-brand text-white" : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {open === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -99,7 +100,7 @@ export function AcademyFAQ() {
             ))}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

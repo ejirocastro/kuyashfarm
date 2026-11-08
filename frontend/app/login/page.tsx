@@ -6,7 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/lib/context/AuthContext";
 import { Navbar } from "@/components/layout/Navbar";
-import { Eye, EyeOff, ArrowRight, AlertCircle, Leaf, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import { BrandLeaf } from "@/components/ui";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Spinner() {
@@ -33,10 +34,10 @@ const InputField = ({ label, error, suffix, id, ...rest }: InputFieldProps) => (
       <input
         id={id}
         {...rest}
-        className={`w-full px-4 py-3.5 text-sm font-sans text-[#080f0a] bg-[#faf8f5] border rounded-xl outline-none transition-all duration-200 placeholder:text-gray-300
+        className={`w-full px-4 py-3.5 text-sm font-sans text-dark bg-cream border rounded-xl outline-none transition-all duration-200 placeholder:text-gray-300
           ${error
             ? "border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100"
-            : "border-[#c6dece] focus:border-[#2d5f3f] focus:ring-2 focus:ring-[#2d5f3f]/10"
+            : "border-brand-border focus:border-brand focus:ring-2 focus:ring-brand/10"
           }
           ${suffix ? "pr-11" : ""}
         `}
@@ -105,10 +106,10 @@ export default function LoginPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#faf8f5] pt-20 flex">
+      <main className="min-h-screen bg-cream pt-20 flex">
 
         {/* ── LEFT PANEL — decorative (desktop only) ── */}
-        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-[#080f0a]">
+        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-dark">
           <Image
             src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?q=80&w=1600"
             alt="Kuyash farm"
@@ -117,23 +118,20 @@ export default function LoginPage() {
             priority
           />
           {/* gradient */}
-          <div className="absolute inset-0 bg-linear-to-br from-[#080f0a] via-[#080f0a]/70 to-[#2d5f3f]/30" />
-          {/* grid */}
-          <div className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)`,
-              backgroundSize: "48px 48px",
-            }} />
+          <div className="absolute inset-0 bg-linear-to-br from-dark via-dark/70 to-brand/30" />
           {/* glow */}
-          <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#2d5f3f]/20 blur-[100px]" />
+          <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-brand/20 blur-[100px]" />
 
           <div className="relative z-10 flex flex-col justify-between p-12 w-full">
             {/* Top badge */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#2d5f3f] flex items-center justify-center">
-                <Leaf className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center">
+                <BrandLeaf className="w-4 h-4 text-white" />
               </div>
-              <span className="font-serif text-white font-bold text-lg tracking-tight">Kuyash Farm</span>
+              <div className="flex flex-col leading-none">
+                <span className="font-serif text-lg font-bold text-white tracking-tight">Kuyash</span>
+                <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-white/50 mt-0.5">Integrated Farm</span>
+              </div>
             </div>
 
             {/* Quote */}
@@ -169,18 +167,21 @@ export default function LoginPage() {
 
             {/* Mobile logo */}
             <div className="flex items-center gap-2 mb-8 lg:hidden">
-              <div className="w-8 h-8 rounded-lg bg-[#2d5f3f] flex items-center justify-center">
-                <Leaf className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center">
+                <BrandLeaf className="w-4 h-4 text-white" />
               </div>
-              <span className="font-serif text-[#080f0a] font-bold text-lg tracking-tight">Kuyash Farm</span>
+              <div className="flex flex-col leading-none">
+                <span className="font-serif text-lg font-bold text-dark tracking-tight">Kuyash</span>
+                <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-gray-400 mt-0.5">Integrated Farm</span>
+              </div>
             </div>
 
             {/* Heading */}
             <div className="mb-8">
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-2">
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-2">
                 Member Access
               </p>
-              <h1 className="font-serif text-3xl font-bold text-[#080f0a] leading-tight mb-2">
+              <h1 className="font-serif text-3xl font-bold text-dark leading-tight mb-2">
                 Welcome back
               </h1>
               <p className="text-sm text-gray-400 font-sans">
@@ -194,12 +195,12 @@ export default function LoginPage() {
                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white border border-[#c6dece] rounded-2xl p-10 flex flex-col items-center text-center"
+                  className="bg-white border border-brand-border rounded-2xl p-10 flex flex-col items-center text-center"
                 >
-                  <div className="w-14 h-14 rounded-full bg-[#eef5f1] border-2 border-[#c6dece] flex items-center justify-center mb-4">
-                    <CheckCircle2 className="w-7 h-7 text-[#2d5f3f]" />
+                  <div className="w-14 h-14 rounded-full bg-brand-bg border-2 border-brand-border flex items-center justify-center mb-4">
+                    <CheckCircle2 className="w-7 h-7 text-brand" />
                   </div>
-                  <p className="font-serif text-xl font-bold text-[#080f0a] mb-1">Signed in!</p>
+                  <p className="font-serif text-xl font-bold text-dark mb-1">Signed in!</p>
                   <p className="text-sm text-gray-400 font-sans">Redirecting you now…</p>
                 </motion.div>
               ) : (
@@ -211,9 +212,9 @@ export default function LoginPage() {
                   className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden"
                 >
                   {/* Brand accent line */}
-                  <div className="h-1 w-full bg-[#2d5f3f]" />
+                  <div className="h-1 w-full bg-brand" />
 
-                  <div className="p-8 space-y-5">
+                  <div className="p-5 sm:p-8 space-y-5">
                     {/* Global error */}
                     <AnimatePresence>
                       {globalError && (
@@ -253,7 +254,7 @@ export default function LoginPage() {
                         autoComplete="current-password"
                         suffix={
                           <button type="button" onClick={() => setShowPassword(v => !v)}
-                            className="text-gray-400 hover:text-[#2d5f3f] transition-colors"
+                            className="text-gray-400 hover:text-brand transition-colors"
                             aria-label={showPassword ? "Hide password" : "Show password"}>
                             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                           </button>
@@ -262,7 +263,7 @@ export default function LoginPage() {
 
                       <div className="flex justify-end">
                         <button type="button"
-                          className="text-xs font-semibold text-[#2d5f3f] hover:text-[#4a7c59] transition-colors font-sans">
+                          className="text-xs font-semibold text-brand hover:text-brand-hover transition-colors font-sans">
                           Forgot password?
                         </button>
                       </div>
@@ -270,7 +271,7 @@ export default function LoginPage() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-2 bg-[#2d5f3f] hover:bg-[#4a7c59] active:bg-[#1a3d2b] text-white font-semibold text-sm py-3.5 rounded-xl transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="w-full flex items-center justify-center gap-2 bg-brand hover:bg-brand-hover active:bg-dark2 text-white font-semibold text-sm py-3.5 rounded-xl transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
                         {isLoading ? (
                           <><Spinner /> Signing in…</>
@@ -282,7 +283,7 @@ export default function LoginPage() {
 
                     <p className="text-center text-sm text-gray-400 font-sans pt-1">
                       Don&apos;t have an account?{" "}
-                      <Link href="/register" className="font-semibold text-[#2d5f3f] hover:text-[#4a7c59] transition-colors">
+                      <Link href="/register" className="font-semibold text-brand hover:text-brand-hover transition-colors">
                         Create one
                       </Link>
                     </p>

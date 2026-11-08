@@ -17,12 +17,12 @@ import {
   PlayCircle,
 } from "lucide-react";
 import { notFound } from "next/navigation";
+import { ease as EASE } from "@/lib/tokens";
+import { Container } from "@/components/ui";
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
-
-import { ease as EASE } from "@/lib/tokens";
 
 const FADE_UP = {
   initial: { opacity: 0, y: 20 },
@@ -43,7 +43,7 @@ export default function ServicePage({ params }: ServicePageProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#faf8f5]">
+      <main className="min-h-screen bg-cream">
 
         {/* ── HERO ── */}
         <section className="relative h-[75vh] min-h-[560px] overflow-hidden">
@@ -54,8 +54,7 @@ export default function ServicePage({ params }: ServicePageProps) {
           ) : (
             <Image src={content.heroImage} alt={service.title} fill className="object-cover" priority />
           )}
-          {/* dark overlay — matches blog hero */}
-          <div className="absolute inset-0 bg-[#080f0a]/65" />
+          <div className="absolute inset-0 bg-dark/65" />
           <div className="absolute inset-0"
             style={{
               backgroundImage: `linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)`,
@@ -63,63 +62,65 @@ export default function ServicePage({ params }: ServicePageProps) {
             }}
           />
 
-          <div className="relative z-10 flex h-full flex-col justify-end px-6 md:px-12 lg:px-16 pb-16 max-w-7xl mx-auto">
-            <motion.div {...FADE_UP}>
-              <Link
-                href="/#services"
-                className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 font-sans text-sm text-white backdrop-blur-md hover:bg-white/10 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                All Services
-              </Link>
-
-              <p className="text-xs font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-4">
-                Kuyash Integrated Farm
-              </p>
-
-              <h1
-                className="font-serif font-bold text-white leading-[1.05] max-w-3xl mb-5"
-                style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
-              >
-                {service.title}
-              </h1>
-
-              <p className="font-sans text-white/60 leading-relaxed max-w-xl mb-7"
-                style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)" }}>
-                {service.description}
-              </p>
-
-              <div className="flex items-center gap-3 flex-wrap">
+          <div className="relative z-10 flex h-full flex-col justify-end pb-16">
+            <Container>
+              <motion.div {...FADE_UP}>
                 <Link
-                  href={content.shopHref}
-                  className="inline-flex items-center gap-2 bg-[#2d5f3f] hover:bg-[#4a7c59] text-white font-semibold text-sm px-6 py-3 rounded-full transition-colors duration-200"
+                  href="/#services"
+                  className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 font-sans text-sm text-white backdrop-blur-md hover:bg-white/10 transition-colors"
                 >
-                  Browse Products <ArrowRight className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4" />
+                  All Services
                 </Link>
-                {content.heroVideo && (
-                  <button
-                    onClick={() => setShowVideo(!showVideo)}
-                    className="inline-flex items-center gap-2 border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm px-6 py-3 rounded-full backdrop-blur-sm transition-colors duration-200"
+
+                <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted mb-4">
+                  Kuyash Integrated Farm
+                </p>
+
+                <h1
+                  className="font-serif font-bold text-white leading-[1.05] max-w-3xl mb-5"
+                  style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
+                >
+                  {service.title}
+                </h1>
+
+                <p className="font-sans text-white/60 leading-relaxed max-w-xl mb-7"
+                  style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)" }}>
+                  {service.description}
+                </p>
+
+                <div className="flex items-center gap-3 flex-wrap">
+                  <Link
+                    href={content.shopHref}
+                    className="inline-flex items-center gap-2 bg-brand hover:bg-brand-hover text-white font-semibold text-sm px-6 py-3 rounded-full transition-colors duration-200"
                   >
-                    <PlayCircle className="h-4 w-4" />
-                    {showVideo ? "View Photo" : "Watch Video"}
-                  </button>
-                )}
-              </div>
-            </motion.div>
+                    Browse Products <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  {content.heroVideo && (
+                    <button
+                      onClick={() => setShowVideo(!showVideo)}
+                      className="inline-flex items-center gap-2 border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm px-6 py-3 rounded-full backdrop-blur-sm transition-colors duration-200"
+                    >
+                      <PlayCircle className="h-4 w-4" />
+                      {showVideo ? "View Photo" : "Watch Video"}
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            </Container>
           </div>
         </section>
 
         {/* ── OVERVIEW ── */}
-        <section className="bg-white py-24 border-b border-[#e8ede9]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
             <div className="grid items-center gap-16 lg:grid-cols-2">
               <motion.div {...FADE_UP}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-4">
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-4">
                   Our Approach
                 </p>
                 <h2
-                  className="font-serif font-bold text-[#080f0a] leading-[1.08] mb-6"
+                  className="font-serif font-bold text-dark leading-[1.08] mb-6"
                   style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
                 >
                   Sustainable Innovation<br />Meets Practical Farming
@@ -134,18 +135,18 @@ export default function ServicePage({ params }: ServicePageProps) {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
-                className="relative aspect-4/3 rounded-2xl overflow-hidden border border-[#e8ede9]"
+                className="relative aspect-4/3 rounded-2xl overflow-hidden border border-border"
               >
                 <Image src={content.heroImage} alt="Farm overview" fill className="object-cover" />
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* ── STATS ── */}
         {slug !== "livestock" && (
-          <section className="bg-[#080f0a] py-20">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+          <section className="bg-dark py-20">
+            <Container>
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +154,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 transition={{ duration: 0.5 }}
                 className="mb-12"
               >
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                   Impact by the Numbers
                 </p>
                 <h2
@@ -164,7 +165,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </h2>
               </motion.div>
 
-              <div className="grid gap-px bg-[#1a3d2b] sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden border border-[#1a3d2b]">
+              <div className="grid gap-px bg-dark2 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden border border-dark2">
                 {content.stats.map((stat, i) => (
                   <motion.div
                     key={i}
@@ -172,7 +173,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: i * 0.08 }}
-                    className="bg-[#080f0a] px-8 py-10"
+                    className="bg-dark px-8 py-10"
                   >
                     <p className="font-serif font-bold text-white mb-1"
                       style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}>
@@ -185,17 +186,17 @@ export default function ServicePage({ params }: ServicePageProps) {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </Container>
           </section>
         )}
 
         {/* ── PRODUCTS ── */}
         {content.products && content.products.length > 0 && (
-          <section className="bg-[#1a3d2b] py-20">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+          <section className="bg-dark2 py-20">
+            <Container>
               <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
                 <motion.div {...FADE_UP}>
-                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                     Our Products
                   </p>
                   <h2
@@ -207,7 +208,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </motion.div>
                 <Link
                   href={content.shopHref}
-                  className="inline-flex items-center gap-2 text-[#6b9d7a] hover:text-white font-semibold text-sm transition-colors duration-200 shrink-0"
+                  className="inline-flex items-center gap-2 text-muted hover:text-white font-semibold text-sm transition-colors duration-200 shrink-0"
                 >
                   Shop All Products <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -226,7 +227,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                       href={product.href}
                       className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-white/25 transition-all duration-300 h-full"
                     >
-                      {/* image */}
                       <div className="relative h-44 overflow-hidden shrink-0">
                         <Image
                           src={product.image}
@@ -235,20 +235,19 @@ export default function ServicePage({ params }: ServicePageProps) {
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                           sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,25vw"
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-[#080f0a]/60 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-dark/60 to-transparent" />
                         <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-[0.18em] bg-white/15 backdrop-blur-sm text-white px-2.5 py-1 rounded-full">
                           {product.tag}
                         </span>
                       </div>
-                      {/* content */}
                       <div className="flex flex-col flex-1 p-5 bg-white/5">
-                        <h3 className="font-serif font-bold text-white text-base mb-2 group-hover:text-[#c6dece] transition-colors duration-200">
+                        <h3 className="font-serif font-bold text-white text-base mb-2 group-hover:text-brand-border transition-colors duration-200">
                           {product.label}
                         </h3>
                         <p className="font-sans text-xs text-white/55 leading-relaxed flex-1">
                           {product.sub}
                         </p>
-                        <div className="flex items-center gap-1.5 mt-4 text-[#6b9d7a] text-xs font-semibold group-hover:gap-2.5 transition-all duration-200">
+                        <div className="flex items-center gap-1.5 mt-4 text-muted text-xs font-semibold group-hover:gap-2.5 transition-all duration-200">
                           Order Now <ArrowRight className="h-3 w-3" />
                         </div>
                       </div>
@@ -256,19 +255,19 @@ export default function ServicePage({ params }: ServicePageProps) {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </Container>
           </section>
         )}
 
         {/* ── FARMING PROCESS ── */}
-        <section className="bg-white py-24 border-b border-[#e8ede9]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
             <motion.div className="mb-16" {...FADE_UP}>
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                 Seed to Harvest
               </p>
               <h2
-                className="font-serif font-bold text-[#080f0a] leading-tight max-w-lg"
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
                 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
               >
                 Our Farming Process
@@ -285,43 +284,40 @@ export default function ServicePage({ params }: ServicePageProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ duration: 0.45, delay: i * 0.07 }}
-                    className="group flex items-start gap-6 bg-[#faf8f5] border border-[#e8ede9] hover:border-[#c6dece] rounded-2xl px-7 py-6 transition-all duration-200"
+                    className="group flex items-start gap-6 bg-cream border border-border hover:border-brand-border rounded-2xl px-7 py-6 transition-all duration-200"
                   >
-                    {/* step number + icon */}
                     <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
-                      <div className="w-10 h-10 rounded-xl bg-white border border-[#c6dece] group-hover:bg-[#2d5f3f] group-hover:border-[#2d5f3f] flex items-center justify-center transition-colors duration-200">
-                        <Icon className="w-5 h-5 text-[#2d5f3f] group-hover:text-white transition-colors duration-200" />
+                      <div className="w-10 h-10 rounded-xl bg-white border border-brand-border group-hover:bg-brand group-hover:border-brand flex items-center justify-center transition-colors duration-200">
+                        <Icon className="w-5 h-5 text-brand group-hover:text-white transition-colors duration-200" />
                       </div>
-                      <span className="text-[9px] font-mono text-[#6b9d7a] tracking-[0.15em]">{phase.phase}</span>
+                      <span className="text-[9px] font-mono text-muted tracking-[0.15em]">{phase.phase}</span>
                     </div>
 
-                    {/* content */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-serif font-bold text-[#080f0a] text-lg mb-1.5">{phase.title}</h3>
+                      <h3 className="font-serif font-bold text-dark text-lg mb-1.5">{phase.title}</h3>
                       <p className="font-sans text-sm text-gray-500 leading-relaxed">{phase.description}</p>
                     </div>
 
-                    {/* duration */}
                     <div className="shrink-0 text-right">
-                      <p className="text-[9px] font-mono uppercase tracking-[0.15em] text-[#6b9d7a] mb-0.5">Duration</p>
-                      <p className="font-sans text-sm font-semibold text-[#080f0a]">{phase.duration}</p>
+                      <p className="text-[9px] font-mono uppercase tracking-[0.15em] text-muted mb-0.5">Duration</p>
+                      <p className="font-sans text-sm font-semibold text-dark">{phase.duration}</p>
                     </div>
                   </motion.div>
                 );
               })}
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* ── TECHNOLOGY ── */}
-        <section className="bg-[#faf8f5] py-24 border-b border-[#e8ede9]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        <section className="bg-cream py-24 border-b border-border">
+          <Container>
             <motion.div className="mb-16" {...FADE_UP}>
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                 Innovation
               </p>
               <h2
-                className="font-serif font-bold text-[#080f0a] leading-tight max-w-lg"
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
                 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
               >
                 Technology Driving Excellence
@@ -338,15 +334,15 @@ export default function ServicePage({ params }: ServicePageProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ duration: 0.45, delay: i * 0.08 }}
-                    className="group bg-white border border-[#e8ede9] hover:border-[#c6dece] rounded-2xl p-7 transition-all duration-200"
+                    className="group bg-white border border-border hover:border-brand-border rounded-2xl p-7 transition-all duration-200"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-[#eef5f1] group-hover:bg-[#2d5f3f] border border-[#c6dece] group-hover:border-[#2d5f3f] flex items-center justify-center mb-5 transition-colors duration-200">
-                      <Icon className="w-5 h-5 text-[#2d5f3f] group-hover:text-white transition-colors duration-200" />
+                    <div className="w-11 h-11 rounded-xl bg-brand-bg group-hover:bg-brand border border-brand-border group-hover:border-brand flex items-center justify-center mb-5 transition-colors duration-200">
+                      <Icon className="w-5 h-5 text-brand group-hover:text-white transition-colors duration-200" />
                     </div>
-                    <h3 className="font-serif font-bold text-[#080f0a] text-lg mb-2">{tech.title}</h3>
+                    <h3 className="font-serif font-bold text-dark text-lg mb-2">{tech.title}</h3>
                     <p className="font-sans text-sm text-gray-500 leading-relaxed mb-4">{tech.description}</p>
                     {tech.metrics && (
-                      <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-[#2d5f3f]">
+                      <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-brand">
                         {tech.metrics}
                       </p>
                     )}
@@ -354,27 +350,27 @@ export default function ServicePage({ params }: ServicePageProps) {
                 );
               })}
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* ── BEFORE / AFTER ── */}
         {content.beforeAfter && (
-          <section className="bg-white py-24 border-b border-[#e8ede9]">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+          <section className="bg-white py-24 border-b border-border">
+            <Container>
               <BeforeAfterSlider {...content.beforeAfter} />
-            </div>
+            </Container>
           </section>
         )}
 
         {/* ── FEATURES ── */}
-        <section className="bg-white py-24 border-b border-[#e8ede9]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
             <motion.div className="mb-14" {...FADE_UP}>
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                 Why Kuyash
               </p>
               <h2
-                className="font-serif font-bold text-[#080f0a] leading-tight max-w-lg"
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
                 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
               >
                 What Sets Us Apart
@@ -391,26 +387,25 @@ export default function ServicePage({ params }: ServicePageProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ duration: 0.4, delay: i * 0.07 }}
-                    className="group bg-[#faf8f5] border border-[#e8ede9] hover:border-[#c6dece] rounded-2xl p-6 transition-all duration-200"
+                    className="group bg-cream border border-border hover:border-brand-border rounded-2xl p-6 transition-all duration-200"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white border border-[#c6dece] group-hover:bg-[#2d5f3f] group-hover:border-[#2d5f3f] flex items-center justify-center mb-4 transition-colors duration-200">
-                      <Icon className="w-5 h-5 text-[#2d5f3f] group-hover:text-white transition-colors duration-200" />
+                    <div className="w-10 h-10 rounded-xl bg-white border border-brand-border group-hover:bg-brand group-hover:border-brand flex items-center justify-center mb-4 transition-colors duration-200">
+                      <Icon className="w-5 h-5 text-brand group-hover:text-white transition-colors duration-200" />
                     </div>
-                    <h3 className="font-serif font-bold text-[#080f0a] text-base mb-2">{feature.title}</h3>
+                    <h3 className="font-serif font-bold text-dark text-base mb-2">{feature.title}</h3>
                     <p className="font-sans text-xs text-gray-500 leading-relaxed">{feature.description}</p>
                   </motion.div>
                 );
               })}
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* ── BENEFITS ── */}
-        <section className="bg-[#faf8f5] py-24 border-b border-[#e8ede9]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        <section className="bg-cream py-24 border-b border-border">
+          <Container>
             <div className="grid items-start gap-16 lg:grid-cols-2">
 
-              {/* gallery collage */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -419,7 +414,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 className="grid grid-cols-2 gap-3"
               >
                 {content.gallery.slice(0, 4).map((image, i) => (
-                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-[#e8ede9]">
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-border">
                     <Image
                       src={image} alt={`Farm photo ${i + 1}`} fill
                       className="object-cover transition-transform duration-500 hover:scale-105"
@@ -429,18 +424,17 @@ export default function ServicePage({ params }: ServicePageProps) {
                 ))}
               </motion.div>
 
-              {/* benefits list */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
               >
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                   Benefits
                 </p>
                 <h2
-                  className="font-serif font-bold text-[#080f0a] leading-tight mb-8"
+                  className="font-serif font-bold text-dark leading-tight mb-8"
                   style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
                 >
                   What You Get
@@ -449,27 +443,27 @@ export default function ServicePage({ params }: ServicePageProps) {
                   {content.benefits.map((benefit, i) => (
                     <div
                       key={i}
-                      className="flex items-start gap-3 bg-white border border-[#e8ede9] rounded-xl px-5 py-4"
+                      className="flex items-start gap-3 bg-white border border-border rounded-xl px-5 py-4"
                     >
-                      <CheckCircle2 className="w-5 h-5 shrink-0 text-[#6b9d7a] mt-0.5" />
+                      <CheckCircle2 className="w-5 h-5 shrink-0 text-muted mt-0.5" />
                       <p className="font-sans text-sm text-gray-600 leading-relaxed">{benefit}</p>
                     </div>
                   ))}
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* ── GALLERY ── */}
-        <section className="bg-white py-24 border-b border-[#e8ede9]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
             <motion.div className="mb-12" {...FADE_UP}>
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-3">
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
                 Farm Gallery
               </p>
               <h2
-                className="font-serif font-bold text-[#080f0a] leading-tight max-w-lg"
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
                 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
               >
                 See Our Farm in Action
@@ -484,61 +478,63 @@ export default function ServicePage({ params }: ServicePageProps) {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.04 }}
-                  className="group relative aspect-square rounded-xl overflow-hidden border border-[#e8ede9] hover:border-[#c6dece] transition-all duration-300"
+                  className="group relative aspect-square rounded-xl overflow-hidden border border-border hover:border-brand-border transition-all duration-300"
                 >
                   <Image
                     src={image} alt={`Gallery ${i + 1}`} fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width:640px) 50vw,(max-width:1024px) 33vw,25vw"
                   />
-                  <div className="absolute inset-0 bg-[#080f0a]/0 group-hover:bg-[#080f0a]/20 transition-colors duration-300" />
+                  <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/20 transition-colors duration-300" />
                   <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span className="font-mono text-[10px] text-white/80">0{i + 1}</span>
                   </div>
                 </motion.div>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* ── CTA ── */}
-        <section className="bg-[#080f0a] py-24 relative overflow-hidden">
+        <section className="bg-dark py-24 relative overflow-hidden">
           <div className="absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
               backgroundSize: "60px 60px",
             }}
           />
-          <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-            <motion.div {...FADE_UP}>
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-4">
-                Fresh From Our Farm
-              </p>
-              <h2
-                className="font-serif font-bold text-white leading-[1.06] max-w-2xl mb-5"
-                style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
-              >
-                Experience Premium<br />Organic Produce
-              </h2>
-              <p className="font-sans text-white/50 text-sm leading-relaxed max-w-md mb-10">
-                Browse our selection of fresh, sustainably-grown products. Farm-to-table delivery within 24 hours.
-              </p>
-              <div className="flex flex-col sm:flex-row items-start gap-3">
-                <Link
-                  href={content.shopHref}
-                  className="inline-flex items-center gap-2 bg-[#2d5f3f] hover:bg-[#4a7c59] text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200"
+          <div className="relative z-10">
+            <Container>
+              <motion.div {...FADE_UP}>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-4">
+                  Fresh From Our Farm
+                </p>
+                <h2
+                  className="font-serif font-bold text-white leading-[1.06] max-w-2xl mb-5"
+                  style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
                 >
-                  Shop Now <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/#services"
-                  className="inline-flex items-center gap-2 border border-white/15 hover:border-white/30 text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200"
-                >
-                  <Leaf className="h-4 w-4 text-[#6b9d7a]" />
-                  Explore All Services
-                </Link>
-              </div>
-            </motion.div>
+                  Experience Premium<br />Organic Produce
+                </h2>
+                <p className="font-sans text-white/50 text-sm leading-relaxed max-w-md mb-10">
+                  Browse our selection of fresh, sustainably-grown products. Farm-to-table delivery within 24 hours.
+                </p>
+                <div className="flex flex-col sm:flex-row items-start gap-3">
+                  <Link
+                    href={content.shopHref}
+                    className="inline-flex items-center gap-2 bg-brand hover:bg-brand-hover text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200"
+                  >
+                    Shop Now <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="/#services"
+                    className="inline-flex items-center gap-2 border border-white/15 hover:border-white/30 text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200"
+                  >
+                    <Leaf className="h-4 w-4 text-muted" />
+                    Explore All Services
+                  </Link>
+                </div>
+              </motion.div>
+            </Container>
           </div>
         </section>
 

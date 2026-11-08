@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ease as EASE } from "@/lib/tokens";
+import { BrandLeaf, Container } from "@/components/ui";
 
 const TEAM_IMAGES = [
   {
@@ -25,8 +27,8 @@ const TEAM_IMAGES = [
 
 export function PeopleSection() {
   return (
-    <section className="bg-[#080f0a] py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+    <section className="bg-cream py-20 overflow-hidden">
+      <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* LEFT — copy */}
@@ -34,31 +36,29 @@ export function PeopleSection() {
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: EASE }}
           >
-            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-4">
+            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-brand mb-4">
               Our People
             </p>
             <h2
-              className="font-serif font-bold text-white leading-[1.06] mb-6"
+              className="font-serif font-bold text-dark leading-[1.06] mb-6"
               style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
             >
               The People Behind<br />Our Harvest.
-              <span className="inline-block ml-2 text-[#6b9d7a]">
-                <svg viewBox="0 0 24 24" className="inline w-6 h-6 fill-none stroke-current stroke-[1.5]">
-                  <path d="M12 2C9 2 6 5 6 9c0 2.5 1.5 4.5 3.5 5.5L9 22h6l-.5-7.5C16.5 13.5 18 11.5 18 9c0-4-3-7-6-7z" />
-                </svg>
+              <span className="inline-block ml-2 text-brand">
+                <BrandLeaf className="inline w-6 h-6" strokeWidth={1.5} />
               </span>
             </h2>
-            <p className="text-white/50 font-sans text-sm leading-relaxed mb-4 max-w-md">
+            <p className="text-gray-500 font-sans text-sm leading-relaxed mb-4 max-w-md">
               A farm is only as strong as the people who care for it. Our team works with passion, knowledge and commitment every single day.
             </p>
-            <p className="text-white/50 font-sans text-sm leading-relaxed mb-8 max-w-md">
+            <p className="text-gray-500 font-sans text-sm leading-relaxed mb-8 max-w-md">
               From field managers and agronomists to processors and drivers — 65+ dedicated people show up for the land, and for each other.
             </p>
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 text-[#6b9d7a] font-semibold text-sm hover:gap-3 transition-all duration-200"
+              className="inline-flex items-center gap-2 text-brand font-semibold text-sm hover:gap-3 transition-all duration-200"
             >
               Meet Our Team <ArrowRight className="w-4 h-4" />
             </Link>
@@ -69,8 +69,8 @@ export function PeopleSection() {
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-2 grid-rows-2 gap-3 h-[420px]"
+            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+            className="grid grid-cols-2 grid-rows-2 gap-3 h-[280px] sm:h-[380px] lg:h-[420px]"
           >
             {TEAM_IMAGES.map((img, i) => (
               <motion.div
@@ -88,13 +88,13 @@ export function PeopleSection() {
                   className="object-cover"
                   sizes="(max-width:1024px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-[#080f0a]/20" />
+                <div className="absolute inset-0 bg-dark/10" />
               </motion.div>
             ))}
           </motion.div>
 
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

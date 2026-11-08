@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Leaf, User as UserIcon, ArrowRight } from "lucide-react";
+import { X, User as UserIcon, ArrowRight } from "lucide-react";
 import { getCurrentUser } from "@/lib/utils";
+import { BrandLeaf } from "@/components/ui";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Message {
@@ -86,14 +87,14 @@ export function ChatWidget() {
             transition={{ duration: 0.2 }}
             onClick={() => setIsOpen(true)}
             aria-label="Open chat"
-            className="fixed bottom-6 right-6 z-50 group flex items-center gap-2.5 bg-[#080f0a] hover:bg-[#2d5f3f] text-white pl-4 pr-5 py-3 rounded-full shadow-xl transition-all duration-300"
+            className="fixed bottom-6 right-6 z-50 group flex items-center gap-2.5 bg-dark hover:bg-brand text-white pl-4 pr-5 py-3 rounded-full shadow-xl transition-all duration-300"
           >
-            <div className="w-6 h-6 rounded-full bg-[#2d5f3f] group-hover:bg-white/20 flex items-center justify-center transition-colors duration-300">
-              <Leaf className="w-3.5 h-3.5 text-white" />
+            <div className="w-6 h-6 rounded-full bg-brand group-hover:bg-white/20 flex items-center justify-center transition-colors duration-300">
+              <BrandLeaf className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-sans font-semibold text-sm">Chat with us</span>
             {/* live dot */}
-            <span className="w-2 h-2 rounded-full bg-[#6b9d7a] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-muted animate-pulse" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -106,19 +107,19 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[440px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#e8ede9]"
+            className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[440px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-border"
           >
 
             {/* Header */}
-            <div className="bg-[#080f0a] px-4 py-3.5 flex items-center justify-between shrink-0">
+            <div className="bg-dark px-4 py-3.5 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-[#2d5f3f] flex items-center justify-center">
-                  <Leaf className="w-4 h-4 text-white" />
+                <div className="w-8 h-8 rounded-xl bg-brand flex items-center justify-center">
+                  <BrandLeaf className="w-4 h-4 text-white" />
                 </div>
                 <div>
                   <p className="font-serif font-bold text-white text-sm leading-none">Kuyash Farm</p>
                   <div className="flex items-center gap-1.5 mt-0.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#6b9d7a]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-muted" />
                     <p className="text-white/45 text-[10px] font-sans">Online — replies instantly</p>
                   </div>
                 </div>
@@ -133,22 +134,22 @@ export function ChatWidget() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#faf8f5]">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-cream">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex items-end gap-2 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {message.sender === "bot" && (
-                    <div className="w-6 h-6 rounded-lg bg-[#2d5f3f] flex items-center justify-center shrink-0 mb-0.5">
-                      <Leaf className="w-3 h-3 text-white" />
+                    <div className="w-6 h-6 rounded-lg bg-brand flex items-center justify-center shrink-0 mb-0.5">
+                      <BrandLeaf className="w-3 h-3 text-white" />
                     </div>
                   )}
                   <div
                     className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 ${
                       message.sender === "user"
-                        ? "bg-[#2d5f3f] text-white rounded-br-sm"
-                        : "bg-white text-[#080f0a] rounded-bl-sm border border-[#e8ede9]"
+                        ? "bg-brand text-white rounded-br-sm"
+                        : "bg-white text-dark rounded-bl-sm border border-border"
                     }`}
                   >
                     <p className="font-sans text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
@@ -157,8 +158,8 @@ export function ChatWidget() {
                     </p>
                   </div>
                   {message.sender === "user" && (
-                    <div className="w-6 h-6 rounded-lg bg-[#eef5f1] border border-[#c6dece] flex items-center justify-center shrink-0 mb-0.5">
-                      <UserIcon className="w-3 h-3 text-[#2d5f3f]" />
+                    <div className="w-6 h-6 rounded-lg bg-brand-bg border border-brand-border flex items-center justify-center shrink-0 mb-0.5">
+                      <UserIcon className="w-3 h-3 text-brand" />
                     </div>
                   )}
                 </div>
@@ -167,15 +168,15 @@ export function ChatWidget() {
               {/* Typing indicator */}
               {isTyping && (
                 <div className="flex items-end gap-2 justify-start">
-                  <div className="w-6 h-6 rounded-lg bg-[#2d5f3f] flex items-center justify-center shrink-0">
-                    <Leaf className="w-3 h-3 text-white" />
+                  <div className="w-6 h-6 rounded-lg bg-brand flex items-center justify-center shrink-0">
+                    <BrandLeaf className="w-3 h-3 text-white" />
                   </div>
-                  <div className="bg-white border border-[#e8ede9] rounded-2xl rounded-bl-sm px-4 py-3">
+                  <div className="bg-white border border-border rounded-2xl rounded-bl-sm px-4 py-3">
                     <div className="flex gap-1 items-center">
                       {[0, 150, 300].map((delay) => (
                         <div
                           key={delay}
-                          className="w-1.5 h-1.5 bg-[#6b9d7a] rounded-full animate-bounce"
+                          className="w-1.5 h-1.5 bg-muted rounded-full animate-bounce"
                           style={{ animationDelay: `${delay}ms` }}
                         />
                       ))}
@@ -187,13 +188,13 @@ export function ChatWidget() {
             </div>
 
             {/* Quick actions */}
-            <div className="px-3 py-2 bg-white border-t border-[#e8ede9] shrink-0">
+            <div className="px-3 py-2 bg-white border-t border-border shrink-0">
               <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
                 {QUICK_ACTIONS.map((action) => (
                   <button
                     key={action.id}
                     onClick={() => setInputMessage(action.text)}
-                    className="shrink-0 text-[10px] font-mono uppercase tracking-widest text-[#2d5f3f] bg-[#eef5f1] hover:bg-[#c6dece] border border-[#c6dece] px-3 py-1.5 rounded-full transition-colors duration-200 whitespace-nowrap"
+                    className="shrink-0 text-[10px] font-mono uppercase tracking-widest text-brand bg-brand-bg hover:bg-brand-border border border-brand-border px-3 py-1.5 rounded-full transition-colors duration-200 whitespace-nowrap"
                   >
                     {action.label}
                   </button>
@@ -202,21 +203,21 @@ export function ChatWidget() {
             </div>
 
             {/* Input */}
-            <div className="px-3 py-3 bg-white border-t border-[#e8ede9] shrink-0">
-              <div className="flex items-center gap-2 bg-[#faf8f5] border border-[#e8ede9] rounded-full px-3 py-1.5 focus-within:border-[#2d5f3f] transition-colors duration-200">
+            <div className="px-3 py-3 bg-white border-t border-border shrink-0">
+              <div className="flex items-center gap-2 bg-cream border border-border rounded-full px-3 py-1.5 focus-within:border-brand transition-colors duration-200">
                 <input
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type your message..."
-                  className="flex-1 bg-transparent text-sm font-sans text-[#080f0a] placeholder:text-gray-400 focus:outline-none"
+                  className="flex-1 bg-transparent text-sm font-sans text-dark placeholder:text-gray-400 focus:outline-none"
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim()}
                   aria-label="Send message"
-                  className="w-7 h-7 rounded-full bg-[#2d5f3f] hover:bg-[#4a7c59] disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 shrink-0"
+                  className="w-7 h-7 rounded-full bg-brand hover:bg-brand-hover disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 shrink-0"
                 >
                   <ArrowRight className="w-3.5 h-3.5 text-white" />
                 </button>

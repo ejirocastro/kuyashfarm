@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Cpu, Leaf, TrendingUp } from "lucide-react";
+import { ease as EASE } from "@/lib/tokens";
+import { Container } from "@/components/ui";
 
 const floatingCards = [
   { icon: Cpu, label: "Precision Agriculture", sub: "IoT & AI-powered", color: "#06b6d4", delay: 0 },
@@ -12,7 +14,7 @@ const floatingCards = [
 
 export function AcademyHero() {
   return (
-    <section className="relative bg-[#080f0a] overflow-hidden min-h-screen">
+    <section className="relative bg-dark overflow-hidden min-h-screen">
       {/* Background grid */}
       <div
         className="absolute inset-0 z-0 opacity-[0.04]"
@@ -21,11 +23,12 @@ export function AcademyHero() {
           backgroundSize: "60px 60px",
         }}
       />
-      <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-[#2d5f3f]/20 blur-[120px] z-0" />
-      <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] rounded-full bg-[#4a7c59]/15 blur-[100px] z-0" />
+      <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-brand/20 blur-[120px] z-0" />
+      <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] rounded-full bg-brand-hover/15 blur-[100px] z-0" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-6 lg:px-8 pt-28 pb-16">
+      <div className="relative z-10 pt-28 pb-16">
+      <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center w-full">
 
           {/* LEFT */}
@@ -41,10 +44,7 @@ export function AcademyHero() {
               <br />
               Africa&apos;s Next
               <br />
-              <span
-                className="text-transparent bg-clip-text"
-                style={{ backgroundImage: "linear-gradient(135deg, #6b9d7a 0%, #e8d5a3 100%)" }}
-              >
+              <span className="text-transparent bg-clip-text bg-linear-to-br from-muted to-gold">
                 Generation
               </span>
               <br />
@@ -71,7 +71,7 @@ export function AcademyHero() {
             >
               <Link
                 href="/academy/programs"
-                className="group inline-flex items-center gap-3 bg-[#2d5f3f] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#4a7c59] transition-all duration-300"
+                className="group inline-flex items-center gap-3 bg-brand text-white font-semibold px-8 py-4 rounded-full hover:bg-brand-hover transition-all duration-300"
                 style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
               >
                 Explore Programs
@@ -89,7 +89,7 @@ export function AcademyHero() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.15 }}
               className="absolute inset-0 rounded-3xl overflow-hidden border border-white/8"
-              style={{ background: "linear-gradient(135deg, #0f2318 0%, #1a3d2b 50%, #0d1f14 100%)" }}
+              style={{ background: "linear-gradient(135deg, #0f2318 0%, var(--dark2) 50%, #0d1f14 100%)" }}
             >
               <div
                 className="absolute inset-0 opacity-[0.06]"
@@ -101,17 +101,17 @@ export function AcademyHero() {
               {/* Central rings */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative">
-                  <div className="w-52 h-52 rounded-full border border-[#2d5f3f]/30 flex items-center justify-center">
-                    <div className="w-36 h-36 rounded-full border border-[#4a7c59]/40 flex items-center justify-center">
-                      <div className="w-20 h-20 rounded-full bg-[#2d5f3f]/30 border border-[#6b9d7a]/50 flex items-center justify-center">
-                        <Leaf className="w-8 h-8 text-[#6b9d7a]" />
+                  <div className="w-52 h-52 rounded-full border border-brand/30 flex items-center justify-center">
+                    <div className="w-36 h-36 rounded-full border border-brand-hover/40 flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-full bg-brand/30 border border-muted/50 flex items-center justify-center">
+                        <Leaf className="w-8 h-8 text-muted" />
                       </div>
                     </div>
                   </div>
                   {[0, 60, 120, 180, 240, 300].map((deg, i) => (
                     <div
                       key={i}
-                      className="absolute w-2 h-2 rounded-full bg-[#4a7c59]/60"
+                      className="absolute w-2 h-2 rounded-full bg-brand-hover/60"
                       style={{
                         top: "50%", left: "50%",
                         transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-104px)`,
@@ -139,7 +139,7 @@ export function AcademyHero() {
                   transition={{ duration: 0.6, delay: 0.5 + card.delay }}
                   className={`absolute ${positions[i]} z-20`}
                 >
-                  <div className="flex items-center gap-3 bg-[#0f1f14]/90 border border-white/10 backdrop-blur-md rounded-2xl px-4 py-3 shadow-2xl w-[200px]">
+                  <div className="flex items-center gap-3 bg-dark/90 border border-white/10 backdrop-blur-md rounded-2xl px-4 py-3 shadow-2xl w-[200px]">
                     <div
                       className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                       style={{ background: `${card.color}20`, border: `1px solid ${card.color}40` }}
@@ -160,10 +160,10 @@ export function AcademyHero() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="absolute -top-5 right-4 z-20 bg-[#e8d5a3] rounded-2xl px-5 py-4 shadow-xl"
+              className="absolute -top-5 right-4 z-20 bg-gold rounded-2xl px-5 py-4 shadow-xl"
             >
-              <p className="font-serif text-[#1a3d2b] text-2xl font-bold">40 acres</p>
-              <p className="text-[#1a3d2b]/60 text-xs mt-0.5 font-sans">Working farm campus</p>
+              <p className="font-serif text-dark2 text-2xl font-bold">40 acres</p>
+              <p className="text-dark2/60 text-xs mt-0.5 font-sans">Working farm campus</p>
             </motion.div>
 
             {/* Bottom-right accent */}
@@ -171,17 +171,18 @@ export function AcademyHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.72 }}
-              className="absolute bottom-3 right-5 z-20 bg-[#0f2318]/90 border border-[#2d5f3f]/40 backdrop-blur-md rounded-2xl px-5 py-4 shadow-xl"
+              className="absolute bottom-3 right-5 z-20 bg-dark/90 border border-brand/40 backdrop-blur-md rounded-2xl px-5 py-4 shadow-xl"
             >
               <div className="flex items-center gap-2 mb-1">
-                <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
-                <span className="text-[#6b9d7a] text-xs font-medium">Live enrollment</span>
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-muted text-xs font-medium">Live enrollment</span>
               </div>
               <p className="text-white font-semibold text-sm">Next cohort: August 2026</p>
             </motion.div>
           </div>
 
         </div>
+      </Container>
       </div>
 
       {/* Scroll cue */}

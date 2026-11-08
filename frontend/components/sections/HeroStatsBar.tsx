@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Leaf, Users, Building2, Layers, GitMerge } from "lucide-react";
+import { Container } from "@/components/ui";
 
 const STATS = [
   { value: "56", label: "Hectares", sub: "Farm Site", icon: Leaf },
@@ -13,9 +14,9 @@ const STATS = [
 
 export function HeroStatsBar() {
   return (
-    <div className="bg-[#1a3d2b] border-t border-[#2d5f3f]/40">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-[#2d5f3f]/30">
+    <div className="bg-dark2 border-t border-brand/40">
+      <Container>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 divide-x-0 sm:divide-x divide-brand/30">
           {STATS.map((stat, i) => {
             const Icon = stat.icon;
             return (
@@ -26,8 +27,8 @@ export function HeroStatsBar() {
                 transition={{ duration: 0.4, delay: i * 0.07 }}
                 className="flex items-center gap-3.5 px-5 py-5 first:pl-0 last:pr-0"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#2d5f3f]/40 border border-[#2d5f3f]/50 flex items-center justify-center shrink-0">
-                  <Icon className="w-3.5 h-3.5 text-[#6b9d7a]" />
+                <div className="w-8 h-8 rounded-lg bg-brand/40 border border-brand/50 flex items-center justify-center shrink-0">
+                  <Icon className="w-3.5 h-3.5 text-muted" />
                 </div>
                 <div>
                   <p className="font-serif font-bold text-white text-lg leading-none">
@@ -40,7 +41,7 @@ export function HeroStatsBar() {
             );
           })}
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

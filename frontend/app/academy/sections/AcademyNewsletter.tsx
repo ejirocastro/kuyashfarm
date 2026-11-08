@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { Container } from "@/components/ui";
 
 export function AcademyNewsletter() {
   const [email, setEmail] = useState("");
@@ -19,8 +20,8 @@ export function AcademyNewsletter() {
   };
 
   return (
-    <section className="bg-[#080f0a] py-28">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+    <section className="bg-dark py-28">
+      <Container>
         <div className="relative rounded-3xl overflow-hidden border border-white/8 p-12 md:p-16"
           style={{ background: "linear-gradient(135deg, #0f2318 0%, #1a3d2b 60%, #0f2318 100%)" }}
         >
@@ -33,7 +34,7 @@ export function AcademyNewsletter() {
             }}
           />
           {/* Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full bg-[#2d5f3f]/30 blur-[80px]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full bg-brand/30 blur-[80px]" />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12">
             <div className="max-w-lg">
@@ -41,7 +42,7 @@ export function AcademyNewsletter() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-xs font-mono uppercase tracking-[0.2em] text-[#6b9d7a] mb-4"
+                className="text-xs font-mono uppercase tracking-[0.2em] text-muted mb-4"
               >
                 Stay Connected
               </motion.p>
@@ -54,7 +55,7 @@ export function AcademyNewsletter() {
               >
                 Get agricultural insights
                 <br />
-                <span className="text-[#e8d5a3]">delivered to your inbox.</span>
+                <span className="text-gold">delivered to your inbox.</span>
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -77,8 +78,8 @@ export function AcademyNewsletter() {
               className="w-full lg:w-auto lg:min-w-[400px]"
             >
               {submitted ? (
-                <div className="flex items-center gap-3 bg-[#2d5f3f]/30 border border-[#2d5f3f]/50 rounded-2xl px-6 py-5">
-                  <CheckCircle className="w-6 h-6 text-[#6b9d7a] shrink-0" />
+                <div className="flex items-center gap-3 bg-brand/30 border border-brand/50 rounded-2xl px-6 py-5">
+                  <CheckCircle className="w-6 h-6 text-muted shrink-0" />
                   <div>
                     <p className="text-white font-semibold text-sm">You&apos;re subscribed!</p>
                     <p className="text-white/50 text-xs mt-0.5 font-sans">Look out for your first email from us.</p>
@@ -92,15 +93,15 @@ export function AcademyNewsletter() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="flex-1 bg-white/[0.06] border border-white/15 text-white placeholder:text-white/30 rounded-xl px-5 py-4 text-sm font-sans outline-none focus:border-[#2d5f3f] focus:bg-white/[0.09] transition-all duration-200"
+                    className="flex-1 bg-white/[0.06] border border-white/15 text-white placeholder:text-white/30 rounded-xl px-5 py-4 text-sm font-sans outline-none focus:border-brand focus:bg-white/[0.09] transition-all duration-200"
                   />
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex items-center justify-center gap-2 bg-[#e8d5a3] text-[#1a3d2b] font-semibold px-6 py-4 rounded-xl hover:bg-[#dfc98a] transition-colors duration-200 text-sm shrink-0 disabled:opacity-70"
+                    className="flex items-center justify-center gap-2 bg-gold text-dark2 font-semibold px-6 py-4 rounded-xl hover:opacity-90 transition-all duration-200 text-sm shrink-0 disabled:opacity-70"
                   >
                     {loading ? (
-                      <span className="w-4 h-4 border-2 border-[#1a3d2b]/30 border-t-[#1a3d2b] rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-dark2/30 border-t-dark2 rounded-full animate-spin" />
                     ) : (
                       <>Subscribe <ArrowRight className="w-4 h-4" /></>
                     )}
@@ -113,7 +114,7 @@ export function AcademyNewsletter() {
             </motion.div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

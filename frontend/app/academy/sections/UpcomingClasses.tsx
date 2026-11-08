@@ -5,11 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { ACADEMY_CLASSES, LEVEL_COLORS } from "@/lib/data/academy";
+import { Container } from "@/components/ui";
 
 export function UpcomingClasses() {
   return (
     <section id="classes" className="bg-white py-28 md:py-36">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <Container>
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
           <div>
@@ -17,7 +18,7 @@ export function UpcomingClasses() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-xs font-mono uppercase tracking-[0.2em] text-[#6b9d7a] mb-4"
+              className="text-xs font-mono uppercase tracking-[0.2em] text-muted mb-4"
             >
               Upcoming Classes
             </motion.p>
@@ -26,11 +27,11 @@ export function UpcomingClasses() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="font-serif text-4xl md:text-5xl font-bold text-[#080f0a] leading-tight"
+              className="font-serif text-4xl md:text-5xl font-bold text-dark leading-tight"
             >
               Book your spot.
               <br />
-              <span className="text-[#2d5f3f]">Seats fill fast.</span>
+              <span className="text-brand">Seats fill fast.</span>
             </motion.h2>
           </div>
           <motion.p
@@ -85,7 +86,7 @@ export function UpcomingClasses() {
 
               {/* Body */}
               <div className="p-7 flex flex-col flex-1">
-                <h3 className="font-serif text-xl font-bold text-[#080f0a] mb-2 leading-tight">
+                <h3 className="font-serif text-xl font-bold text-dark mb-2 leading-tight">
                   {cls.title}
                 </h3>
                 <p className="text-gray-500 text-sm leading-relaxed font-sans mb-5">
@@ -97,7 +98,7 @@ export function UpcomingClasses() {
                   {cls.topics.map((topic) => (
                     <span
                       key={topic}
-                      className="text-xs font-medium bg-[#f0f7f3] text-[#2d5f3f] px-3 py-1 rounded-full"
+                      className="text-xs font-medium bg-brand-bg text-brand px-3 py-1 rounded-full"
                     >
                       {topic}
                     </span>
@@ -107,11 +108,11 @@ export function UpcomingClasses() {
                 {/* Meta */}
                 <div className="mt-auto space-y-2.5 text-sm text-gray-400 border-t border-gray-50 pt-5 mb-6">
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-[#2d5f3f] shrink-0" />
+                    <Calendar className="w-4 h-4 text-brand shrink-0" />
                     <span>{cls.date} &bull; {cls.time}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#2d5f3f] shrink-0" />
+                    <MapPin className="w-4 h-4 text-brand shrink-0" />
                     <span>{cls.location}</span>
                   </div>
                 </div>
@@ -119,7 +120,7 @@ export function UpcomingClasses() {
                 {/* Price + CTA */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-serif text-2xl font-bold text-[#080f0a]">
+                    <p className="font-serif text-2xl font-bold text-dark">
                       ₦{cls.price.toLocaleString()}
                     </p>
                     <p className="text-xs text-gray-400 font-sans">per person</p>
@@ -132,7 +133,7 @@ export function UpcomingClasses() {
                   ) : (
                     <Link
                       href={`/academy/classes/${cls.id}`}
-                      className="group/btn inline-flex items-center gap-2 bg-[#2d5f3f] text-white font-semibold text-sm px-6 py-3 rounded-full hover:bg-[#1a3d2b] transition-colors duration-200"
+                      className="group/btn inline-flex items-center gap-2 bg-brand text-white font-semibold text-sm px-6 py-3 rounded-full hover:bg-dark2 transition-colors duration-200"
                     >
                       Register
                       <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
@@ -143,7 +144,7 @@ export function UpcomingClasses() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

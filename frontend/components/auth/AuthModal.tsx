@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, X, Leaf, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, X, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/lib/context/AuthContext";
+import { BrandLeaf } from "@/components/ui";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -38,10 +39,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           ref={ref}
           id={id}
           {...rest}
-          className={`w-full px-4 py-3 text-sm font-sans text-[#080f0a] bg-[#faf8f5] border rounded-xl outline-none transition-all duration-200 placeholder:text-gray-300
+          className={`w-full px-4 py-3 text-sm font-sans text-dark bg-cream border rounded-xl outline-none transition-all duration-200 placeholder:text-gray-300
             ${error
               ? "border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100"
-              : "border-[#c6dece] focus:border-[#2d5f3f] focus:ring-2 focus:ring-[#2d5f3f]/10"
+              : "border-brand-border focus:border-brand focus:ring-2 focus:ring-brand/10"
             }
             ${suffix ? "pr-11" : ""}
           `}
@@ -165,7 +166,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-[#080f0a]/70 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-dark/70 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -183,19 +184,19 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
               onClick={e => e.stopPropagation()}
             >
               {/* Brand accent line */}
-              <div className="h-1 w-full bg-[#2d5f3f]" />
+              <div className="h-1 w-full bg-brand" />
 
               {/* Left decorative bleed — subtle green wash */}
-              <div className="absolute top-1 left-0 w-1 h-full bg-[#2d5f3f]/5 pointer-events-none" />
+              <div className="absolute top-1 left-0 w-1 h-full bg-brand/5 pointer-events-none" />
 
               {/* ── HEADER ── */}
               <div className="px-8 pt-7 pb-5 flex items-start justify-between border-b border-gray-50">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#eef5f1] border border-[#c6dece] flex items-center justify-center shrink-0">
-                    <Leaf className="w-4 h-4 text-[#2d5f3f]" />
+                  <div className="w-9 h-9 rounded-xl bg-brand-bg border border-brand-border flex items-center justify-center shrink-0">
+                    <BrandLeaf className="w-4 h-4 text-brand" />
                   </div>
                   <div>
-                    <h2 className="font-serif text-xl font-bold text-[#080f0a] leading-tight">
+                    <h2 className="font-serif text-xl font-bold text-dark leading-tight">
                       {mode === "login" ? "Welcome back" : "Create account"}
                     </h2>
                     <p className="text-xs text-gray-400 font-sans mt-0.5">
@@ -228,10 +229,10 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
                       transition={{ duration: 0.3 }}
                       className="flex flex-col items-center py-8 text-center"
                     >
-                      <div className="w-14 h-14 rounded-full bg-[#eef5f1] border-2 border-[#c6dece] flex items-center justify-center mb-4">
-                        <CheckCircle2 className="w-7 h-7 text-[#2d5f3f]" />
+                      <div className="w-14 h-14 rounded-full bg-brand-bg border-2 border-brand-border flex items-center justify-center mb-4">
+                        <CheckCircle2 className="w-7 h-7 text-brand" />
                       </div>
-                      <p className="font-serif text-lg font-bold text-[#080f0a] mb-1">
+                      <p className="font-serif text-lg font-bold text-dark mb-1">
                         {mode === "login" ? "Signed in!" : "Account created!"}
                       </p>
                       <p className="text-sm text-gray-400 font-sans">Redirecting you now…</p>
@@ -315,7 +316,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
                           <button
                             type="button"
                             onClick={() => setShowPassword(v => !v)}
-                            className="text-gray-400 hover:text-[#2d5f3f] transition-colors"
+                            className="text-gray-400 hover:text-brand transition-colors"
                             aria-label={showPassword ? "Hide password" : "Show password"}
                           >
                             {showPassword
@@ -347,7 +348,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
                                 <button
                                   type="button"
                                   onClick={() => setShowConfirm(v => !v)}
-                                  className="text-gray-400 hover:text-[#2d5f3f] transition-colors"
+                                  className="text-gray-400 hover:text-brand transition-colors"
                                   aria-label={showConfirm ? "Hide password" : "Show password"}
                                 >
                                   {showConfirm
@@ -365,7 +366,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
                         <div className="flex justify-end">
                           <button
                             type="button"
-                            className="text-xs font-semibold text-[#2d5f3f] hover:text-[#4a7c59] transition-colors font-sans"
+                            className="text-xs font-semibold text-brand hover:text-brand-hover transition-colors font-sans"
                           >
                             Forgot password?
                           </button>
@@ -376,7 +377,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex items-center justify-center gap-2 bg-[#2d5f3f] hover:bg-[#4a7c59] active:bg-[#1a3d2b] text-white font-semibold text-sm py-3.5 rounded-xl transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed mt-1"
+                        className="w-full flex items-center justify-center gap-2 bg-brand hover:bg-brand-hover active:bg-dark2 text-white font-semibold text-sm py-3.5 rounded-xl transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed mt-1"
                       >
                         {isLoading ? (
                           <>
@@ -403,7 +404,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, defaultMode = "login" }:
                     <button
                       type="button"
                       onClick={() => setMode(mode === "login" ? "register" : "login")}
-                      className="font-semibold text-[#2d5f3f] hover:text-[#4a7c59] transition-colors"
+                      className="font-semibold text-brand hover:text-brand-hover transition-colors"
                     >
                       {mode === "login" ? "Sign up" : "Sign in"}
                     </button>

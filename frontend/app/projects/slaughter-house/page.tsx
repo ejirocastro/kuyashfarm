@@ -13,15 +13,9 @@ import {
   ShoppingBag, Store, UtensilsCrossed, ChefHat, Beef,
   ClipboardCheck, Package, PackageCheck,
 } from "lucide-react";
+import { ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
+import { Container } from "@/components/ui";
 
-import { colors as c, ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
-const BRAND  = c.brand;
-const DARK   = c.dark;
-const DARK2  = c.dark2;
-const CREAM  = c.cream;
-const BORDER = c.border;
-const MUTED  = c.muted;
-const GOLD   = c.gold;
 const fadeUp = (delay = 0) => _fadeUp(delay);
 
 // ─── data ─────────────────────────────────────────────────────────────────────
@@ -101,14 +95,17 @@ const FAQS = [
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b last:border-0" style={{ borderColor: BORDER }}>
+    <div className="border-b border-border last:border-0">
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between gap-4 py-5 text-left"
       >
-        <span className="font-serif font-semibold text-sm" style={{ color: DARK }}>{q}</span>
-        <span className="shrink-0 w-6 h-6 rounded-full border flex items-center justify-center" style={{ borderColor: BORDER }}>
-          {open ? <Minus className="w-3 h-3" style={{ color: BRAND }} /> : <Plus className="w-3 h-3" style={{ color: BRAND }} />}
+        <span className="font-serif font-semibold text-sm text-dark">{q}</span>
+        <span className="shrink-0 w-6 h-6 rounded-full border border-border flex items-center justify-center">
+          {open
+            ? <Minus className="w-3 h-3 text-brand" />
+            : <Plus className="w-3 h-3 text-brand" />
+          }
         </span>
       </button>
       <AnimatePresence initial={false}>
@@ -120,7 +117,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.3, ease: EASE }}
             className="overflow-hidden"
           >
-            <p className="font-sans text-sm leading-relaxed pb-5" style={{ color: "#4a5568" }}>{a}</p>
+            <p className="font-sans text-sm text-gray-600 leading-relaxed pb-5">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -133,141 +130,133 @@ export default function SlaughterHousePage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen" style={{ backgroundColor: CREAM }}>
+      <main className="min-h-screen bg-cream">
 
-        {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
+        {/* ── 1. HERO ── */}
         <section className="relative h-[88vh] min-h-[600px] overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600"
             alt="Meat processing facility"
-            fill
-            priority
+            fill priority
             className="object-cover object-center"
             sizes="100vw"
           />
-          <div className="absolute inset-0" style={{ backgroundColor: `${DARK}4d` }} />
-          <div className="absolute inset-0 bg-linear-to-t from-[#080f0a]/85 via-[#080f0a]/15 to-transparent" />
+          <div className="absolute inset-0 bg-dark/30" />
+          <div className="absolute inset-0 bg-linear-to-t from-dark/85 via-dark/15 to-transparent" />
 
-          {/* back-link — top-left, clear of navbar */}
-          <div className="absolute top-20 left-0 z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
-              <Link
-                href="/#projects"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" /> All Projects
-              </Link>
-            </motion.div>
+          <div className="absolute top-20 left-0 z-10 w-full">
+            <Container>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
+                <Link
+                  href="/#projects"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" /> All Projects
+                </Link>
+              </motion.div>
+            </Container>
           </div>
 
-          {/* bottom content */}
-          <div className="absolute inset-x-0 bottom-0 z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
-            >
-              <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-4" style={{ color: MUTED }}>
-                Slaughterhouse &amp; Meat Processing
-              </p>
-
-              <h1
-                className="font-serif font-bold text-white leading-[1.04] max-w-2xl mb-5"
-                style={{ fontSize: "clamp(2rem, 4.5vw, 4rem)" }}
+          <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
+            <Container>
+              <motion.div
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: EASE }}
               >
-                From Farm to Market.<br />
-                Quality at Every Stage.
-              </h1>
-
-              <p className="font-sans text-white/65 leading-relaxed max-w-lg mb-9" style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)" }}>
-                Kuyash Integrated Farm Ltd is developing a modern slaughterhouse and meat processing facility to ensure safe, hygienic and reliable meat supply — from our farms to your table.
-              </p>
-
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                <Link
-                  href="#partnership"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: GOLD, color: DARK }}
+                <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-4 text-muted">
+                  Slaughterhouse &amp; Meat Processing
+                </p>
+                <h1
+                  className="font-serif font-bold text-white leading-[1.04] max-w-2xl mb-5"
+                  style={{ fontSize: "clamp(2rem, 4.5vw, 4rem)" }}
                 >
-                  Enquire About Our Facility <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="#process"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
-                >
-                  Explore Our Processing Plans
-                </Link>
-              </div>
-            </motion.div>
+                  From Farm to Market.<br />Quality at Every Stage.
+                </h1>
+                <p className="font-sans text-white/65 leading-relaxed max-w-lg mb-9" style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)" }}>
+                  Kuyash Integrated Farm Ltd is developing a modern slaughterhouse and meat processing facility to ensure safe, hygienic and reliable meat supply — from our farms to your table.
+                </p>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                  <Link
+                    href="#partnership"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
+                  >
+                    Enquire About Our Facility <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="#process"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
+                  >
+                    Explore Our Processing Plans
+                  </Link>
+                </div>
+              </motion.div>
+            </Container>
           </div>
         </section>
 
-        {/* ── 2. THE FACILITY ──────────────────────────────────────────────── */}
-        <section id="facility" className="bg-white py-20 border-y" style={{ borderColor: BORDER }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 2. THE FACILITY ── */}
+        <section id="facility" className="bg-white py-20 border-y border-border">
+          <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-              {/* left — copy */}
               <motion.div {...fadeUp()}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: MUTED }}>The Facility</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">The Facility</p>
                 <h2
-                  className="font-serif font-bold leading-[1.06] mb-6"
-                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: DARK }}
+                  className="font-serif font-bold text-dark leading-[1.06] mb-6"
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
                 >
                   Building a Modern<br />Meat Processing Hub
                 </h2>
-                <div className="space-y-4 font-sans text-sm leading-relaxed mb-10" style={{ color: "#4a5568" }}>
+                <div className="space-y-4 font-sans text-sm text-gray-600 leading-relaxed mb-10">
                   <p>
                     Our slaughterhouse is part of Kuyash&apos;s integrated farm vision — connecting livestock production with responsible processing, cold storage and dependable supply. The facility is designed to meet industry best practices, ensure food safety and deliver high-quality meat products to local and regional markets.
                   </p>
                 </div>
 
-                {/* 4 pillars */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {FACILITY_PILLARS.map((p, i) => {
                     const Icon = p.icon;
                     return (
                       <motion.div key={p.label} {...fadeUp(i * 0.07)} className="flex flex-col items-center text-center gap-2">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: "#eef5f1" }}>
-                          <Icon className="w-4 h-4" style={{ color: BRAND }} />
+                        <div className="w-10 h-10 rounded-xl bg-brand-bg flex items-center justify-center">
+                          <Icon className="w-4 h-4 text-brand" />
                         </div>
-                        <p className="font-sans text-xs font-semibold leading-snug" style={{ color: DARK }}>{p.label}</p>
+                        <p className="font-sans text-xs font-semibold text-dark leading-snug">{p.label}</p>
                       </motion.div>
                     );
                   })}
                 </div>
               </motion.div>
 
-              {/* right — facility image */}
               <motion.div {...fadeUp(0.15)}>
-                <div className="relative aspect-4/3 rounded-2xl overflow-hidden border" style={{ borderColor: BORDER }}>
+                <div className="relative aspect-4/3 rounded-2xl overflow-hidden border border-border">
                   <Image
                     src="https://images.unsplash.com/photo-1590504805695-b87b5b8b8c01?q=80&w=1200"
                     alt="Kuyash facility building"
-                    fill
-                    className="object-cover"
+                    fill className="object-cover"
                     sizes="(max-width:1024px) 100vw, 50vw"
                   />
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ── 3. MEAT CATEGORIES ───────────────────────────────────────────── */}
-        <section className="py-20" style={{ backgroundColor: CREAM }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 3. MEAT CATEGORIES ── */}
+        <section className="py-20 bg-cream">
+          <Container>
             <motion.div {...fadeUp()} className="text-center mb-12">
-              <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: MUTED }}>
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">
                 Our Livestock &amp; Meat Categories
               </p>
               <h2
-                className="font-serif font-bold leading-[1.06] mb-3"
-                style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: DARK }}
+                className="font-serif font-bold text-dark leading-[1.06] mb-3"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
               >
                 Quality Meats from Healthy Livestock
               </h2>
-              <p className="font-sans text-sm leading-relaxed max-w-lg mx-auto" style={{ color: "#4a5568" }}>
+              <p className="font-sans text-sm text-gray-600 leading-relaxed max-w-lg mx-auto">
                 We source and process from trusted, healthy livestock, ensuring quality, safety and great taste.
               </p>
             </motion.div>
@@ -280,102 +269,92 @@ export default function SlaughterHousePage() {
                     className="group relative flex flex-col justify-end rounded-2xl overflow-hidden h-72 cursor-pointer"
                   >
                     <Image
-                      src={cat.image}
-                      alt={cat.label}
-                      fill
+                      src={cat.image} alt={cat.label} fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width:640px) 100vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#080f0a]/80 via-[#080f0a]/20 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-dark/80 via-dark/20 to-transparent" />
                     <div className="relative z-10 p-6 flex items-end justify-between">
                       <div>
                         <p className="font-serif font-bold text-white text-lg mb-1">{cat.label}</p>
                         <p className="font-sans text-white/65 text-xs">{cat.sub}</p>
                       </div>
                       <div className="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-300 shrink-0">
-                        <ArrowRight className="w-4 h-4 text-white group-hover:text-[#2d5f3f] transition-colors duration-300" />
+                        <ArrowRight className="w-4 h-4 text-white group-hover:text-brand transition-colors duration-300" />
                       </div>
                     </div>
                   </Link>
                 </motion.div>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ── 4. HYGIENE & SAFETY ──────────────────────────────────────────── */}
-        <section className="bg-white py-20 border-t" style={{ borderColor: BORDER }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 4. HYGIENE & SAFETY ── */}
+        <section className="bg-white py-20 border-t border-border">
+          <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-              {/* left — image */}
               <motion.div {...fadeUp()} className="order-last lg:order-first">
                 <div className="relative aspect-4/3 rounded-2xl overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1200"
                     alt="Food safety and hygiene"
-                    fill
-                    className="object-cover"
+                    fill className="object-cover"
                     sizes="(max-width:1024px) 100vw, 50vw"
                   />
                 </div>
               </motion.div>
 
-              {/* right — copy */}
               <motion.div {...fadeUp(0.15)}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: MUTED }}>
-                  Safety &amp; Quality
-                </p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">Safety &amp; Quality</p>
                 <h2
-                  className="font-serif font-bold leading-[1.06] mb-5"
-                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: DARK }}
+                  className="font-serif font-bold text-dark leading-[1.06] mb-5"
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
                 >
                   Hygiene, Safety &amp;<br />Quality Assurance
                 </h2>
-                <p className="font-sans text-sm leading-relaxed mb-10" style={{ color: "#4a5568" }}>
+                <p className="font-sans text-sm text-gray-600 leading-relaxed mb-10">
                   We follow strict hygiene and safety protocols to ensure the highest standards at every stage of processing. Our approach includes veterinary inspection, temperature control, sanitation procedures and a trained, professional team committed to food safety and quality.
                 </p>
 
-                {/* 4 safety pillars */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {SAFETY_PILLARS.map((p, i) => {
                     const Icon = p.icon;
                     return (
                       <motion.div key={p.label} {...fadeUp(i * 0.07)} className="flex flex-col items-center text-center gap-2">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: "#eef5f1" }}>
-                          <Icon className="w-4 h-4" style={{ color: BRAND }} />
+                        <div className="w-10 h-10 rounded-xl bg-brand-bg flex items-center justify-center">
+                          <Icon className="w-4 h-4 text-brand" />
                         </div>
-                        <p className="font-sans text-xs font-semibold leading-snug" style={{ color: DARK }}>{p.label}</p>
+                        <p className="font-sans text-xs font-semibold text-dark leading-snug">{p.label}</p>
                       </motion.div>
                     );
                   })}
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ── 5. PROCESSING JOURNEY ────────────────────────────────────────── */}
-        <section id="process" className="py-20 border-t overflow-hidden" style={{ backgroundColor: CREAM, borderColor: BORDER }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 5. PROCESSING JOURNEY ── */}
+        <section id="process" className="py-20 border-t border-border overflow-hidden bg-cream">
+          <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-center">
 
-              {/* left — copy + steps */}
               <div>
                 <motion.div {...fadeUp()} className="mb-12">
-                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: MUTED }}>Our Processing Journey</p>
+                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">Our Processing Journey</p>
                   <h2
-                    className="font-serif font-bold leading-[1.06] mb-3"
-                    style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: DARK }}
+                    className="font-serif font-bold text-dark leading-[1.06] mb-3"
+                    style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
                   >
                     From Livestock to Your Table
                   </h2>
-                  <p className="font-sans text-sm leading-relaxed max-w-lg" style={{ color: "#4a5568" }}>
+                  <p className="font-sans text-sm text-gray-600 leading-relaxed max-w-lg">
                     A carefully managed process that ensures safety, quality and traceability.
                   </p>
                 </motion.div>
 
-                {/* 6-step flow — 2-col grid on mobile, horizontal on desktop */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-nowrap gap-5 lg:gap-0">
                   {PROCESS_STEPS.map((step, i) => {
                     const Icon = step.icon;
@@ -385,14 +364,14 @@ export default function SlaughterHousePage() {
                           {...fadeUp(i * 0.08)}
                           className="flex flex-col items-center text-center gap-2 flex-1"
                         >
-                          <div className="w-11 h-11 rounded-full flex items-center justify-center border" style={{ backgroundColor: "white", borderColor: BORDER }}>
-                            <Icon className="w-4 h-4" style={{ color: BRAND }} />
+                          <div className="w-11 h-11 rounded-full bg-white border border-border flex items-center justify-center">
+                            <Icon className="w-4 h-4 text-brand" />
                           </div>
-                          <p className="font-sans text-[10px] font-semibold leading-snug" style={{ color: DARK }}>{step.label}</p>
+                          <p className="font-sans text-[10px] font-semibold text-dark leading-snug">{step.label}</p>
                         </motion.div>
                         {i < PROCESS_STEPS.length - 1 && (
                           <div className="hidden lg:flex items-center pt-3.5 shrink-0">
-                            <ArrowRight className="w-4 h-4" style={{ color: MUTED }} />
+                            <ArrowRight className="w-4 h-4 text-muted" />
                           </div>
                         )}
                       </div>
@@ -401,43 +380,35 @@ export default function SlaughterHousePage() {
                 </div>
               </div>
 
-              {/* right — image */}
               <motion.div {...fadeUp(0.2)}>
                 <div className="relative aspect-4/3 rounded-2xl overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?q=80&w=800"
-                    alt="Meat processing"
-                    fill
-                    className="object-cover"
+                    alt="Meat processing" fill className="object-cover"
                     sizes="(max-width:1024px) 100vw, 380px"
                   />
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ── 6. WHO WE SERVE ──────────────────────────────────────────────── */}
-        <section className="py-20 overflow-hidden" style={{ backgroundColor: DARK2 }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 6. WHO WE SERVE ── */}
+        <section className="py-20 overflow-hidden bg-dark2">
+          <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_240px] gap-12 items-center">
 
-              {/* left — chef image */}
               <motion.div {...fadeUp()}>
                 <div className="relative h-72 lg:h-80 rounded-2xl overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=800"
-                    alt="Chef plating food"
-                    fill
-                    className="object-cover"
-                    sizes="320px"
+                    alt="Chef plating food" fill className="object-cover" sizes="320px"
                   />
                 </div>
               </motion.div>
 
-              {/* centre — copy */}
               <motion.div {...fadeUp(0.1)}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: GOLD }}>Who We Serve</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-gold">Who We Serve</p>
                 <h2
                   className="font-serif font-bold text-white leading-[1.06] mb-5"
                   style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
@@ -449,14 +420,12 @@ export default function SlaughterHousePage() {
                 </p>
                 <Link
                   href="#partnership"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: GOLD, color: DARK }}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
                 >
                   Partner With Us <ArrowRight className="h-4 w-4" />
                 </Link>
               </motion.div>
 
-              {/* right — customer types */}
               <motion.div {...fadeUp(0.2)} className="space-y-3">
                 {WHO_WE_SERVE.map((item, i) => {
                   const Icon = item.icon;
@@ -475,80 +444,74 @@ export default function SlaughterHousePage() {
                 })}
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ── 7. THE KUYASH ADVANTAGE ──────────────────────────────────────── */}
-        <section className="bg-white py-20 border-t" style={{ borderColor: BORDER }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 7. THE KUYASH ADVANTAGE ── */}
+        <section className="bg-white py-20 border-t border-border">
+          <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-              {/* left — copy */}
               <motion.div {...fadeUp()}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: MUTED }}>The Kuyash Advantage</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">The Kuyash Advantage</p>
                 <h2
                   className="font-serif font-bold leading-[1.06] mb-5"
-                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: DARK }}
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
                 >
-                  Integrated Farm.<br />
-                  <span style={{ color: BRAND }}>Greater Value.</span>
+                  <span className="text-dark">Integrated Farm.<br /></span>
+                  <span className="text-brand">Greater Value.</span>
                 </h2>
-                <p className="font-sans text-sm leading-relaxed mb-8 max-w-md" style={{ color: "#4a5568" }}>
+                <p className="font-sans text-sm text-gray-600 leading-relaxed mb-8 max-w-md">
                   Our slaughterhouse is part of a larger integrated farm, working hand-in-hand with our poultry, livestock, fisheries and crop projects. This integration ensures better control, higher quality and a more reliable supply chain — from farm to processing to market.
                 </p>
                 <Link
                   href="/#projects"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: GOLD, color: DARK }}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
                 >
                   Explore Our Projects <ArrowRight className="h-4 w-4" />
                 </Link>
               </motion.div>
 
-              {/* right — aerial farm image */}
               <motion.div {...fadeUp(0.15)}>
                 <div className="relative aspect-4/3 rounded-2xl overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1200"
                     alt="Kuyash integrated farm aerial view"
-                    fill
-                    className="object-cover"
+                    fill className="object-cover"
                     sizes="(max-width:1024px) 100vw, 50vw"
                   />
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
-        {/* ── 8. FAQ + PARTNERSHIP ─────────────────────────────────────────── */}
-        <section id="partnership" className="py-20 border-t" style={{ backgroundColor: CREAM, borderColor: BORDER }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+        {/* ── 8. FAQ + PARTNERSHIP ── */}
+        <section id="partnership" className="py-20 border-t border-border bg-cream">
+          <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-              {/* left — FAQ */}
               <motion.div {...fadeUp()}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: MUTED }}>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">
                   Frequently Asked Questions
                 </p>
                 <h2
-                  className="font-serif font-bold leading-[1.06] mb-8"
-                  style={{ fontSize: "clamp(1.6rem, 2.8vw, 2.4rem)", color: DARK }}
+                  className="font-serif font-bold text-dark leading-[1.06] mb-8"
+                  style={{ fontSize: "clamp(1.6rem, 2.8vw, 2.4rem)" }}
                 >
                   Common Questions
                 </h2>
-                <div className="divide-y divide-[#e8ede9]">
+                <div className="divide-y divide-border">
                   {FAQS.map((faq) => (
                     <FAQItem key={faq.q} q={faq.q} a={faq.a} />
                   ))}
                 </div>
               </motion.div>
 
-              {/* right — partnership card */}
               <motion.div {...fadeUp(0.15)}>
-                <div className="rounded-2xl p-8 flex flex-col gap-6 sticky top-24" style={{ backgroundColor: DARK2 }}>
+                <div className="rounded-2xl p-8 flex flex-col gap-6 sticky top-24 bg-dark2">
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3" style={{ color: GOLD }}>
+                    <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-gold">
                       Let&apos;s Work Together
                     </p>
                     <h3
@@ -564,13 +527,11 @@ export default function SlaughterHousePage() {
 
                   <a
                     href="mailto:info@kuyashfarm.com"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90 self-start"
-                    style={{ backgroundColor: GOLD, color: DARK }}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity self-start"
                   >
                     Send an Enquiry <ArrowRight className="h-4 w-4" />
                   </a>
 
-                  {/* contact details */}
                   <div className="space-y-3 pt-4 border-t border-white/10">
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full border border-white/15 flex items-center justify-center shrink-0">
@@ -602,7 +563,7 @@ export default function SlaughterHousePage() {
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
       </main>

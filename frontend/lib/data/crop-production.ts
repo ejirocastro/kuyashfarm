@@ -42,7 +42,7 @@ export const CROPS: Crop[] = [
     cycleWeeks: 14,
     yieldPerHa: "4–6 tonnes",
     icon: "🌽",
-    image: "https://images.unsplash.com/photo-1601593768799-76d98ac4d8e1?q=80&w=1600",
+    image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=1600",
     tagline: "Nigeria's most important staple grain, grown at scale.",
     description:
       "Maize is our highest-volume field crop — grown across open hectares of Nasarawa land in two rotational seasons each year. We plant improved hybrid varieties (OBA Super 2, SAMMAZ 15) selected for drought tolerance and high stover yield, supporting both grain production and animal feed for our livestock arm.",
@@ -62,7 +62,7 @@ export const CROPS: Crop[] = [
     cycleWeeks: 52,
     yieldPerHa: "20–35 tonnes fresh tuber",
     icon: "🌿",
-    image: "https://images.unsplash.com/photo-1598511726623-d2e9996b09b2?q=80&w=1600",
+    image: "https://images.unsplash.com/photo-1595855759920-86582396756a?q=80&w=1600",
     tagline: "Drought-resilient, high-yield root crop for food and processing.",
     description:
       "Cassava thrives in Nasarawa's sandy-loam soils and is a cornerstone of our integrated system. We cultivate TMS improved varieties, harvesting roots for direct fresh sale and supplying our processing unit with starch and garri production feedstock. Cassava peels feed our livestock, closing the production loop.",

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { ACADEMY_STATS } from "@/lib/data/academy";
+import { Container } from "@/components/ui";
 
 function AnimatedCounter({ target, suffix, duration = 2000 }: { target: number; suffix: string; duration?: number }) {
   const [count, setCount] = useState(0);
@@ -27,8 +28,8 @@ function AnimatedCounter({ target, suffix, duration = 2000 }: { target: number; 
 
 export function AcademyStats() {
   return (
-    <section className="bg-[#080f0a] border-t border-b border-white/5 py-20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+    <section className="bg-dark border-t border-b border-white/5 py-20">
+      <Container>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {ACADEMY_STATS.map((stat, i) => (
             <motion.div
@@ -46,7 +47,7 @@ export function AcademyStats() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

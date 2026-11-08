@@ -1,12 +1,12 @@
 export default function AcademyLoading() {
   return (
-    <div className="min-h-screen bg-[#faf8f5] pt-20">
+    <div className="min-h-screen bg-cream pt-20">
       {/* Hero skeleton */}
-      <div className="bg-[#2d5f3f]/5 px-6 py-16">
+      <div className="bg-brand/5 px-6 py-16">
         <div className="mx-auto max-w-4xl space-y-4">
-          <div className="h-4 w-24 animate-pulse rounded-full bg-[#2d5f3f]/20" />
-          <div className="h-10 w-2/3 animate-pulse rounded-lg bg-[#2d5f3f]/20" />
-          <div className="h-4 w-1/2 animate-pulse rounded-full bg-[#2d5f3f]/10" />
+          <div className="h-4 w-24 animate-pulse rounded-full bg-brand/20" />
+          <div className="h-10 w-2/3 animate-pulse rounded-lg bg-brand/20" />
+          <div className="h-4 w-1/2 animate-pulse rounded-full bg-brand/10" />
         </div>
       </div>
 

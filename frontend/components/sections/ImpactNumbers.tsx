@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { ease as EASE } from "@/lib/tokens";
+import { Container } from "@/components/ui";
 
 const STATS = [
   { value: "56+", label: "Hectares", sub: "Farm Area" },
@@ -15,7 +17,7 @@ const STATS = [
 export function ImpactNumbers() {
   return (
     <section className="bg-white py-16 border-t border-gray-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <Container>
 
         {/* header row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16">
@@ -25,11 +27,11 @@ export function ImpactNumbers() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.55 }}
           >
-            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#2d5f3f] mb-3">
+            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-brand mb-3">
               Our Impact
             </p>
             <h2
-              className="font-serif font-bold text-[#080f0a] leading-[1.08]"
+              className="font-serif font-bold text-dark leading-[1.08]"
               style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
             >
               Our work creates impact<br />beyond the farm.
@@ -43,7 +45,7 @@ export function ImpactNumbers() {
           >
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 text-[#2d5f3f] font-semibold text-sm hover:gap-3 transition-all duration-200 shrink-0"
+              className="inline-flex items-center gap-2 text-brand font-semibold text-sm hover:gap-3 transition-all duration-200 shrink-0"
             >
               See Full Impact Report <ArrowRight className="w-4 h-4" />
             </Link>
@@ -51,30 +53,30 @@ export function ImpactNumbers() {
         </div>
 
         {/* stat row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-0 lg:divide-x lg:divide-gray-100">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 lg:gap-0 lg:divide-x lg:divide-gray-100">
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.sub}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
               className="lg:px-8 first:lg:pl-0 last:lg:pr-0 flex flex-col"
             >
               {/* accent line */}
-              <div className="w-8 h-0.5 bg-[#2d5f3f] mb-5" />
+              <div className="w-8 h-0.5 bg-brand mb-5" />
               <p
-                className="font-serif font-bold text-[#080f0a] leading-none mb-1"
+                className="font-serif font-bold text-dark leading-none mb-1"
                 style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
               >
                 {stat.value}
               </p>
-              <p className="font-sans font-semibold text-sm text-[#2d5f3f] mb-0.5">{stat.label}</p>
+              <p className="font-sans font-semibold text-sm text-brand mb-0.5">{stat.label}</p>
               <p className="font-sans text-xs text-gray-400">{stat.sub}</p>
             </motion.div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

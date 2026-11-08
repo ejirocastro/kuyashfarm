@@ -1,8 +1,8 @@
 export default function BlogLoading() {
   return (
-    <div className="min-h-screen bg-[#faf8f5]">
+    <div className="min-h-screen bg-cream">
       {/* Hero skeleton */}
-      <div className="bg-[#080f0a] py-24 md:py-32 px-6 md:px-12 lg:px-16">
+      <div className="bg-dark py-24 md:py-32 px-6 md:px-12 lg:px-16">
         <div className="max-w-7xl mx-auto space-y-5">
           <div className="w-64 h-3 bg-white/10 rounded animate-pulse" />
           <div className="space-y-3">
@@ -83,12 +83,12 @@ export default function BlogLoading() {
               ))}
             </div>
 
-            <div className="bg-[#080f0a] rounded-2xl p-6 space-y-4">
+            <div className="bg-dark rounded-2xl p-6 space-y-4">
               <div className="w-24 h-3 bg-white/10 rounded animate-pulse" />
               <div className="w-48 h-5 bg-white/10 rounded animate-pulse" />
               <div className="w-full h-3 bg-white/10 rounded animate-pulse" />
               <div className="w-full h-11 bg-white/10 rounded-xl animate-pulse" />
-              <div className="w-full h-11 bg-[#2d5f3f]/50 rounded-xl animate-pulse" />
+              <div className="w-full h-11 bg-brand/50 rounded-xl animate-pulse" />
             </div>
           </aside>
         </div>

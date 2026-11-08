@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Wheat, Bird, Fish, Beef, Droplets, Nut } from "lucide-react";
+import { ease as EASE } from "@/lib/tokens";
+import { Container } from "@/components/ui";
 
 const OPERATIONS = [
   {
@@ -52,8 +54,8 @@ const OPERATIONS = [
 
 export function FiveSides() {
   return (
-    <section className="bg-[#faf8f5] py-20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+    <section className="bg-cream py-20">
+      <Container>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -62,10 +64,10 @@ export function FiveSides() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#2d5f3f] mb-3">
+          <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-brand mb-3">
             Our Operations
           </p>
-          <h2 className="font-serif font-bold text-[#080f0a] leading-tight"
+          <h2 className="font-serif font-bold text-dark leading-tight"
             style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}>
             Six Sides of One Farm
           </h2>
@@ -81,11 +83,11 @@ export function FiveSides() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, delay: i * 0.07, ease: EASE }}
               >
                 <Link
                   href={op.href}
-                  className="group flex flex-col bg-white border border-gray-100 hover:border-[#c6dece] hover:shadow-xl rounded-2xl overflow-hidden transition-all duration-300 h-full"
+                  className="group flex flex-col bg-white border border-gray-100 hover:border-brand-border hover:shadow-xl rounded-2xl overflow-hidden transition-all duration-300 h-full"
                 >
                   {/* image */}
                   <div className="relative h-44 overflow-hidden shrink-0">
@@ -98,20 +100,20 @@ export function FiveSides() {
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
                     {/* icon badge */}
-                    <div className="absolute bottom-3 left-3 w-8 h-8 rounded-lg bg-[#2d5f3f] flex items-center justify-center">
+                    <div className="absolute bottom-3 left-3 w-8 h-8 rounded-lg bg-brand flex items-center justify-center">
                       <Icon className="w-4 h-4 text-white" />
                     </div>
                   </div>
 
                   {/* content */}
                   <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-serif font-bold text-[#080f0a] text-base mb-2 group-hover:text-[#2d5f3f] transition-colors duration-200">
+                    <h3 className="font-serif font-bold text-dark text-base mb-2 group-hover:text-brand transition-colors duration-200">
                       {op.label}
                     </h3>
                     <p className="text-xs text-gray-400 font-sans leading-relaxed flex-1">
                       {op.description}
                     </p>
-                    <div className="flex items-center gap-1 mt-4 text-[#2d5f3f] text-xs font-semibold group-hover:gap-2 transition-all duration-200">
+                    <div className="flex items-center gap-1 mt-4 text-brand text-xs font-semibold group-hover:gap-2 transition-all duration-200">
                       Read More <ArrowRight className="w-3 h-3" />
                     </div>
                   </div>
@@ -120,7 +122,7 @@ export function FiveSides() {
             );
           })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

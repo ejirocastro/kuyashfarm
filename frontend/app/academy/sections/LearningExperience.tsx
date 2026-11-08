@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Cpu, Users, Sprout, FlaskConical } from "lucide-react";
+import { Container } from "@/components/ui";
 
 const EXPERIENCES = [
   {
@@ -53,14 +54,14 @@ const EXPERIENCES = [
 export function LearningExperience() {
   return (
     <section className="bg-white py-28 md:py-36">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <Container>
         {/* Header */}
         <div className="max-w-2xl mb-24">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono uppercase tracking-[0.2em] text-[#6b9d7a] mb-4"
+            className="text-xs font-mono uppercase tracking-[0.2em] text-muted mb-4"
           >
             The Learning Experience
           </motion.p>
@@ -69,11 +70,11 @@ export function LearningExperience() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-[#080f0a] leading-[1.05]"
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-dark leading-[1.05]"
           >
             Four pillars of
             <br />
-            <span className="text-[#2d5f3f]">world-class training.</span>
+            <span className="text-brand">world-class training.</span>
           </motion.h2>
         </div>
 
@@ -97,7 +98,7 @@ export function LearningExperience() {
                 >
                   <p className="text-xs font-mono uppercase tracking-[0.2em] text-gray-400 mb-5">{exp.tag}</p>
                   <h3
-                    className="font-serif text-3xl md:text-4xl font-bold text-[#080f0a] leading-tight mb-5"
+                    className="font-serif text-3xl md:text-4xl font-bold text-dark leading-tight mb-5"
                     style={{ whiteSpace: "pre-line" }}
                   >
                     {exp.title}
@@ -105,7 +106,7 @@ export function LearningExperience() {
                   <p className="text-gray-500 text-lg leading-relaxed font-sans mb-8">{exp.description}</p>
 
                   {/* Highlight badge */}
-                  <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl mb-8 text-sm font-medium bg-[#eef5f1] text-[#2d5f3f] border border-[#c6dece]">
+                  <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl mb-8 text-sm font-medium bg-brand-bg text-brand border border-brand-border">
                     <Icon className="w-4 h-4" />
                     {exp.highlight}
                   </div>
@@ -114,8 +115,8 @@ export function LearningExperience() {
                   <ul className="space-y-3">
                     {exp.features.map((f) => (
                       <li key={f} className="flex items-center gap-3 text-gray-700 font-sans text-sm">
-                        <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-[#eef5f1]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#2d5f3f]" />
+                        <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-brand-bg">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand" />
                         </span>
                         {f}
                       </li>
@@ -129,7 +130,7 @@ export function LearningExperience() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7 }}
-                  className="relative h-[400px] rounded-3xl overflow-hidden bg-[#eef5f1] border border-[#c6dece]"
+                  className="relative h-[400px] rounded-3xl overflow-hidden bg-brand-bg border border-brand-border"
                 >
                   {/* Grid pattern */}
                   <div
@@ -141,8 +142,8 @@ export function LearningExperience() {
                   />
                   {/* Central icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-28 h-28 rounded-3xl flex items-center justify-center shadow-lg bg-white border-2 border-[#c6dece]">
-                      <Icon className="w-14 h-14 text-[#2d5f3f]" />
+                    <div className="w-28 h-28 rounded-3xl flex items-center justify-center shadow-lg bg-white border-2 border-brand-border">
+                      <Icon className="w-14 h-14 text-brand" />
                     </div>
                   </div>
                   {/* Step label */}
@@ -156,7 +157,7 @@ export function LearningExperience() {
             );
           })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,8 +1,8 @@
 export default function ProgramsLoading() {
   return (
-    <div className="min-h-screen bg-[#faf8f5] pt-20">
+    <div className="min-h-screen bg-cream pt-20">
       {/* Hero skeleton */}
-      <div className="bg-[#080f0a] px-6 py-16">
+      <div className="bg-dark px-6 py-16">
         <div className="mx-auto max-w-7xl space-y-4 px-6 md:px-12 lg:px-16">
           <div className="h-3 w-28 animate-pulse rounded-full bg-white/10" />
           <div className="h-10 w-1/2 animate-pulse rounded-lg bg-white/10" />

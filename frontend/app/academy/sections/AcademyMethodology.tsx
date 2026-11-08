@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ClipboardList, Search, MessageSquare, CheckCircle, Users, Sprout, BarChart2, Award } from "lucide-react";
 import { ADMISSION_STEPS } from "@/lib/data/academy";
 import type { LucideIcon } from "lucide-react";
+import { Container } from "@/components/ui";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   ClipboardList, Search, MessageSquare, CheckCircle, Users, Sprout, BarChart2, Award,
@@ -11,15 +12,15 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 export function AcademyMethodology() {
   return (
-    <section className="bg-[#080f0a] py-28 md:py-36 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+    <section className="bg-dark py-28 md:py-36 overflow-hidden">
+      <Container>
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-20">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono uppercase tracking-[0.2em] text-[#6b9d7a] mb-4"
+            className="text-xs font-mono uppercase tracking-[0.2em] text-muted mb-4"
           >
             The Journey
           </motion.p>
@@ -32,7 +33,7 @@ export function AcademyMethodology() {
           >
             From application
             <br />
-            <span className="text-[#e8d5a3]">to certified practitioner.</span>
+            <span className="text-gold">to certified practitioner.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -60,13 +61,13 @@ export function AcademyMethodology() {
               >
                 {/* Connector line */}
                 {i < ADMISSION_STEPS.length - 1 && i % 4 !== 3 && (
-                  <div className="absolute top-7 left-full w-full h-px bg-linear-to-r from-[#2d5f3f]/40 to-transparent hidden md:block z-0" />
+                  <div className="absolute top-7 left-full w-full h-px bg-linear-to-r from-brand/40 to-transparent hidden md:block z-0" />
                 )}
 
-                <div className="relative z-10 p-5 rounded-2xl border border-white/8 bg-white/[0.02] group-hover:border-[#2d5f3f]/40 group-hover:bg-white/[0.04] transition-all duration-400">
+                <div className="relative z-10 p-5 rounded-2xl border border-white/8 bg-white/[0.02] group-hover:border-brand/40 group-hover:bg-white/[0.04] transition-all duration-400">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#2d5f3f]/20 border border-[#2d5f3f]/30 flex items-center justify-center group-hover:bg-[#2d5f3f]/40 transition-colors duration-400">
-                      <Icon className="w-5 h-5 text-[#6b9d7a]" />
+                    <div className="w-10 h-10 rounded-xl bg-brand/20 border border-brand/30 flex items-center justify-center group-hover:bg-brand/40 transition-colors duration-400">
+                      <Icon className="w-5 h-5 text-muted" />
                     </div>
                     <span className="font-mono text-xs text-white/20">{step.step}</span>
                   </div>
@@ -88,14 +89,14 @@ export function AcademyMethodology() {
         >
           <a
             href="/academy/classes/1"
-            className="inline-flex items-center gap-3 bg-[#2d5f3f] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#4a7c59] transition-colors duration-300 text-base"
+            className="inline-flex items-center gap-3 bg-brand text-white font-semibold px-8 py-4 rounded-full hover:bg-brand-hover transition-colors duration-300 text-base"
           >
             Start Your Application
             <span>→</span>
           </a>
           <p className="mt-4 text-white/25 text-sm font-sans">Applications reviewed within 48 hours</p>
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 }

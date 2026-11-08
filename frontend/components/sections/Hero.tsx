@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { ease as EASE } from "@/lib/tokens";
 
 const SLIDES = [
   {
@@ -15,6 +16,11 @@ const SLIDES = [
     url: "/images/backgrounds/hero-transition.jpg",
     position: "center",
     tagline: "From Our Farm to Your Table.",
+  },
+  {
+    url: "/images/backgrounds/chinesecarbage.jpg",
+    position: "center",
+    tagline: "Fresh Produce. Pure Quality.",
   },
   {
     url: "/images/backgrounds/sunset.jpeg",
@@ -68,7 +74,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden bg-[#080f0a]"
+      className="relative flex min-h-screen items-center overflow-hidden bg-dark"
     >
       {/* ── Background slides ── */}
       <div className="absolute inset-0 z-0">
@@ -86,19 +92,11 @@ export function Hero() {
         ))}
 
         {/* Directional gradient — dark left where text lives, opens right */}
-        <div className="absolute inset-0 bg-linear-to-r from-[#080f0a]/90 via-[#080f0a]/55 to-[#080f0a]/20" />
+        <div className="absolute inset-0 bg-linear-to-r from-dark/90 via-dark/55 to-dark/20" />
         {/* Bottom fade for scroll cue area */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-[#080f0a]/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-dark/60 to-transparent" />
       </div>
 
-      {/* subtle grid */}
-      <div
-        className="absolute inset-0 z-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
 
       {/* ── Content — left aligned ── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-24 pb-20">
@@ -110,7 +108,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#6b9d7a] mb-5"
+            className="text-[11px] font-mono uppercase tracking-[0.28em] text-muted mb-5"
           >
             {SLIDES[current].tagline}
           </motion.p>
@@ -119,17 +117,12 @@ export function Hero() {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, ease: EASE }}
             className="font-serif font-bold text-white leading-[1.04]"
             style={{ fontSize: "clamp(3rem, 6.5vw, 6rem)" }}
           >
             The future of{" "}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{
-                backgroundImage: "linear-gradient(135deg, #6b9d7a 0%, #e8d5a3 100%)",
-              }}
-            >
+            <span className="text-transparent bg-clip-text bg-linear-to-br from-muted to-gold">
               farming
             </span>
             <br />
@@ -157,7 +150,7 @@ export function Hero() {
           >
             <Link
               href="/categories"
-              className="group inline-flex items-center gap-2.5 bg-[#2d5f3f] hover:bg-[#4a7c59] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300"
+              className="group inline-flex items-center gap-2.5 bg-brand hover:bg-brand-hover text-white font-semibold px-8 py-4 rounded-full transition-all duration-300"
               style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
             >
               Explore Products
@@ -184,17 +177,19 @@ export function Hero() {
               <button
                 key={index}
                 onClick={() => goTo(index)}
-                className="relative h-0.5 rounded-full overflow-hidden transition-all duration-300 focus:outline-none"
+                className="relative py-2 flex items-center rounded-full focus:outline-none"
                 style={{ width: index === current ? 48 : 20 }}
                 aria-label={`Go to slide ${index + 1}`}
               >
-                <div className="absolute inset-0 bg-white/25 rounded-full" />
-                {index === current && (
-                  <div
-                    className="absolute inset-y-0 left-0 bg-white rounded-full"
-                    style={{ width: `${progress}%` }}
-                  />
-                )}
+                <span className="relative h-0.5 w-full rounded-full overflow-hidden block">
+                  <div className="absolute inset-0 bg-white/25 rounded-full" />
+                  {index === current && (
+                    <div
+                      className="absolute inset-y-0 left-0 bg-white rounded-full"
+                      style={{ width: `${progress}%` }}
+                    />
+                  )}
+                </span>
               </button>
             ))}
           </motion.div>
@@ -206,7 +201,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.55 }}
-        className="absolute bottom-10 left-6 md:left-16 z-10 flex items-center gap-8 md:gap-10"
+        className="absolute bottom-10 left-6 md:left-16 z-10 hidden sm:flex items-center gap-8 md:gap-10"
       >
         {[
           { value: "40", label: "Acre Farm" },

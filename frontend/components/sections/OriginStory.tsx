@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ease as EASE } from "@/lib/tokens";
+import { BrandLeaf, Container } from "@/components/ui";
 
 export function OriginStory() {
   return (
     <section className="bg-white py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* LEFT — copy */}
@@ -16,20 +18,18 @@ export function OriginStory() {
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: EASE }}
           >
-            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#2d5f3f] mb-4">
+            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-brand mb-4">
               Our Beginning
             </p>
             <h2
-              className="font-serif font-bold text-[#080f0a] leading-[1.06] mb-6"
+              className="font-serif font-bold text-dark leading-[1.06] mb-6"
               style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
             >
               Every Farm Has<br />A Beginning.
-              <span className="inline-block ml-2 text-[#2d5f3f]">
-                <svg viewBox="0 0 24 24" className="inline w-7 h-7 fill-none stroke-current stroke-[1.5]">
-                  <path d="M12 2C9 2 6 5 6 9c0 2.5 1.5 4.5 3.5 5.5L9 22h6l-.5-7.5C16.5 13.5 18 11.5 18 9c0-4-3-7-6-7z" />
-                </svg>
+              <span className="inline-block ml-2 text-brand">
+                <BrandLeaf className="inline w-7 h-7" strokeWidth={1.5} />
               </span>
             </h2>
             <div className="space-y-4 text-gray-500 font-sans text-sm leading-relaxed max-w-md">
@@ -42,7 +42,7 @@ export function OriginStory() {
             </div>
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 mt-8 text-[#2d5f3f] font-semibold text-sm hover:gap-3 transition-all duration-200"
+              className="inline-flex items-center gap-2 mt-8 text-brand font-semibold text-sm hover:gap-3 transition-all duration-200"
             >
               Read Our Story <ArrowRight className="w-4 h-4" />
             </Link>
@@ -53,7 +53,7 @@ export function OriginStory() {
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
             className="relative rounded-2xl overflow-hidden group cursor-pointer"
             style={{ aspectRatio: "4/3" }}
           >
@@ -64,12 +64,12 @@ export function OriginStory() {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width:1024px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-[#080f0a]/30 group-hover:bg-[#080f0a]/20 transition-colors duration-300" />
+            <div className="absolute inset-0 bg-dark/30 group-hover:bg-dark/20 transition-colors duration-300" />
 
             {/* play button */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-6 h-6 text-[#2d5f3f] fill-[#2d5f3f] ml-1" />
+                <Play className="w-6 h-6 text-brand fill-brand ml-1" />
               </div>
             </div>
 
@@ -83,7 +83,7 @@ export function OriginStory() {
           </motion.div>
 
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

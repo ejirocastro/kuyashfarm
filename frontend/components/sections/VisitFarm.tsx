@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ease as EASE } from "@/lib/tokens";
+import { BrandLeaf, Container } from "@/components/ui";
 
 export function VisitFarm() {
   return (
@@ -17,17 +19,18 @@ export function VisitFarm() {
         sizes="100vw"
         priority={false}
       />
-      <div className="absolute inset-0 bg-[#080f0a]/65" />
+      <div className="absolute inset-0 bg-dark/65" />
 
       {/* content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-20">
+      <div className="relative z-10 w-full py-20">
+        <Container>
         <div className="max-w-xl">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#6b9d7a] mb-4"
+            className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-4"
           >
             Come See What We Are Growing
           </motion.p>
@@ -36,15 +39,13 @@ export function VisitFarm() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.65, delay: 0.08, ease: EASE }}
             className="font-serif font-bold text-white leading-[1.06] mb-5"
             style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
           >
             Come See What<br />We Are Growing.
-            <span className="inline-block ml-2 text-[#6b9d7a]">
-              <svg viewBox="0 0 24 24" className="inline w-7 h-7 fill-none stroke-current stroke-[1.5]">
-                <path d="M12 2C9 2 6 5 6 9c0 2.5 1.5 4.5 3.5 5.5L9 22h6l-.5-7.5C16.5 13.5 18 11.5 18 9c0-4-3-7-6-7z" />
-              </svg>
+            <span className="inline-block ml-2 text-muted">
+              <BrandLeaf className="inline w-7 h-7" strokeWidth={1.5} />
             </span>
           </motion.h2>
 
@@ -67,7 +68,7 @@ export function VisitFarm() {
           >
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2.5 bg-[#2d5f3f] hover:bg-[#4a7c59] text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300"
+              className="group inline-flex items-center gap-2.5 bg-brand hover:bg-brand-hover text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300"
             >
               Visit The Farm
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
@@ -89,14 +90,13 @@ export function VisitFarm() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-16 flex items-center gap-2.5"
           >
-            <div className="w-6 h-6 rounded-md bg-[#2d5f3f] flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-white stroke-[1.5]">
-                <path d="M12 2C9 2 6 5 6 9c0 2.5 1.5 4.5 3.5 5.5L9 22h6l-.5-7.5C16.5 13.5 18 11.5 18 9c0-4-3-7-6-7z" />
-              </svg>
+            <div className="w-6 h-6 rounded-md bg-brand flex items-center justify-center">
+              <BrandLeaf className="w-3.5 h-3.5 text-white" strokeWidth={1.5} />
             </div>
             <span className="font-serif font-bold text-white/70 text-sm tracking-wide">KUYASH INTEGRATED FARMS</span>
           </motion.div>
         </div>
+        </Container>
       </div>
     </section>
   );

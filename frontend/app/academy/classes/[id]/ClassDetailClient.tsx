@@ -114,18 +114,18 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-[#f7f5f0] flex items-center justify-center py-24">
+        <main className="min-h-screen bg-cream flex items-center justify-center py-24">
           <Container>
             <div className="max-w-xl mx-auto text-center">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-10 h-10 text-[#2d5f3f]" />
+              <div className="w-20 h-20 bg-brand-bg rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-brand" />
               </div>
-              <h1 className="font-serif text-3xl font-bold text-[#1a3d2b] mb-3">
+              <h1 className="font-serif text-3xl font-bold text-dark2 mb-3">
                 You&apos;re registered!
               </h1>
               <p className="text-gray-500 mb-2">
                 Your spot for{" "}
-                <span className="font-semibold text-[#1a3d2b]">{cls.title}</span> has
+                <span className="font-semibold text-dark2">{cls.title}</span> has
                 been reserved.
               </p>
               <p className="text-gray-500 mb-8">
@@ -142,13 +142,13 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                 ].map(({ label, value }) => (
                   <div key={label} className="flex justify-between text-sm">
                     <span className="text-gray-500">{label}</span>
-                    <span className="font-semibold text-[#1a3d2b]">{value}</span>
+                    <span className="font-semibold text-dark2">{value}</span>
                   </div>
                 ))}
                 <hr />
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Amount to pay</span>
-                  <span className="font-bold text-lg text-[#1a3d2b]">
+                  <span className="font-bold text-lg text-dark2">
                     ₦{cls.price.toLocaleString()}
                   </span>
                 </div>
@@ -159,7 +159,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
 
               <Link
                 href="/academy"
-                className="inline-flex items-center gap-2 bg-[#2d5f3f] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#1a3d2b] transition-colors"
+                className="inline-flex items-center gap-2 bg-brand text-white font-semibold px-8 py-4 rounded-full hover:bg-dark2 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Back to Academy
               </Link>
@@ -174,12 +174,12 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
   return (
     <>
       <Navbar />
-      <main className="bg-[#f7f5f0] min-h-screen">
+      <main className="bg-cream min-h-screen">
 
         {/* Hero */}
         <div className="relative h-72 md:h-96 w-full overflow-hidden">
           <Image src={cls.image} alt={cls.title} fill priority className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1a3d2b]/80 via-[#1a3d2b]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark2/80 via-dark2/40 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-end pb-8">
             <Container>
               <Link
@@ -210,23 +210,23 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
               {/* Meta strip */}
               <div className="bg-white rounded-2xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
-                  { icon: <Calendar className="w-5 h-5 text-[#2d5f3f]" />, label: "Date", value: cls.date },
-                  { icon: <Clock className="w-5 h-5 text-[#2d5f3f]" />, label: "Time", value: cls.time },
-                  { icon: <MapPin className="w-5 h-5 text-[#2d5f3f]" />, label: "Location", value: cls.location },
-                  { icon: <Users className="w-5 h-5 text-[#2d5f3f]" />, label: "Seats Left", value: `${cls.seatsLeft} of ${cls.seats}` },
+                  { icon: <Calendar className="w-5 h-5 text-brand" />, label: "Date", value: cls.date },
+                  { icon: <Clock className="w-5 h-5 text-brand" />, label: "Time", value: cls.time },
+                  { icon: <MapPin className="w-5 h-5 text-brand" />, label: "Location", value: cls.location },
+                  { icon: <Users className="w-5 h-5 text-brand" />, label: "Seats Left", value: `${cls.seatsLeft} of ${cls.seats}` },
                 ].map((item) => (
                   <div key={item.label}>
                     <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
                       {item.icon} {item.label}
                     </div>
-                    <p className="font-semibold text-[#1a3d2b] text-sm">{item.value}</p>
+                    <p className="font-semibold text-dark2 text-sm">{item.value}</p>
                   </div>
                 ))}
               </div>
 
               {/* About */}
               <div className="bg-white rounded-2xl p-6">
-                <h2 className="font-serif text-xl font-bold text-[#1a3d2b] mb-3">
+                <h2 className="font-serif text-xl font-bold text-dark2 mb-3">
                   About This Class
                 </h2>
                 <p className="text-gray-500 leading-relaxed">{cls.fullDescription}</p>
@@ -234,14 +234,14 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
 
               {/* Topics */}
               <div className="bg-white rounded-2xl p-6">
-                <h2 className="font-serif text-xl font-bold text-[#1a3d2b] mb-4">
+                <h2 className="font-serif text-xl font-bold text-dark2 mb-4">
                   What You Will Cover
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {cls.topics.map((topic) => (
                     <div key={topic} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full bg-[#eef5f1] flex items-center justify-center shrink-0">
-                        <CheckCircle2 className="w-3 h-3 text-[#2d5f3f]" />
+                      <div className="w-5 h-5 rounded-full bg-brand-bg flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="w-3 h-3 text-brand" />
                       </div>
                       <span className="text-sm text-gray-700">{topic}</span>
                     </div>
@@ -251,13 +251,13 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
 
               {/* Included */}
               <div className="bg-white rounded-2xl p-6">
-                <h2 className="font-serif text-xl font-bold text-[#1a3d2b] mb-4">
+                <h2 className="font-serif text-xl font-bold text-dark2 mb-4">
                   What&apos;s Included
                 </h2>
                 <div className="space-y-2">
                   {cls.includes.map((item) => (
                     <div key={item} className="flex items-center gap-3">
-                      <Award className="w-4 h-4 text-[#e8d5a3] shrink-0" />
+                      <Award className="w-4 h-4 text-gold shrink-0" />
                       <span className="text-sm text-gray-700">{item}</span>
                     </div>
                   ))}
@@ -266,7 +266,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
 
               {/* Instructor */}
               <div className="bg-white rounded-2xl p-6 flex items-center gap-5">
-                <div className="w-14 h-14 rounded-full bg-[#2d5f3f] flex items-center justify-center shrink-0">
+                <div className="w-14 h-14 rounded-full bg-brand flex items-center justify-center shrink-0">
                   <span className="text-white font-serif font-bold text-lg">
                     {cls.instructor.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
                   </span>
@@ -275,7 +275,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                   <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
                     Your Instructor
                   </p>
-                  <p className="font-serif font-bold text-[#1a3d2b]">{cls.instructor.name}</p>
+                  <p className="font-serif font-bold text-dark2">{cls.instructor.name}</p>
                   <p className="text-sm text-gray-500">
                     {cls.instructor.role} · {cls.instructor.experience} experience
                   </p>
@@ -287,7 +287,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl p-6 sticky top-24 shadow-sm">
                 <div className="mb-6 pb-6 border-b border-gray-100">
-                  <p className="font-serif text-4xl font-bold text-[#1a3d2b]">
+                  <p className="font-serif text-4xl font-bold text-dark2">
                     ₦{cls.price.toLocaleString()}
                   </p>
                   <p className="text-xs text-gray-400 mt-1">per person · payment on arrival</p>
@@ -299,7 +299,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <h3 className="font-serif text-lg font-bold text-[#1a3d2b]">
+                  <h3 className="font-serif text-lg font-bold text-dark2">
                     Register for this class
                   </h3>
 
@@ -314,7 +314,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                           value={formData[field]}
                           onChange={handleChange}
                           placeholder={field === "firstName" ? "John" : "Doe"}
-                          className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 ${
+                          className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 ${
                             errors[field] ? "border-red-400" : "border-gray-200"
                           }`}
                         />
@@ -335,7 +335,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="john@example.com"
-                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 ${
+                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 ${
                         errors.email ? "border-red-400" : "border-gray-200"
                       }`}
                     />
@@ -353,7 +353,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="08012345678"
-                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 ${
+                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 ${
                         errors.phone ? "border-red-400" : "border-gray-200"
                       }`}
                     />
@@ -371,7 +371,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                       value={formData.occupation}
                       onChange={handleChange}
                       placeholder="e.g. Farmer, Student, Business Owner"
-                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 ${
+                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 ${
                         errors.occupation ? "border-red-400" : "border-gray-200"
                       }`}
                     />
@@ -388,7 +388,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                       name="farmingExperience"
                       value={formData.farmingExperience}
                       onChange={handleChange}
-                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 bg-white ${
+                      className={`w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 bg-white ${
                         errors.farmingExperience ? "border-red-400" : "border-gray-200"
                       }`}
                     >
@@ -412,7 +412,7 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                       name="hearAboutUs"
                       value={formData.hearAboutUs}
                       onChange={handleChange}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 bg-white"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 bg-white"
                     >
                       <option value="">Select an option</option>
                       <option value="social_media">Social Media</option>
@@ -433,14 +433,14 @@ export function ClassDetailClient({ cls }: { cls: AcademyClass }) {
                       onChange={handleChange}
                       rows={2}
                       placeholder="Any questions or special requirements?"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2d5f3f]/30 resize-none"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/30 resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#2d5f3f] text-white font-semibold py-4 rounded-full hover:bg-[#1a3d2b] transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-brand text-white font-semibold py-4 rounded-full hover:bg-dark2 transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>

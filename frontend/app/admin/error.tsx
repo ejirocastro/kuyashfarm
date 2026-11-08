@@ -30,14 +30,14 @@ export default function AdminError({
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 rounded-full bg-[#2d5f3f] px-6 py-2.5 font-sans text-sm font-semibold text-white transition-colors hover:bg-[#4a7c59]"
+            className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 font-sans text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
           >
             <RotateCcw className="h-4 w-4" />
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 font-sans text-sm font-semibold text-gray-700 transition-colors hover:border-[#2d5f3f] hover:text-[#2d5f3f]"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 font-sans text-sm font-semibold text-gray-700 transition-colors hover:border-brand hover:text-brand"
           >
             Go home
           </a>

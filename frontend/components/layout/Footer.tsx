@@ -1,8 +1,9 @@
 "use client";
 
-import { MapPin, Phone, Mail, Leaf } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
+import { BrandLeaf } from "@/components/ui";
 
 const QUICK_LINKS = [
   { label: "Home", href: "/" },
@@ -57,19 +58,20 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#080f0a] text-white">
+    <footer className="bg-dark text-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-20 pb-10">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
 
           {/* Col 1 — Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-7 h-7 rounded-lg bg-[#2d5f3f] flex items-center justify-center">
-                <Leaf className="w-3.5 h-3.5 text-white" />
+              <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center">
+                <BrandLeaf className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="font-serif text-base font-bold tracking-tight text-white">
-                {SITE_CONFIG.name}
-              </span>
+              <div className="flex flex-col leading-none">
+                <span className="font-serif text-base font-bold tracking-tight text-white">Kuyash</span>
+                <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-white/40 mt-0.5">Integrated Farm</span>
+              </div>
             </Link>
             <p className="text-white/40 font-sans text-xs leading-relaxed mb-6 max-w-[220px]">
               Nigeria&apos;s premier integrated farm — cultivating food, community and the future of agriculture.
@@ -80,7 +82,7 @@ export function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-white/40 hover:border-[#6b9d7a] hover:text-[#6b9d7a] transition-all duration-200"
+                  className="flex h-10 w-10 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-white/10 text-white/40 hover:border-muted hover:text-muted transition-all duration-200"
                 >
                   <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current">
                     <path d={path} />
@@ -102,7 +104,7 @@ export function Footer() {
                     href={link.href}
                     className="group inline-flex items-center gap-1.5 font-sans text-sm text-white/45 hover:text-white transition-colors duration-200"
                   >
-                    <span className="h-px w-0 bg-[#6b9d7a] transition-all duration-200 group-hover:w-3" />
+                    <span className="h-px w-0 bg-muted transition-all duration-200 group-hover:w-3" />
                     {link.label}
                   </Link>
                 </li>
@@ -122,7 +124,7 @@ export function Footer() {
                     href={link.href}
                     className="group inline-flex items-center gap-1.5 font-sans text-sm text-white/45 hover:text-white transition-colors duration-200"
                   >
-                    <span className="h-px w-0 bg-[#6b9d7a] transition-all duration-200 group-hover:w-3" />
+                    <span className="h-px w-0 bg-muted transition-all duration-200 group-hover:w-3" />
                     {link.label}
                   </Link>
                 </li>
@@ -137,19 +139,19 @@ export function Footer() {
             </h4>
             <ul className="space-y-3.5 mb-8">
               <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#6b9d7a]" />
+                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted" />
                 <span className="font-sans text-sm leading-snug text-white/45">
-                  Iwo Road, Ibadan, Oyo State, Nigeria
+                  No. 10 New Karshi Road, Uke Karu, Nasarawa State, Nigeria
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="h-3.5 w-3.5 shrink-0 text-[#6b9d7a]" />
+                <Phone className="h-3.5 w-3.5 shrink-0 text-muted" />
                 <a href="tel:+2348000000000" className="font-sans text-sm text-white/45 hover:text-white transition-colors duration-200">
                   +234 800 000 0000
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="h-3.5 w-3.5 shrink-0 text-[#6b9d7a]" />
+                <Mail className="h-3.5 w-3.5 shrink-0 text-muted" />
                 <a href="mailto:hello@kuyashfarm.com" className="font-sans text-sm text-white/45 hover:text-white transition-colors duration-200">
                   hello@kuyashfarm.com
                 </a>

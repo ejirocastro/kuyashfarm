@@ -44,15 +44,15 @@ function fmtDate(iso: string) {
 /* ─── STATUS BADGE ─── */
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
-    Upcoming:       "bg-[#eef5f1] text-[#2d5f3f] border-[#c6dece]",
-    Ongoing:        "bg-[#2d5f3f]/10 text-[#2d5f3f] border-[#2d5f3f]/20",
+    Upcoming:       "bg-brand-bg text-brand border-brand-border",
+    Ongoing:        "bg-brand/10 text-brand border-brand/20",
     Completed:      "bg-gray-100 text-gray-500 border-gray-200",
     Cancelled:      "bg-red-50 text-red-500 border-red-100",
-    Confirmed:      "bg-[#eef5f1] text-[#2d5f3f] border-[#c6dece]",
-    Waitlisted:     "bg-[#e8d5a3]/30 text-[#1a3d2b] border-[#e8d5a3]/50",
-    Pending:        "bg-[#e8d5a3]/30 text-[#1a3d2b] border-[#e8d5a3]/50",
-    Paid:           "bg-[#eef5f1] text-[#2d5f3f] border-[#c6dece]",
-    "Partially Paid": "bg-[#e8d5a3]/30 text-[#1a3d2b] border-[#e8d5a3]/50",
+    Confirmed:      "bg-brand-bg text-brand border-brand-border",
+    Waitlisted:     "bg-gold/30 text-dark2 border-gold/50",
+    Pending:        "bg-gold/30 text-dark2 border-gold/50",
+    Paid:           "bg-brand-bg text-brand border-brand-border",
+    "Partially Paid": "bg-gold/30 text-dark2 border-gold/50",
     Refunded:       "bg-gray-100 text-gray-500 border-gray-200",
   };
   return (
@@ -66,7 +66,7 @@ function StatusBadge({ status }: { status: string }) {
 function Avatar({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) {
   const sz = { sm: "w-7 h-7 text-[10px]", md: "w-9 h-9 text-xs", lg: "w-12 h-12 text-sm" }[size];
   return (
-    <div className={`${sz} rounded-full bg-[#2d5f3f] flex items-center justify-center text-white font-semibold shrink-0`}>
+    <div className={`${sz} rounded-full bg-brand flex items-center justify-center text-white font-semibold shrink-0`}>
       {initials(name)}
     </div>
   );
@@ -79,14 +79,14 @@ function EmptyState({ icon: Icon, title, body, action }: {
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
-      <div className="w-14 h-14 rounded-2xl bg-[#eef5f1] border border-[#c6dece] flex items-center justify-center mb-4">
-        <Icon className="w-6 h-6 text-[#2d5f3f]" />
+      <div className="w-14 h-14 rounded-2xl bg-brand-bg border border-brand-border flex items-center justify-center mb-4">
+        <Icon className="w-6 h-6 text-brand" />
       </div>
       <p className="font-serif text-base font-bold text-gray-900 mb-1">{title}</p>
       <p className="text-sm text-gray-400 font-sans max-w-xs leading-relaxed">{body}</p>
       {action && (
         <Link href={action.href}
-          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2d5f3f] border border-[#c6dece] px-4 py-2 rounded-full hover:bg-[#eef5f1] transition-colors">
+          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand border border-brand-border px-4 py-2 rounded-full hover:bg-brand-bg transition-colors">
           {action.label} <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       )}
@@ -114,11 +114,11 @@ function Section({ title, subtitle, action, children }: {
         </div>
         {action && (
           action.href ? (
-            <Link href={action.href} className="text-xs font-semibold text-[#2d5f3f] hover:underline underline-offset-2">
+            <Link href={action.href} className="text-xs font-semibold text-brand hover:underline underline-offset-2">
               {action.label}
             </Link>
           ) : (
-            <button onClick={action.onClick} className="text-xs font-semibold text-[#2d5f3f] hover:underline underline-offset-2">
+            <button onClick={action.onClick} className="text-xs font-semibold text-brand hover:underline underline-offset-2">
               {action.label}
             </button>
           )
@@ -176,13 +176,13 @@ function DashboardSection({ setSection }: { setSection: (s: Section) => void }) 
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25, delay: i * 0.05 }}
               onClick={card.onClick}
-              className="group text-left bg-white border border-gray-100 hover:border-[#c6dece] rounded-2xl p-5 transition-all duration-200 hover:shadow-md"
+              className="group text-left bg-white border border-gray-100 hover:border-brand-border rounded-2xl p-5 transition-all duration-200 hover:shadow-md"
             >
               <div className="flex items-start justify-between mb-4">
-                <div className="w-9 h-9 rounded-xl bg-[#eef5f1] border border-[#c6dece] flex items-center justify-center">
-                  <Icon className="w-4 h-4 text-[#2d5f3f]" />
+                <div className="w-9 h-9 rounded-xl bg-brand-bg border border-brand-border flex items-center justify-center">
+                  <Icon className="w-4 h-4 text-brand" />
                 </div>
-                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-[#2d5f3f] transition-colors" />
+                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-brand transition-colors" />
               </div>
               <p className="font-serif text-3xl font-bold text-gray-900">{card.value}</p>
               <p className="text-xs font-semibold text-gray-500 mt-0.5">{card.label}</p>
@@ -230,7 +230,7 @@ function DashboardSection({ setSection }: { setSection: (s: Section) => void }) 
                     <p className="text-[10px] text-gray-400 font-sans uppercase tracking-wider mb-1">Total Outstanding</p>
                     <p className="font-serif text-2xl font-bold text-gray-900">₦{totalPending.toLocaleString()}</p>
                   </div>
-                  <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#e8d5a3]/30 text-[#1a3d2b] border border-[#e8d5a3]/50">
+                  <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-gold/30 text-dark2 border border-gold/50">
                     Pay on Arrival
                   </span>
                 </div>
@@ -271,10 +271,10 @@ function UpcomingClassCard({ cls, isNext, compact }: {
 }) {
   const days = daysUntil(new Date(cls.date).toISOString().split("T")[0]);
   const countdownText = days === 0 ? "Today" : days === 1 ? "Tomorrow" : `In ${days} days`;
-  const countdownColor = days <= 1 ? "text-[#2d5f3f] font-bold" : days <= 7 ? "text-[#1a3d2b]" : "text-gray-400";
+  const countdownColor = days <= 1 ? "text-brand font-bold" : days <= 7 ? "text-dark2" : "text-gray-400";
 
   return (
-    <div className={`bg-white rounded-2xl border transition-all duration-200 ${isNext ? "border-[#2d5f3f]/30 shadow-md shadow-[#2d5f3f]/5" : "border-gray-100 hover:border-gray-200"} p-5`}>
+    <div className={`bg-white rounded-2xl border transition-all duration-200 ${isNext ? "border-brand/30 shadow-md shadow-brand/5" : "border-gray-100 hover:border-gray-200"} p-5`}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2">
@@ -292,10 +292,10 @@ function UpcomingClassCard({ cls, isNext, compact }: {
         {!compact && (
           <div className="flex flex-col gap-2 shrink-0">
             <Link href={`/academy/classes/${cls.id}`}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-[#2d5f3f] px-3 py-2 rounded-lg hover:bg-[#4a7c59] transition-colors">
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-brand px-3 py-2 rounded-lg hover:bg-brand-hover transition-colors">
               <Eye className="w-3 h-3" /> View
             </Link>
-            <button className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2d5f3f] border border-[#c6dece] px-3 py-2 rounded-lg hover:bg-[#eef5f1] transition-colors">
+            <button className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand border border-brand-border px-3 py-2 rounded-lg hover:bg-brand-bg transition-colors">
               <CalendarPlus className="w-3 h-3" /> Add to Cal
             </button>
           </div>
@@ -345,7 +345,7 @@ function ProgramsSection() {
       <div className="flex gap-2 flex-wrap mb-5">
         {filters.map(f => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-all duration-150 ${f === filter ? "bg-[#2d5f3f] text-white border-[#2d5f3f]" : "border-gray-200 text-gray-500 hover:border-[#c6dece] hover:text-[#2d5f3f]"}`}>
+            className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-all duration-150 ${f === filter ? "bg-brand text-white border-brand" : "border-gray-200 text-gray-500 hover:border-brand-border hover:text-brand"}`}>
             {f}
           </button>
         ))}
@@ -359,7 +359,7 @@ function ProgramsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filtered.map((enr) => (
             <motion.div key={enr.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              className="bg-white border border-gray-100 hover:border-[#c6dece] rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-md group">
+              className="bg-white border border-gray-100 hover:border-brand-border rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-md group">
               <div className="relative h-36 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={enr.image} alt={enr.programName} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -377,10 +377,10 @@ function ProgramsSection() {
                   <div className="mb-3">
                     <div className="flex justify-between text-[10px] text-gray-400 mb-1">
                       <span>Progress</span>
-                      <span className="font-semibold text-[#2d5f3f]">{enr.progress}%</span>
+                      <span className="font-semibold text-brand">{enr.progress}%</span>
                     </div>
                     <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#2d5f3f] rounded-full" style={{ width: `${enr.progress}%` }} />
+                      <div className="h-full bg-brand rounded-full" style={{ width: `${enr.progress}%` }} />
                     </div>
                   </div>
                 )}
@@ -389,12 +389,12 @@ function ProgramsSection() {
                   <span className="text-[10px] font-mono text-gray-300">Ref: {enr.ref}</span>
                   <div className="flex gap-2">
                     <Link href={`/academy/classes/${enr.classId}`}
-                      className="text-[11px] font-semibold text-[#2d5f3f] border border-[#c6dece] px-2.5 py-1.5 rounded-lg hover:bg-[#eef5f1] transition-colors">
+                      className="text-[11px] font-semibold text-brand border border-brand-border px-2.5 py-1.5 rounded-lg hover:bg-brand-bg transition-colors">
                       View Details
                     </Link>
                     {enr.status !== "Cancelled" && enr.status !== "Completed" && (
                       <Link href={`/academy/classes/${enr.classId}`}
-                        className="text-[11px] font-semibold text-white bg-[#2d5f3f] px-2.5 py-1.5 rounded-lg hover:bg-[#4a7c59] transition-colors">
+                        className="text-[11px] font-semibold text-white bg-brand px-2.5 py-1.5 rounded-lg hover:bg-brand-hover transition-colors">
                         {enr.status === "Ongoing" ? "Continue" : "Details"}
                       </Link>
                     )}
@@ -429,7 +429,7 @@ function HistorySection() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
         <input value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Search by program or reference..."
-          className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm font-sans outline-none focus:border-[#2d5f3f] focus:ring-2 focus:ring-[#2d5f3f]/10 transition-all" />
+          className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm font-sans outline-none focus:border-brand focus:ring-2 focus:ring-brand/10 transition-all" />
       </div>
 
       {/* Desktop table */}
@@ -452,7 +452,7 @@ function HistorySection() {
                 <td className="px-5 py-4"><StatusBadge status={r.enrollmentStatus} /></td>
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-2">
-                    <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#2d5f3f] hover:underline underline-offset-2">
+                    <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand hover:underline underline-offset-2">
                       <Eye className="w-3 h-3" /> View
                     </button>
                     <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-500 hover:text-gray-700">
@@ -500,7 +500,7 @@ function HistorySection() {
                       </div>
                     ))}
                     <div className="flex gap-2 pt-2">
-                      <button className="flex-1 text-xs font-semibold text-[#2d5f3f] border border-[#c6dece] py-2 rounded-lg hover:bg-[#eef5f1] transition-colors">View</button>
+                      <button className="flex-1 text-xs font-semibold text-brand border border-brand-border py-2 rounded-lg hover:bg-brand-bg transition-colors">View</button>
                       <button className="flex-1 text-xs font-semibold text-gray-500 border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-1.5">
                         <Download className="w-3 h-3" /> Slip
                       </button>
@@ -532,16 +532,16 @@ function CertificatesSection() {
             <motion.div key={cert.id}
               whileHover={{ y: -2 }}
               transition={{ duration: 0.15 }}
-              className="group bg-white border border-gray-100 hover:border-[#c6dece] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200">
+              className="group bg-white border border-gray-100 hover:border-brand-border rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200">
               {/* Certificate preview */}
-              <div className="relative h-40 bg-linear-to-br from-[#0f2318] to-[#1a3d2b] flex flex-col items-center justify-center p-5">
+              <div className="relative h-40 bg-linear-to-br from-dark to-dark2 flex flex-col items-center justify-center p-5">
                 <div className="absolute inset-0 opacity-[0.05]"
                   style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-                <Award className="w-8 h-8 text-[#e8d5a3] mb-2" />
+                <Award className="w-8 h-8 text-gold mb-2" />
                 <p className="text-white font-serif font-bold text-xs text-center leading-tight">{cert.programName}</p>
-                <p className="text-[#6b9d7a] text-[9px] font-mono mt-1.5 tracking-widest uppercase">Certificate of Completion</p>
+                <p className="text-muted text-[9px] font-mono mt-1.5 tracking-widest uppercase">Certificate of Completion</p>
                 <div className="absolute top-3 right-3">
-                  <span className="text-[9px] font-semibold text-[#e8d5a3] bg-[#e8d5a3]/10 border border-[#e8d5a3]/20 px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] font-semibold text-gold bg-gold/10 border border-gold/20 px-2 py-0.5 rounded-full">
                     {cert.grade}
                   </span>
                 </div>
@@ -549,14 +549,14 @@ function CertificatesSection() {
               <div className="p-4">
                 <h3 className="font-serif font-bold text-gray-900 text-sm leading-tight mb-3">{cert.programName}</h3>
                 <div className="space-y-1.5 text-[11px] text-gray-400 font-sans mb-4">
-                  <div className="flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3 text-[#2d5f3f]" /> Completed {cert.completedAt}</div>
+                  <div className="flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3 text-brand" /> Completed {cert.completedAt}</div>
                   <div className="flex items-center gap-1.5"><FileText className="w-3 h-3 text-gray-300" />Cert No: {cert.certificateNumber}</div>
                 </div>
                 <div className="flex gap-2 pt-3 border-t border-gray-50">
-                  <button className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#2d5f3f] border border-[#c6dece] py-2 rounded-lg hover:bg-[#eef5f1] transition-colors">
+                  <button className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-brand border border-brand-border py-2 rounded-lg hover:bg-brand-bg transition-colors">
                     <Eye className="w-3 h-3" /> View
                   </button>
-                  <button className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-[#2d5f3f] py-2 rounded-lg hover:bg-[#4a7c59] transition-colors">
+                  <button className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-brand py-2 rounded-lg hover:bg-brand-hover transition-colors">
                     <Download className="w-3 h-3" /> Download
                   </button>
                 </div>
@@ -581,8 +581,8 @@ function PaymentsSection() {
       {/* Summary */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         {[
-          { label: "Total Paid", value: `₦${paid.toLocaleString()}`, color: "text-[#2d5f3f]" },
-          { label: "Pending", value: `₦${pending.toLocaleString()}`, color: "text-[#1a3d2b]" },
+          { label: "Total Paid", value: `₦${paid.toLocaleString()}`, color: "text-brand" },
+          { label: "Pending", value: `₦${pending.toLocaleString()}`, color: "text-dark2" },
           { label: "Outstanding", value: `₦${pending.toLocaleString()}`, color: "text-gray-900" },
         ].map(c => (
           <div key={c.label} className="bg-white border border-gray-100 rounded-2xl p-5">
@@ -593,9 +593,9 @@ function PaymentsSection() {
       </div>
 
       {/* Notice */}
-      <div className="flex items-start gap-3 bg-[#eef5f1] border border-[#c6dece] rounded-xl px-4 py-3.5 mb-6">
-        <AlertCircle className="w-4 h-4 text-[#2d5f3f] shrink-0 mt-0.5" />
-        <p className="text-xs text-[#1a3d2b] font-sans leading-relaxed">
+      <div className="flex items-start gap-3 bg-brand-bg border border-brand-border rounded-xl px-4 py-3.5 mb-6">
+        <AlertCircle className="w-4 h-4 text-brand shrink-0 mt-0.5" />
+        <p className="text-xs text-dark2 font-sans leading-relaxed">
           Payments are currently collected on arrival at the farm. Online payment via card and bank transfer will be available soon.
         </p>
       </div>
@@ -622,7 +622,7 @@ function PaymentsSection() {
                   <td className="px-5 py-4 text-xs text-gray-500 font-sans">{fmtDate(p.date)}</td>
                   <td className="px-5 py-4">
                     {p.receiptAvailable ? (
-                      <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#2d5f3f] hover:underline underline-offset-2">
+                      <button className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand hover:underline underline-offset-2">
                         <Download className="w-3 h-3" /> PDF
                       </button>
                     ) : (
@@ -650,7 +650,7 @@ function PaymentsSection() {
                 <div><p className="text-gray-400">Ref</p><p className="font-mono text-[10px] text-gray-500">{p.ref}</p></div>
               </div>
               {p.receiptAvailable && (
-                <button className="w-full flex items-center justify-center gap-2 text-xs font-semibold text-[#2d5f3f] border border-[#c6dece] py-2 rounded-lg hover:bg-[#eef5f1] transition-colors">
+                <button className="w-full flex items-center justify-center gap-2 text-xs font-semibold text-brand border border-brand-border py-2 rounded-lg hover:bg-brand-bg transition-colors">
                   <Download className="w-3 h-3" /> Download Receipt
                 </button>
               )}
@@ -689,11 +689,11 @@ function NotificationList({ limit }: { limit?: number }) {
           <div className="flex items-center gap-2">
             <h2 className="font-serif text-lg font-bold text-gray-900">Notifications</h2>
             {unread > 0 && (
-              <span className="w-5 h-5 rounded-full bg-[#2d5f3f] text-white text-[10px] font-bold flex items-center justify-center">{unread}</span>
+              <span className="w-5 h-5 rounded-full bg-brand text-white text-[10px] font-bold flex items-center justify-center">{unread}</span>
             )}
           </div>
           {unread > 0 && (
-            <button onClick={markAllRead} className="text-xs font-semibold text-[#2d5f3f] hover:underline underline-offset-2">Mark all read</button>
+            <button onClick={markAllRead} className="text-xs font-semibold text-brand hover:underline underline-offset-2">Mark all read</button>
           )}
         </div>
       )}
@@ -705,8 +705,8 @@ function NotificationList({ limit }: { limit?: number }) {
           const timeStr = ts.toLocaleDateString("en-NG", { day: "numeric", month: "short" });
           return (
             <button key={n.id} onClick={() => markRead(n.id)}
-              className={`w-full flex items-start gap-3 px-4 py-4 text-left hover:bg-gray-50/50 transition-colors ${!n.read ? "bg-[#eef5f1]/40" : ""}`}>
-              <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${!n.read ? "bg-[#2d5f3f] text-white" : "bg-gray-100 text-gray-400"}`}>
+              className={`w-full flex items-start gap-3 px-4 py-4 text-left hover:bg-gray-50/50 transition-colors ${!n.read ? "bg-brand-bg/40" : ""}`}>
+              <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${!n.read ? "bg-brand text-white" : "bg-gray-100 text-gray-400"}`}>
                 <Icon className="w-3.5 h-3.5" />
               </div>
               <div className="flex-1 min-w-0">
@@ -716,7 +716,7 @@ function NotificationList({ limit }: { limit?: number }) {
                 </div>
                 <p className="text-xs text-gray-400 font-sans mt-0.5 leading-relaxed">{n.body}</p>
               </div>
-              {!n.read && <span className="w-2 h-2 rounded-full bg-[#2d5f3f] shrink-0 mt-2" />}
+              {!n.read && <span className="w-2 h-2 rounded-full bg-brand shrink-0 mt-2" />}
             </button>
           );
         })}
@@ -750,9 +750,9 @@ function QuickActionGrid({ setSection }: { setSection: (s: Section) => void }) {
         const Icon = a.icon;
         return (
           <button key={a.label} onClick={a.onClick}
-            className="group flex flex-col items-center gap-2.5 p-3 bg-white border border-gray-100 hover:border-[#c6dece] rounded-2xl transition-all duration-200 hover:shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-[#eef5f1] border border-[#c6dece] flex items-center justify-center group-hover:bg-[#2d5f3f] transition-colors duration-200">
-              <Icon className="w-4 h-4 text-[#2d5f3f] group-hover:text-white transition-colors duration-200" />
+            className="group flex flex-col items-center gap-2.5 p-3 bg-white border border-gray-100 hover:border-brand-border rounded-2xl transition-all duration-200 hover:shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-brand-bg border border-brand-border flex items-center justify-center group-hover:bg-brand transition-colors duration-200">
+              <Icon className="w-4 h-4 text-brand group-hover:text-white transition-colors duration-200" />
             </div>
             <span className="text-[10px] font-semibold text-gray-500 text-center leading-tight">{a.label}</span>
           </button>
@@ -785,14 +785,14 @@ function ProfileSection() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Card */}
         <div className="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center text-center">
-          <div className="w-20 h-20 rounded-full bg-[#2d5f3f] flex items-center justify-center text-white font-serif text-2xl font-bold mb-4">
+          <div className="w-20 h-20 rounded-full bg-brand flex items-center justify-center text-white font-serif text-2xl font-bold mb-4">
             {initials(`${s.firstName} ${s.lastName}`)}
           </div>
           <h3 className="font-serif font-bold text-gray-900 text-lg">{s.firstName} {s.lastName}</h3>
           <p className="text-xs text-gray-400 font-mono mt-1">{s.studentId}</p>
           <div className="flex flex-wrap gap-1.5 justify-center mt-4">
             {s.areasOfInterest.map(a => (
-              <span key={a} className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#eef5f1] text-[#2d5f3f] border border-[#c6dece]">{a}</span>
+              <span key={a} className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-brand-bg text-brand border border-brand-border">{a}</span>
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-gray-50 w-full space-y-2 text-left">
@@ -806,7 +806,7 @@ function ProfileSection() {
         <div className="lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-serif font-bold text-gray-900 text-sm">Profile Details</h3>
-            <button className="text-xs font-semibold text-[#2d5f3f] border border-[#c6dece] px-3 py-1.5 rounded-lg hover:bg-[#eef5f1] transition-colors">
+            <button className="text-xs font-semibold text-brand border border-brand-border px-3 py-1.5 rounded-lg hover:bg-brand-bg transition-colors">
               Edit Profile
             </button>
           </div>
@@ -862,7 +862,7 @@ function SettingsSection() {
                   <p className="text-xs text-gray-400 font-sans mt-0.5">{sub}</p>
                 </div>
                 <button onClick={() => toggle(key)}
-                  className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors duration-200 ${settings[key] ? "bg-[#2d5f3f]" : "bg-gray-200"}`}>
+                  className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors duration-200 ${settings[key] ? "bg-brand" : "bg-gray-200"}`}>
                   <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform duration-200 ${settings[key] ? "translate-x-4" : "translate-x-0.5"}`} />
                 </button>
               </div>
@@ -910,7 +910,7 @@ function SidebarContent({ active, setSection, onClose }: {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-4 py-5 border-b border-gray-100 dark:border-white/5">
-        <div className="w-8 h-8 rounded-lg bg-[#2d5f3f] flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center shrink-0">
           <Leaf className="w-4 h-4 text-white" />
         </div>
         <div>
@@ -932,15 +932,15 @@ function SidebarContent({ active, setSection, onClose }: {
           return (
             <button key={item.id} onClick={() => { setSection(item.id); onClose?.(); }}
               className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-sans font-medium transition-all duration-150 text-left
-                ${isActive ? "bg-[#eef5f1] text-[#2d5f3f]" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-white/50 dark:hover:bg-white/5 dark:hover:text-white"}`}>
+                ${isActive ? "bg-brand-bg text-brand" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-white/50 dark:hover:bg-white/5 dark:hover:text-white"}`}>
               {isActive && (
                 <motion.span layoutId="sidebar-indicator"
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-[#2d5f3f] rounded-full" />
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-brand rounded-full" />
               )}
               <Icon className="w-4 h-4 shrink-0" />
               <span>{item.label}</span>
               {item.id === "notifications" && unreadCount > 0 && (
-                <span className="ml-auto w-5 h-5 rounded-full bg-[#2d5f3f] text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="ml-auto w-5 h-5 rounded-full bg-brand text-white text-[9px] font-bold flex items-center justify-center">
                   {unreadCount}
                 </span>
               )}
@@ -985,10 +985,10 @@ export function DashboardClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9f8f6] dark:bg-[#0a0f0d] flex">
+    <div className="min-h-screen bg-cream dark:bg-dark flex">
 
       {/* ── Desktop Sidebar ── */}
-      <aside className="hidden lg:flex flex-col w-60 shrink-0 bg-white dark:bg-[#080f0a] border-r border-gray-100 dark:border-white/5 fixed inset-y-0 left-0 z-30">
+      <aside className="hidden lg:flex flex-col w-60 shrink-0 bg-white dark:bg-dark border-r border-gray-100 dark:border-white/5 fixed inset-y-0 left-0 z-30">
         <SidebarContent active={section} setSection={setSection} />
       </aside>
 
@@ -1001,7 +1001,7 @@ export function DashboardClient() {
               className="fixed inset-0 bg-black/40 z-40 lg:hidden" />
             <motion.aside initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 w-72 z-50 bg-white dark:bg-[#080f0a] border-r border-gray-100 dark:border-white/5 lg:hidden flex flex-col">
+              className="fixed inset-y-0 left-0 w-72 z-50 bg-white dark:bg-dark border-r border-gray-100 dark:border-white/5 lg:hidden flex flex-col">
               <SidebarContent active={section} setSection={setSection} onClose={() => setMobileOpen(false)} />
             </motion.aside>
           </>
@@ -1012,7 +1012,7 @@ export function DashboardClient() {
       <div className="flex-1 lg:ml-60 flex flex-col min-h-screen">
 
         {/* ── Top Nav ── */}
-        <header className="sticky top-0 z-20 bg-white/90 dark:bg-[#080f0a]/90 backdrop-blur-md border-b border-gray-100 dark:border-white/5 px-4 lg:px-8 h-14 flex items-center gap-4">
+        <header className="sticky top-0 z-20 bg-white/90 dark:bg-dark/90 backdrop-blur-md border-b border-gray-100 dark:border-white/5 px-4 lg:px-8 h-14 flex items-center gap-4">
           <button onClick={() => setMobileOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-500 -ml-1">
             <Menu className="w-5 h-5" />
           </button>
@@ -1034,7 +1034,7 @@ export function DashboardClient() {
               className="relative p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-white/60 transition-colors">
               <Bell className="w-4.5 h-4.5 w-5 h-5" />
               {unread > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#2d5f3f]" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand" />
               )}
             </button>
 

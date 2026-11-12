@@ -6,13 +6,14 @@ import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight, ArrowLeft,
+  ArrowRight,
   Droplets, ShieldCheck, Leaf, MapPin,
   Filter, Beaker, Gauge, Package, CheckCircle2,
-  Phone, Mail, Settings,
+  Phone, Mail,
 } from "lucide-react";
-import { ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
-import { Container } from "@/components/ui";
+import { fadeUp as _fadeUp } from "@/lib/tokens";
+import { Button, Container } from "@/components/ui";
+import { ProjectHero } from "@/components/sections";
 
 const fadeUp = (delay = 0) => _fadeUp(delay);
 
@@ -40,13 +41,6 @@ const PRODUCTS = [
   "Customized packaging (branded bottles & labels)",
 ];
 
-const QUALITY_PILLARS = [
-  { icon: ShieldCheck, label: "Stringent Quality Control" },
-  { icon: Settings,    label: "Modern Refinery Equipment" },
-  { icon: Package,     label: "Hygienic Packaging" },
-  { icon: Leaf,        label: "Environmental Responsibility" },
-];
-
 // ─── page ─────────────────────────────────────────────────────────────────────
 export default function WaterFactoryPage() {
   return (
@@ -55,68 +49,20 @@ export default function WaterFactoryPage() {
       <main className="min-h-screen bg-cream">
 
         {/* ── 1. HERO ── */}
-        <section className="relative h-[88vh] min-h-[600px] overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1600"
-            alt="Water bottling facility"
-            fill priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-dark/30" />
-          <div className="absolute inset-0 bg-linear-to-t from-dark/85 via-dark/15 to-transparent" />
-
-          <div className="absolute top-20 left-0 z-10 w-full">
-            <Container>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
-                <Link
-                  href="/#projects"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4" /> All Projects
-                </Link>
-              </motion.div>
-            </Container>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
-            <Container>
-              <motion.div
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: EASE }}
-              >
-                <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-4 text-muted">Water Refinery</p>
-                <h1
-                  className="font-serif font-bold text-white leading-[1.04] max-w-2xl mb-5"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 4rem)" }}
-                >
-                  Pure Water.<br />Healthier Lives.<br />A Stronger Future.
-                </h1>
-                <p className="font-sans text-white/65 leading-relaxed max-w-lg mb-9" style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)" }}>
-                  Kuyash Integrated Farm Ltd is developing a modern water refinery to produce high-quality, safe and refreshing drinking water for homes, businesses and communities across Nigeria.
-                </p>
-                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                  <Link
-                    href="#contact"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
-                  >
-                    Enquire About Our Project <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="#process"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
-                  >
-                    Explore Our Plan
-                  </Link>
-                </div>
-              </motion.div>
-            </Container>
-          </div>
-        </section>
+        <ProjectHero
+          image="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1600"
+          imageAlt="Water bottling facility"
+          eyebrow="Water Refinery"
+          headline={<>Pure Water.<br />Healthier Lives.<br />A Stronger Future.</>}
+          body="Kuyash Integrated Farm Ltd is developing a modern water refinery to produce high-quality, safe and refreshing drinking water for homes, businesses and communities across Nigeria."
+          ctas={[
+            { label: "Enquire About Our Project", href: "#contact" },
+            { label: "Explore Our Plan", href: "#process", variant: "outline" },
+          ]}
+        />
 
         {/* ── 2. ABOUT THE PROJECT ── */}
-        <section id="about" className="bg-white py-20 border-y border-border">
+        <section id="about" className="bg-white py-24border-y border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -207,7 +153,7 @@ export default function WaterFactoryPage() {
         </section>
 
         {/* ── 4. OUR WATER PRODUCTS ── */}
-        <section className="bg-white py-20 border-b border-border">
+        <section className="bg-white py-24border-b border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -240,63 +186,68 @@ export default function WaterFactoryPage() {
                     </li>
                   ))}
                 </ul>
-                <Link
+                <Button
                   href="/shop/all"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
+                  variant="gold"
                 >
                   View Product Range <ArrowRight className="h-4 w-4" />
-                </Link>
+                </Button>
               </motion.div>
             </div>
           </Container>
         </section>
 
-        {/* ── 5. WHY CHOOSE KUYASH WATER ── */}
+        {/* ── 5. PRODUCT SKU TABLE ── */}
         <section className="py-20 border-b border-border bg-cream">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div {...fadeUp()} className="mb-10">
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">Product Range</p>
+              <h2
+                className="font-serif font-bold text-dark leading-[1.06]"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
+              >
+                Available Sizes &amp; Formats
+              </h2>
+            </motion.div>
 
-              <motion.div {...fadeUp()}>
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-gold">Why Choose Kuyash Water</p>
-                <h2
-                  className="font-serif font-bold text-dark leading-[1.06] mb-5"
-                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
-                >
-                  Quality You Can Trust
-                </h2>
-                <p className="font-sans text-sm text-gray-600 leading-relaxed mb-10">
-                  We are committed to delivering water that is safe, clean and consistently high in quality. Our facility will be built with modern technology, strict hygiene standards and a focus on sustainability.
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {QUALITY_PILLARS.map((p, i) => {
-                    const Icon = p.icon;
-                    return (
-                      <motion.div key={p.label} {...fadeUp(i * 0.07)} className="flex flex-col items-center text-center gap-2">
-                        <div className="w-10 h-10 rounded-xl bg-brand-bg flex items-center justify-center">
-                          <Icon className="w-4 h-4 text-brand" />
-                        </div>
-                        <p className="font-sans text-xs font-semibold text-dark leading-snug">{p.label}</p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </motion.div>
+            <motion.div {...fadeUp(0.1)} className="overflow-x-auto rounded-2xl border border-border">
+              <table className="w-full text-sm font-sans min-w-[520px]">
+                <thead>
+                  <tr className="bg-dark2 text-white">
+                    <th className="text-left px-6 py-4 font-semibold text-xs uppercase tracking-widest rounded-tl-2xl">Format</th>
+                    <th className="text-left px-6 py-4 font-semibold text-xs uppercase tracking-widest">Size / Volume</th>
+                    <th className="text-left px-6 py-4 font-semibold text-xs uppercase tracking-widest">Pack Size</th>
+                    <th className="text-left px-6 py-4 font-semibold text-xs uppercase tracking-widest rounded-tr-2xl">Best For</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border bg-white">
+                  {[
+                    { format: "Sachet Water",       size: "500 ml",    pack: "30 sachets / bag",   use: "Everyday hydration, events" },
+                    { format: "Table Water Bottle",  size: "75 cl",     pack: "12 bottles / crate", use: "Homes, offices, restaurants" },
+                    { format: "Table Water Bottle",  size: "1.5 L",     pack: "12 bottles / crate", use: "Family & institutional use" },
+                    { format: "Dispenser Bottle",    size: "18.9 L",    pack: "Single unit",        use: "Offices, churches, schools" },
+                    { format: "Bulk Supply",         size: "On request", pack: "Tanker delivery",   use: "Hotels, hospitals, factories" },
+                  ].map((row, i) => (
+                    <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-cream/40"}>
+                      <td className="px-6 py-4 font-semibold text-dark">{row.format}</td>
+                      <td className="px-6 py-4 text-gray-600">{row.size}</td>
+                      <td className="px-6 py-4 text-gray-600">{row.pack}</td>
+                      <td className="px-6 py-4 text-gray-500 text-xs">{row.use}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
 
-              <motion.div {...fadeUp(0.15)}>
-                <div className="relative aspect-4/3 rounded-2xl overflow-hidden">
-                  <Image
-                    src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=1200"
-                    alt="Water quality testing" fill className="object-cover"
-                    sizes="(max-width:1024px) 100vw, 50vw"
-                  />
-                </div>
-              </motion.div>
-            </div>
+            <motion.p {...fadeUp(0.15)} className="mt-5 font-sans text-xs text-gray-400 text-center">
+              Custom labelling and branded packaging available for bulk orders.{" "}
+              <Link href="#contact" className="text-brand font-semibold hover:underline">Enquire now →</Link>
+            </motion.p>
           </Container>
         </section>
 
         {/* ── 6. INTEGRATED FARM. GREATER VALUE. ── */}
-        <section className="bg-white py-20 border-b border-border">
+        <section className="bg-white py-24border-b border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -322,12 +273,12 @@ export default function WaterFactoryPage() {
                 <p className="font-sans text-sm text-gray-600 leading-relaxed mb-9">
                   The water refinery is one of several key projects under Kuyash Integrated Farm Ltd. It works hand-in-hand with our crop, livestock, fisheries and processing operations to create a fully integrated and sustainable agricultural business.
                 </p>
-                <Link
+                <Button
                   href="/#projects"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
+                  variant="gold"
                 >
                   Explore Our Projects <ArrowRight className="h-4 w-4" />
-                </Link>
+                </Button>
               </motion.div>
             </div>
           </Container>
@@ -357,12 +308,13 @@ export default function WaterFactoryPage() {
                     Partner with us or get in touch to learn more about our water refinery project and future supply opportunities.
                   </p>
                   <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                    <a
-                      href="mailto:info@kuyashfarm.com"
-                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
+                    <Button
+                      href="mailto:kuyashfarmltd@gmail.com"
+                      variant="gold"
+                      external
                     >
                       Enquire <ArrowRight className="h-4 w-4" />
-                    </a>
+                    </Button>
                     <Link
                       href="/contact"
                       className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
@@ -393,7 +345,7 @@ export default function WaterFactoryPage() {
                     </div>
                     <div>
                       <p className="font-sans text-xs font-semibold uppercase tracking-wider mb-1 text-gold">Call Us</p>
-                      <p className="font-sans text-sm text-white/65">+234 800 000 0000</p>
+                      <p className="font-sans text-sm text-white/65">+234 902 899 1521</p>
                     </div>
                   </div>
 
@@ -403,7 +355,7 @@ export default function WaterFactoryPage() {
                     </div>
                     <div>
                       <p className="font-sans text-xs font-semibold uppercase tracking-wider mb-1 text-gold">Email Us</p>
-                      <p className="font-sans text-sm text-white/65">info@kuyashfarm.com</p>
+                      <p className="font-sans text-sm text-white/65">kuyashfarmltd@gmail.com</p>
                     </div>
                   </div>
                 </motion.div>

@@ -259,11 +259,11 @@ function generateBotResponse(userInput: string, userName: string): string {
   }
 
   if (input.includes("farm") || input.includes("location") || input.includes("visit") || input.includes("nasarawa")) {
-    return `Our farm is located in Nasarawa State, Nigeria — 56 hectares of integrated farmland.\n\nWe welcome visitors, partners and institutions. Reach us at hello@kuyashfarm.com to schedule a visit or partnership discussion.`;
+    return `Our farm is located in Nasarawa State, Nigeria — 56 hectares of integrated farmland.\n\nWe welcome visitors, partners and institutions. Reach us at kuyashfarmltd@gmail.com to schedule a visit or partnership discussion.`;
   }
 
   if (input.includes("contact") || input.includes("phone") || input.includes("email")) {
-    return `You can reach us at:\n\nEmail — hello@kuyashfarm.com\nPhone — +234 800 000 0000\nHours — Monday to Saturday, 8AM to 6PM\n\nOr keep chatting here — I'm available around the clock.`;
+    return `You can reach us at:\n\nEmail — kuyashfarmltd@gmail.com\nPhone — +234 902 899 1521\nHours — Monday to Saturday, 8AM to 6PM\n\nOr keep chatting here — I'm available around the clock.`;
   }
 
   if (input.includes("hello") || input.includes("hi") || input.includes("hey") || input.includes("good")) {

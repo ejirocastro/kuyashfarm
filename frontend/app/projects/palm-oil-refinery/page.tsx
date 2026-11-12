@@ -1,17 +1,19 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight, ArrowLeft, TrendingUp, Link2, Leaf,
+  ArrowRight, TrendingUp, Link2, Leaf,
   ShieldCheck, Settings, Users, Globe, CheckCircle2,
-  Handshake,
+  Handshake, Plus, Minus,
 } from "lucide-react";
-import { ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
-import { Container } from "@/components/ui";
+import { ease as EASE, fadeUp as _fadeUp, springReveal } from "@/lib/tokens";
+import { Button, Container } from "@/components/ui";
+import { ProjectHero } from "@/components/sections";
 
 const fadeUp = (delay = 0) => _fadeUp(delay);
 
@@ -39,26 +41,38 @@ const PROCESS_STEPS = [
   {
     num: "1",
     label: "Fresh Fruit Bunches",
-    sub: "Sourced from our farms and trusted local growers.",
+    sub: "FFBs sourced from our farms and verified local growers within 24 hours of harvest to minimise free fatty acid (FFA) build-up.",
     image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=600",
   },
   {
     num: "2",
     label: "Crude Palm Oil (CPO)",
-    sub: "Extracted through mechanical pressing and clarification.",
+    sub: "Fruit is sterilised, stripped and mechanically pressed. Clarified CPO is settled and dried before entering the refinery.",
     image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=600",
   },
   {
     num: "3",
-    label: "Refining Process",
-    sub: "Filtering, bleaching and deodorizing for high quality and purity.",
+    label: "Degumming",
+    sub: "Phosphoric acid is added to hydrate and precipitate phosphatides (gums) from the CPO. Removes impurities that would otherwise darken the final oil.",
     image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=600",
   },
   {
     num: "4",
-    label: "Refined Palm Oil",
-    sub: "Ready for local and regional markets.",
+    label: "Bleaching",
+    sub: "Degummed oil passes through bleaching earth under vacuum to adsorb carotenoids (colour pigments), residual phosphatides and trace metals — yielding pale yellow oil.",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=600",
+  },
+  {
+    num: "5",
+    label: "Deodorising",
+    sub: "Bleached oil is steam-stripped under high vacuum at 240–260°C to remove free fatty acids, aldehydes and ketones responsible for odour and flavour — producing RBD palm oil.",
     image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=600",
+  },
+  {
+    num: "6",
+    label: "Fractionation & Dispatch",
+    sub: "RBD oil is crystallised and filtered to yield olein (liquid, for cooking oil) and stearin (solid, for margarine/soap). Both fractions are tested and packed for market.",
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=600",
   },
 ];
 
@@ -84,11 +98,61 @@ const STATUS_STEPS = [
   { label: "Commissioning",          detail: "Upcoming",     done: false },
 ];
 
-const RELATED = [
-  { label: "Water Factory",          href: "/projects/water-factory" },
-  { label: "Soap & Tissue Factory",  href: "/projects/soap-tissue-factory" },
-  { label: "Slaughter House",        href: "/projects/slaughter-house" },
+const FAQS = [
+  {
+    q: "What stage is the refinery project currently at?",
+    a: "The project is in the planning and infrastructure development phase. Equipment installation and commissioning are scheduled for the next phase. Register your interest to stay informed.",
+  },
+  {
+    q: "What products will the refinery produce?",
+    a: "The refinery will produce Refined Bleached Deodorised (RBD) palm oil for the food industry, as well as palm kernel oil, palm stearin and other by-products for industrial and cosmetic use.",
+  },
+  {
+    q: "Will you source from independent farmers?",
+    a: "Yes. Beyond our own plantation, we plan to establish contract-farming relationships with verified local growers, providing a guaranteed offtake at fair market prices.",
+  },
+  {
+    q: "How can I invest or partner with the project?",
+    a: "We welcome investors, equipment suppliers and off-takers. Fill in the contact form or email us at kuyashfarmltd@gmail.com and our business development team will respond within 2 business days.",
+  },
+  {
+    q: "Will the refined oil meet international quality standards?",
+    a: "Yes. The refinery will be designed to meet SON (Standards Organisation of Nigeria) specifications and, over time, Codex Alimentarius standards for export eligibility.",
+  },
 ];
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-border last:border-0">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-4 py-5 text-left"
+      >
+        <span className="font-serif font-semibold text-sm text-dark">{q}</span>
+        <span className="shrink-0 w-6 h-6 rounded-full border border-border flex items-center justify-center">
+          {open
+            ? <Minus className="w-3 h-3 text-brand" />
+            : <Plus className="w-3 h-3 text-brand" />
+          }
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={springReveal}
+            className="overflow-hidden"
+          >
+            <p className="font-sans text-sm text-gray-600 leading-relaxed pb-5">{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 // ─── page ─────────────────────────────────────────────────────────────────────
 
@@ -99,77 +163,17 @@ export default function PalmOilRefineryPage() {
       <main className="min-h-screen bg-cream">
 
         {/* ── 1. HERO ── */}
-        <section className="relative h-[88vh] min-h-[600px] overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2070"
-            alt="Palm Oil Refinery"
-            fill priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-dark/30" />
-          <div className="absolute inset-0 bg-linear-to-t from-dark/85 via-dark/10 to-transparent" />
-
-          <div className="absolute top-24 right-8 md:right-16 flex flex-col items-end gap-1.5 z-10">
-            {["Processing", "Value Addition", "Nigeria"].map((kw) => (
-              <span key={kw} className="font-serif text-sm font-semibold text-white/70 tracking-wide">{kw}</span>
-            ))}
-          </div>
-
-          <div className="absolute top-20 left-0 z-10 w-full">
-            <Container>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
-                <Link
-                  href="/#projects"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4" /> All Projects
-                </Link>
-              </motion.div>
-            </Container>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
-            <Container>
-              <motion.div
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: EASE }}
-              >
-                <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-3 text-muted">
-                  Ongoing Project &nbsp;/&nbsp; Processing &amp; Value Addition
-                </p>
-
-                <h1
-                  className="font-serif font-bold text-white leading-[1.04] max-w-2xl mb-5"
-                  style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)" }}
-                >
-                  From Palm Harvest<br />
-                  <span className="text-gold">to Refined Value.</span>
-                </h1>
-
-                <p className="font-sans text-white/65 leading-relaxed max-w-lg mb-9" style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)" }}>
-                  Developing local processing capacity to turn palm produce into dependable, value-added products for Nigerian markets.
-                </p>
-
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    href="#about"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
-                  >
-                    Explore the Project <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/25 text-white hover:bg-white/10 transition-colors duration-200"
-                  >
-                    Discuss a Partnership
-                  </Link>
-                </div>
-              </motion.div>
-            </Container>
-          </div>
-        </section>
+        <ProjectHero
+          image="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2070"
+          imageAlt="Palm Oil Refinery"
+          eyebrow="Ongoing Project / Processing & Value Addition"
+          headline={<>From Palm Harvest<br /><span className="text-gold">to Refined Value.</span></>}
+          body="Developing local processing capacity to turn palm produce into dependable, value-added products for Nigerian markets."
+          ctas={[
+            { label: "Explore the Project", href: "#about" },
+            { label: "Discuss a Partnership", href: "/contact", variant: "outline" },
+          ]}
+        />
 
         {/* ── 2. THREE-PILLAR STRIP ── */}
         <section className="bg-white border-y border-border">
@@ -198,7 +202,7 @@ export default function PalmOilRefineryPage() {
         </section>
 
         {/* ── 3. ABOUT THE PROJECT ── */}
-        <section id="about" className="bg-white py-20 overflow-hidden">
+        <section id="about" className="bg-white py-24overflow-hidden">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -267,24 +271,12 @@ export default function PalmOilRefineryPage() {
                 </Link>
               </motion.div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-0 items-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {PROCESS_STEPS.map((step, i) => (
-                  <motion.div key={step.num} {...fadeUp(i * 0.1)} className="flex flex-col items-center text-center">
-                    <div className="flex items-center w-full mb-4">
-                      <div className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-4 border-white shadow-md shrink-0 mx-auto">
-                        <Image src={step.image} alt={step.label} fill className="object-cover" sizes="100px" />
-                      </div>
-                      {i < PROCESS_STEPS.length - 1 && (
-                        <div className="hidden lg:flex items-center justify-center w-full">
-                          <ArrowRight className="w-5 h-5 shrink-0 text-muted" />
-                        </div>
-                      )}
-                    </div>
-                    <p className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] mb-1 text-muted">
-                      {step.num}.
-                    </p>
-                    <p className="font-serif font-semibold text-sm text-dark mb-1">{step.label}</p>
-                    <p className="font-sans text-xs leading-snug text-gray-500">{step.sub}</p>
+                  <motion.div key={step.num} {...fadeUp(i * 0.07)} className="rounded-2xl border border-border bg-cream p-5">
+                    <p className="font-mono text-xs font-bold text-muted mb-2 tracking-[0.15em]">{step.num}.</p>
+                    <p className="font-serif font-semibold text-sm text-dark mb-1.5">{step.label}</p>
+                    <p className="font-sans text-xs leading-relaxed text-gray-500">{step.sub}</p>
                   </motion.div>
                 ))}
               </div>
@@ -293,7 +285,7 @@ export default function PalmOilRefineryPage() {
         </section>
 
         {/* ── 5. WHY IT MATTERS ── */}
-        <section className="bg-white py-20 border-t border-border">
+        <section className="bg-white py-24border-t border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12 items-start">
 
@@ -360,17 +352,17 @@ export default function PalmOilRefineryPage() {
                   </Link>
                 </motion.div>
 
-                <motion.div {...fadeUp(0.15)} className="space-y-6">
+                <motion.div {...fadeUp(0.15)} className="space-y-3">
                   {SUSTAINABILITY.map((s, i) => {
                     const Icon = s.icon;
                     return (
-                      <motion.div key={s.label} {...fadeUp(i * 0.1)} className="flex items-start gap-4">
-                        <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center shrink-0">
+                      <motion.div key={s.label} {...fadeUp(i * 0.1)} className="flex items-start gap-4 rounded-xl bg-dark2/70 backdrop-blur-sm px-5 py-4 border border-white/8">
+                        <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0">
                           <Icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
-                          <p className="font-serif font-semibold text-white text-sm mb-1">{s.label}</p>
-                          <p className="font-sans text-white/55 text-xs leading-relaxed">{s.sub}</p>
+                          <p className="font-serif font-semibold text-white text-sm mb-0.5">{s.label}</p>
+                          <p className="font-sans text-white/60 text-xs leading-relaxed">{s.sub}</p>
                         </div>
                       </motion.div>
                     );
@@ -382,7 +374,7 @@ export default function PalmOilRefineryPage() {
         </section>
 
         {/* ── 7. PROJECT STATUS ── */}
-        <section className="bg-white py-20 border-t border-border">
+        <section className="bg-white py-24border-t border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_260px] gap-12 items-start">
 
@@ -473,50 +465,38 @@ export default function PalmOilRefineryPage() {
           </Container>
         </section>
 
-        {/* ── 8. RELATED PROJECTS ── */}
-        <section className="relative py-20 overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1920"
-            alt="Palm oil fruit"
-            fill className="object-cover object-center" sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-dark/70" />
+        {/* ── 8. FAQ ── */}
+        <section className="py-20 border-t border-border bg-cream">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-16 items-start">
 
-          <div className="relative z-10">
-            <Container>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <motion.div {...fadeUp()}>
-                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-white/50">Related Projects</p>
-                  <h2
-                    className="font-serif font-bold text-white leading-[1.06] mb-4"
-                    style={{ fontSize: "clamp(1.6rem, 3vw, 2.6rem)" }}
-                  >
-                    Explore Our Other Projects
-                  </h2>
-                  <p className="font-sans text-white/60 text-sm leading-relaxed mb-8 max-w-md">
-                    Discover our ongoing and planned projects, including the water factory, soap &amp; tissue factory and slaughter house.
-                  </p>
-                  <div className="flex flex-wrap gap-3 mb-6">
-                    {RELATED.map((r) => (
-                      <Link
-                        key={r.label}
-                        href={r.href}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/25 text-white/80 text-xs font-sans hover:bg-white/10 hover:text-white transition-all duration-200"
-                      >
-                        {r.label} <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    ))}
-                  </div>
-                  <Link
-                    href="/#projects"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
-                  >
-                    View All Projects <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </motion.div>
-              </div>
-            </Container>
-          </div>
+              <motion.div {...fadeUp()}>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-3 text-muted">Frequently Asked Questions</p>
+                <h2
+                  className="font-serif font-bold text-dark leading-[1.08] mb-5"
+                  style={{ fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)" }}
+                >
+                  Common Questions
+                </h2>
+                <p className="font-sans text-sm text-gray-600 leading-relaxed mb-8">
+                  Everything you need to know about the Palm Oil Refinery project, our timeline and how to get involved.
+                </p>
+                <Button
+                  href="/contact"
+                  variant="gold"
+                  size="sm"
+                >
+                  Ask Us Directly <ArrowRight className="h-4 w-4" />
+                </Button>
+              </motion.div>
+
+              <motion.div {...fadeUp(0.1)} className="divide-y divide-border">
+                {FAQS.map((faq) => (
+                  <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+                ))}
+              </motion.div>
+            </div>
+          </Container>
         </section>
 
       </main>

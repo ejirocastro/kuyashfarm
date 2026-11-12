@@ -119,7 +119,7 @@ function NavbarInner() {
                     <Link
                       key={link.label}
                       href={resolvedHref}
-                      className="ml-2 inline-flex items-center gap-1.5 bg-gold text-dark2 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-gold-hover transition-colors duration-200"
+                      className="ml-2 inline-flex items-center gap-1.5 border border-gold/60 text-gold px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-gold/10 transition-colors duration-200"
                     >
                       {link.label}
                     </Link>

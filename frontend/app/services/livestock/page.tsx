@@ -1,0 +1,489 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
+import { SERVICES } from "@/lib/constants";
+import { SERVICE_CONTENT } from "@/lib/data/services";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, CheckCircle2, Leaf } from "lucide-react";
+import { ease as EASE } from "@/lib/tokens";
+import { Container } from "@/components/ui";
+
+const SLUG = "livestock";
+
+const FADE_UP = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.55, ease: EASE },
+} as const;
+
+export default function LivestockPage() {
+  const [_showVideo, _setShowVideo] = useState(false);
+
+  const service = SERVICES.find((s) => s.slug === SLUG)!;
+  const content = SERVICE_CONTENT[SLUG];
+
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-cream">
+
+        {/* ── HERO ── */}
+        <section className="relative h-screen min-h-[560px] overflow-hidden bg-[#6b4a2a]">
+          <Image src={content.heroImage} alt={service.title} fill className="object-cover" priority />
+          <div className="absolute inset-0 bg-dark/35" />
+
+          <div className="relative z-10 flex h-full flex-col justify-center pt-16">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div {...FADE_UP} className="max-w-xl">
+                <Link
+                  href="/#services"
+                  className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 font-sans text-sm text-white backdrop-blur-md hover:bg-white/10 transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  All Services
+                </Link>
+                <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted mb-4">
+                  {service.title}
+                </p>
+                <h1
+                  className="font-serif font-bold text-white leading-[1.05] max-w-3xl mb-5"
+                  style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
+                >
+                  {service.title}
+                </h1>
+                <p className="font-sans text-white leading-relaxed max-w-xl mb-7"
+                  style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)" }}>
+                  {service.description}
+                </p>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <Link
+                    href={content.shopHref}
+                    className="inline-flex items-center gap-2 bg-brand hover:bg-brand-hover text-white font-semibold text-sm px-6 py-3 rounded-full transition-colors duration-200"
+                  >
+                    Browse Products <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── OVERVIEW ── */}
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
+            <div className="grid items-center gap-16 lg:grid-cols-2">
+              <motion.div {...FADE_UP}>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-4">
+                  Our Approach
+                </p>
+                <h2
+                  className="font-serif font-bold text-dark leading-[1.08] mb-6"
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+                >
+                  Sustainable Innovation<br />Meets Practical Farming
+                </h2>
+                <p className="font-sans text-sm leading-relaxed text-gray-500 max-w-md">
+                  {content.overview}
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
+                className="relative aspect-4/3 rounded-2xl overflow-hidden border border-border"
+              >
+                <Image src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070" alt="Farm overview" fill className="object-cover" />
+              </motion.div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ── STATS ── */}
+        <section className="bg-dark py-20">
+          <Container>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-12"
+            >
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                Impact by the Numbers
+              </p>
+              <h2
+                className="font-serif font-bold text-white leading-tight"
+                style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)" }}
+              >
+                Measurable results from our practice
+              </h2>
+            </motion.div>
+            <div className="grid gap-px bg-dark2 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden border border-dark2">
+              {content.stats.map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="bg-dark px-8 py-10"
+                >
+                  <p className="font-serif font-bold text-white mb-1"
+                    style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}>
+                    {stat.value}
+                  </p>
+                  <p className="font-sans text-sm font-semibold text-white/80 mb-1">{stat.label}</p>
+                  {stat.description && (
+                    <p className="font-sans text-xs text-white/40 leading-relaxed">{stat.description}</p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── PRODUCTS ── */}
+        {content.products && content.products.length > 0 && (
+          <section className="bg-dark2 py-20">
+            <Container>
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+                <motion.div {...FADE_UP}>
+                  <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                    Our Products
+                  </p>
+                  <h2
+                    className="font-serif font-bold text-white leading-[1.06]"
+                    style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
+                  >
+                    What We Produce
+                  </h2>
+                </motion.div>
+                <Link
+                  href={content.shopHref}
+                  className="inline-flex items-center gap-2 text-muted hover:text-white font-semibold text-sm transition-colors duration-200 shrink-0"
+                >
+                  Shop All Products <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {content.products.map((product, i) => (
+                  <motion.div
+                    key={product.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
+                  >
+                    <Link
+                      href={product.href}
+                      className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-white/25 transition-all duration-300 h-full"
+                    >
+                      <div className="relative h-44 overflow-hidden shrink-0">
+                        <Image
+                          src={product.image}
+                          alt={product.label}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,25vw"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-dark/60 to-transparent" />
+                        <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-[0.18em] bg-white/15 backdrop-blur-sm text-white px-2.5 py-1 rounded-full">
+                          {product.tag}
+                        </span>
+                      </div>
+                      <div className="flex flex-col flex-1 p-5 bg-white/5">
+                        <h3 className="font-serif font-bold text-white text-base mb-2 group-hover:text-brand-border transition-colors duration-200">
+                          {product.label}
+                        </h3>
+                        <p className="font-sans text-xs text-white/55 leading-relaxed flex-1">
+                          {product.sub}
+                        </p>
+                        <div className="flex items-center gap-1.5 mt-4 text-muted text-xs font-semibold group-hover:gap-2.5 transition-all duration-200">
+                          Order Now <ArrowRight className="h-3 w-3" />
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </Container>
+          </section>
+        )}
+
+        {/* ── FARMING PROCESS ── */}
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
+            <motion.div className="mb-16" {...FADE_UP}>
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                How We Raise Our Animals
+              </p>
+              <h2
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+              >
+                Our Farming Process
+              </h2>
+            </motion.div>
+            <div className="space-y-4">
+              {content.farmingProcess.map((phase, i) => {
+                const Icon = phase.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.45, delay: i * 0.07 }}
+                    className="group flex items-start gap-6 bg-cream border border-border hover:border-brand-border rounded-2xl px-7 py-6 transition-all duration-200"
+                  >
+                    <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-brand-border group-hover:bg-brand group-hover:border-brand flex items-center justify-center transition-colors duration-200">
+                        <Icon className="w-5 h-5 text-brand group-hover:text-white transition-colors duration-200" />
+                      </div>
+                      <span className="text-[9px] font-mono text-muted tracking-[0.15em]">{phase.phase}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-serif font-bold text-dark text-lg mb-1.5">{phase.title}</h3>
+                      <p className="font-sans text-sm text-gray-500 leading-relaxed">{phase.description}</p>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <p className="text-[9px] font-mono uppercase tracking-[0.15em] text-muted mb-0.5">Duration</p>
+                      <p className="font-sans text-sm font-semibold text-dark">{phase.duration}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── TECHNOLOGY ── */}
+        <section className="bg-cream py-24 border-b border-border">
+          <Container>
+            <motion.div className="mb-16" {...FADE_UP}>
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                Innovation
+              </p>
+              <h2
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+              >
+                Technology Driving Excellence
+              </h2>
+            </motion.div>
+            <div className="grid gap-5 md:grid-cols-2">
+              {content.technology.map((tech, i) => {
+                const Icon = tech.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.45, delay: i * 0.08 }}
+                    className="group bg-white border border-border hover:border-brand-border rounded-2xl p-7 transition-all duration-200"
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-brand-bg group-hover:bg-brand border border-brand-border group-hover:border-brand flex items-center justify-center mb-5 transition-colors duration-200">
+                      <Icon className="w-5 h-5 text-brand group-hover:text-white transition-colors duration-200" />
+                    </div>
+                    <h3 className="font-serif font-bold text-dark text-lg mb-2">{tech.title}</h3>
+                    <p className="font-sans text-sm text-gray-500 leading-relaxed mb-4">{tech.description}</p>
+                    {tech.metrics && (
+                      <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-brand">
+                        {tech.metrics}
+                      </p>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── BEFORE / AFTER ── */}
+        {content.beforeAfter && (
+          <section className="bg-white py-24 border-b border-border">
+            <Container>
+              <BeforeAfterSlider {...content.beforeAfter} />
+            </Container>
+          </section>
+        )}
+
+        {/* ── FEATURES ── */}
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
+            <motion.div className="mb-14" {...FADE_UP}>
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                Why Kuyash
+              </p>
+              <h2
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+              >
+                What Sets Us Apart
+              </h2>
+            </motion.div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {content.features.map((feature, i) => {
+                const Icon = feature.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.4, delay: i * 0.07 }}
+                    className="group bg-cream border border-border hover:border-brand-border rounded-2xl p-6 transition-all duration-200"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white border border-brand-border group-hover:bg-brand group-hover:border-brand flex items-center justify-center mb-4 transition-colors duration-200">
+                      <Icon className="w-5 h-5 text-brand group-hover:text-white transition-colors duration-200" />
+                    </div>
+                    <h3 className="font-serif font-bold text-dark text-base mb-2">{feature.title}</h3>
+                    <p className="font-sans text-xs text-gray-500 leading-relaxed">{feature.description}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── BENEFITS ── */}
+        <section className="bg-cream py-24 border-b border-border">
+          <Container>
+            <div className="grid items-start gap-16 lg:grid-cols-2">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, ease: EASE }}
+                className="grid grid-cols-2 gap-3"
+              >
+                {content.gallery.slice(0, 4).map((image, i) => (
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-border">
+                    <Image
+                      src={image} alt={`Farm photo ${i + 1}`} fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                      sizes="(max-width:1024px) 50vw, 25vw"
+                    />
+                  </div>
+                ))}
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
+              >
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                  Benefits
+                </p>
+                <h2
+                  className="font-serif font-bold text-dark leading-tight mb-8"
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+                >
+                  What You Get
+                </h2>
+                <div className="space-y-3">
+                  {content.benefits.map((benefit, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-3 bg-white border border-border rounded-xl px-5 py-4"
+                    >
+                      <CheckCircle2 className="w-5 h-5 shrink-0 text-muted mt-0.5" />
+                      <p className="font-sans text-sm text-gray-600 leading-relaxed">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ── GALLERY ── */}
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
+            <motion.div className="mb-12" {...FADE_UP}>
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                Farm Gallery
+              </p>
+              <h2
+                className="font-serif font-bold text-dark leading-tight max-w-lg"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+              >
+                See Our Farm in Action
+              </h2>
+            </motion.div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {content.gallery.map((image, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.04 }}
+                  className="group relative aspect-square rounded-xl overflow-hidden border border-border hover:border-brand-border transition-all duration-300"
+                >
+                  <Image
+                    src={image} alt={`Gallery ${i + 1}`} fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width:640px) 50vw,(max-width:1024px) 33vw,25vw"
+                  />
+                  <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/20 transition-colors duration-300" />
+                  <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="font-mono text-[10px] text-white/80">0{i + 1}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── CTA ── */}
+        <section className="bg-dark py-24 relative overflow-hidden">
+          <div className="relative z-10">
+            <Container>
+              <motion.div {...FADE_UP}>
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-4">
+                  Fresh From Our Farm
+                </p>
+                <h2
+                  className="font-serif font-bold text-white leading-[1.06] max-w-2xl mb-5"
+                  style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+                >
+                  Experience Premium<br />Livestock Products
+                </h2>
+                <p className="font-sans text-white/50 text-sm leading-relaxed max-w-md mb-10">
+                  Browse our selection of fresh, antibiotic-free beef, mutton and dairy. Farm-to-table delivery within 24 hours.
+                </p>
+                <div className="flex flex-col sm:flex-row items-start gap-3">
+                  <Link
+                    href={content.shopHref}
+                    className="inline-flex items-center gap-2 bg-brand hover:bg-brand-hover text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200"
+                  >
+                    Shop Now <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="/#services"
+                    className="inline-flex items-center gap-2 border border-white/15 hover:border-white/30 text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200"
+                  >
+                    <Leaf className="h-4 w-4 text-muted" />
+                    Explore All Services
+                  </Link>
+                </div>
+              </motion.div>
+            </Container>
+          </div>
+        </section>
+
+      </main>
+      <Footer />
+    </>
+  );
+}

@@ -7,7 +7,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ArrowRight, Leaf, Heart, Shield, Star } from "lucide-react";
 import { ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
-import { Container, SectionLabel } from "@/components/ui";
+import { Button, Container, SectionLabel } from "@/components/ui";
 
 const fadeUp = (delay = 0) => _fadeUp(delay);
 
@@ -86,7 +86,7 @@ export default function GroundnutOilPage() {
                 transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
                 className="relative flex items-center justify-end"
               >
-                <div className="relative w-full max-w-lg aspect-[4/3] lg:aspect-auto lg:h-[520px]">
+                <div className="relative w-full max-w-lg aspect-[3/2] sm:aspect-[4/3] lg:aspect-auto lg:h-[520px]">
                   <Image
                     src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=900"
                     alt="Premium groundnut oil in glass bottle with nuts"
@@ -106,7 +106,7 @@ export default function GroundnutOilPage() {
         </section>
 
         {/* ── SECTION 2: OUR PROCESS ── */}
-        <section id="process" className="py-20 border-b border-border bg-cream">
+        <section id="process" className="py-24 border-b border-border bg-cream">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-16">
 
@@ -204,7 +204,84 @@ export default function GroundnutOilPage() {
           </div>
         </section>
 
-        {/* ── SECTION 4: OUR PRODUCTS + PARTNER ── */}
+        {/* ── SECTION 4: QUALITY & CERTIFICATIONS ── */}
+        <section className="bg-white py-24 border-b border-border">
+          <Container>
+            <motion.div {...fadeUp()} className="text-center mb-14">
+              <SectionLabel>Quality Standards</SectionLabel>
+              <h2
+                className="font-serif font-bold text-dark leading-[1.06] mt-3"
+                style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
+              >
+                How We Guarantee Purity
+              </h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+              {[
+                {
+                  badge: "SON Certified",
+                  title: "Standards Organisation of Nigeria",
+                  desc: "Our production process and product specifications comply with SON quality standards for edible vegetable oils in Nigeria.",
+                },
+                {
+                  badge: "Cold-Press Extraction",
+                  title: "No Heat. No Solvents.",
+                  desc: "We use mechanical cold-pressing to extract oil without chemicals or high heat, preserving natural nutrients and flavour.",
+                },
+                {
+                  badge: "Lab Tested",
+                  title: "Every Batch Tested",
+                  desc: "Each production batch is screened for free fatty acid content, peroxide value, moisture and colour before packaging.",
+                },
+                {
+                  badge: "Additive-Free",
+                  title: "Zero Additives",
+                  desc: "No artificial preservatives, colourants or flavour enhancers — just pure groundnut oil from farm to bottle.",
+                },
+                {
+                  badge: "Hygienic Facility",
+                  title: "GMP Compliant",
+                  desc: "Our facility operates under Good Manufacturing Practice (GMP) guidelines for food safety, hygiene and traceability.",
+                },
+                {
+                  badge: "Traceable Sourcing",
+                  title: "Known Origins",
+                  desc: "Every batch of groundnuts is traceable to our farm or verified local partner farms, ensuring consistent quality and safety.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.badge}
+                  {...fadeUp(i * 0.07)}
+                  className="rounded-2xl border border-border p-6 bg-cream"
+                >
+                  <span className="inline-block mb-4 rounded-full bg-brand-bg px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-brand">
+                    {item.badge}
+                  </span>
+                  <p className="font-serif font-semibold text-dark text-sm mb-2">{item.title}</p>
+                  <p className="font-sans text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div {...fadeUp(0.1)} className="rounded-2xl bg-dark2 p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div>
+                <p className="font-serif font-bold text-white text-base mb-1">Need a Certificate of Analysis?</p>
+                <p className="font-sans text-white/55 text-sm">We provide batch test reports for all commercial orders on request.</p>
+              </div>
+              <Button
+                href="/contact"
+                variant="gold"
+                size="sm"
+                className="shrink-0"
+              >
+                Request a CoA <ArrowRight className="h-4 w-4" />
+              </Button>
+            </motion.div>
+          </Container>
+        </section>
+
+        {/* ── SECTION 5: OUR PRODUCTS + PARTNER ── */}
         <section id="products" className="overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-3">
 

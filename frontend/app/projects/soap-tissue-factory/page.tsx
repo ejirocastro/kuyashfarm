@@ -6,13 +6,13 @@ import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight, ArrowLeft,
+  ArrowRight,
   Leaf, Settings, Users,
   Package, Recycle, Droplets, HandHeart,
-  PlayCircle,
 } from "lucide-react";
 import { ease as EASE, fadeUp as _fadeUp } from "@/lib/tokens";
-import { Container } from "@/components/ui";
+import { Button, Container } from "@/components/ui";
+import { ProjectHero } from "@/components/sections";
 
 const fadeUp = (delay = 0) => _fadeUp(delay);
 
@@ -53,10 +53,36 @@ const PRODUCTS = [
 ];
 
 const PROCESS_STEPS = [
-  { num: "01", label: "Sourcing",        sub: "We select the best natural and safe raw materials." },
-  { num: "02", label: "Production",      sub: "Advanced machinery and skilled hands create consistent quality." },
-  { num: "03", label: "Quality Control", sub: "Every batch is tested for safety, softness and performance." },
-  { num: "04", label: "Packaging",       sub: "Eco-friendly packaging that keeps products fresh and safe." },
+  {
+    num: "01",
+    label: "Raw Material Intake",
+    sub: "Palm kernel oil, caustic soda (NaOH), glycerin and fragrance oils are quality-checked on arrival. Tissue pulp bales (virgin or recycled) are graded for fibre length and brightness.",
+  },
+  {
+    num: "02",
+    label: "Saponification (Soap)",
+    sub: "Oils are reacted with caustic soda in a controlled saponification reactor at 70–80°C. The reaction is monitored until a neutral pH is achieved. Glycerin is recovered as a co-product.",
+  },
+  {
+    num: "03",
+    label: "Pulp Forming (Tissue)",
+    sub: "Pulp slurry is spread onto a Fourdrinier wire at controlled basis weight (14–22 gsm per ply). The web is dried, creped for softness, and slit to parent-reel width.",
+  },
+  {
+    num: "04",
+    label: "Finishing & Converting",
+    sub: "Soap bars are cut, stamped and cooled. Tissue parent reels are embossed, perforated and wound into retail logs, then cut to final sheet count per pack.",
+  },
+  {
+    num: "05",
+    label: "Quality Inspection",
+    sub: "Soap: pH (9–10), moisture content and lather tested per batch. Tissue: GSM, tensile strength, sheet count and brightness measured against SON specification.",
+  },
+  {
+    num: "06",
+    label: "Packaging & Dispatch",
+    sub: "Products are wrapped, labelled with batch codes and NAFDAC registration numbers, then palletised for distribution to wholesalers and retailers.",
+  },
 ];
 
 const SUSTAINABILITY = [
@@ -67,9 +93,9 @@ const SUSTAINABILITY = [
 ];
 
 const IMPACT_STATS = [
-  { value: "50+",  label: "Local Jobs Created" },
-  { value: "100%", label: "Safe & Quality Products" },
-  { value: "100%", label: "Commitment to Sustainability" },
+  { value: "50+",    label: "Local Jobs Created" },
+  { value: "2 lines", label: "Soap & Tissue under one roof" },
+  { value: "NAFDAC", label: "Registered products" },
 ];
 
 // ─── page ─────────────────────────────────────────────────────────────────────
@@ -80,67 +106,17 @@ export default function SoapTissueFactoryPage() {
       <main className="min-h-screen bg-cream">
 
         {/* ── 1. HERO ── */}
-        <section className="relative h-[88vh] min-h-[600px] overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=1600"
-            alt="Soap and tissue factory"
-            fill priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-dark/30" />
-          <div className="absolute inset-0 bg-linear-to-t from-dark/85 via-dark/15 to-transparent" />
-
-          <div className="absolute top-20 left-0 z-10 w-full">
-            <Container>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}>
-                <Link
-                  href="/#projects"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm text-white font-sans backdrop-blur-md hover:bg-white/10 transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4" /> All Projects
-                </Link>
-              </motion.div>
-            </Container>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
-            <Container>
-              <motion.div
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: EASE }}
-              >
-                <p className="text-[10px] font-mono uppercase tracking-[0.28em] mb-4 text-muted">
-                  Soap &amp; Tissue Factory
-                </p>
-                <h1
-                  className="font-serif font-bold text-white leading-[1.04] max-w-2xl mb-5"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 4rem)" }}
-                >
-                  Clean Living<br />for a Healthier<br />Tomorrow.
-                </h1>
-                <p className="font-sans text-white/65 leading-relaxed max-w-lg mb-9" style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)" }}>
-                  We produce high-quality soaps and tissue products using modern technology, natural ingredients and sustainable practices — for homes, businesses and communities across Nigeria.
-                </p>
-                <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                  <Link
-                    href="#products"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
-                  >
-                    Explore Our Products <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="#process"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
-                  >
-                    <PlayCircle className="h-4 w-4" /> Watch Our Process
-                  </Link>
-                </div>
-              </motion.div>
-            </Container>
-          </div>
-        </section>
+        <ProjectHero
+          image="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=1600"
+          imageAlt="Soap and tissue factory"
+          eyebrow="Soap & Tissue Factory"
+          headline={<>Clean Living<br />for a Healthier<br />Tomorrow.</>}
+          body="We produce high-quality soaps and tissue products using modern technology, natural ingredients and sustainable practices — for homes, businesses and communities across Nigeria."
+          ctas={[
+            { label: "Explore Our Products", href: "#products" },
+            { label: "Watch Our Process", href: "#process", variant: "outline" },
+          ]}
+        />
 
         {/* ── 2. HERO PILLARS ── */}
         <section className="bg-white border-b border-border py-10">
@@ -243,19 +219,19 @@ export default function SoapTissueFactoryPage() {
                 <p className="font-sans text-white/60 text-sm leading-relaxed mb-8 max-w-md">
                   Our state-of-the-art soap and tissue factory combines modern technology with strict quality control to deliver products you can trust.
                 </p>
-                <Link
+                <Button
                   href="#process"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
+                  variant="gold"
                 >
                   Take a Virtual Tour <ArrowRight className="h-4 w-4" />
-                </Link>
+                </Button>
               </motion.div>
             </Container>
           </div>
         </section>
 
         {/* ── 5. OUR PROCESS ── */}
-        <section id="process" className="bg-white py-20 border-b border-border">
+        <section id="process" className="bg-white py-24border-b border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
@@ -265,7 +241,7 @@ export default function SoapTissueFactoryPage() {
                   className="font-serif font-bold text-dark leading-[1.06] mb-5"
                   style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
                 >
-                  From Natural Ingredients<br />to Everyday Care
+                  How We Make<br />Soap &amp; Tissue
                 </h2>
                 <p className="font-sans text-sm text-gray-600 leading-relaxed mb-8">
                   We follow a simple but rigorous process to ensure every product meets our highest standards — from raw materials to your hands.
@@ -278,11 +254,11 @@ export default function SoapTissueFactoryPage() {
                 </Link>
               </motion.div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {PROCESS_STEPS.map((step, i) => (
                   <motion.div
                     key={step.label}
-                    {...fadeUp(i * 0.08)}
+                    {...fadeUp(i * 0.07)}
                     className="rounded-2xl p-5 border border-border bg-cream"
                   >
                     <p className="font-mono text-2xl font-bold mb-3 text-brand">{step.num}</p>
@@ -329,12 +305,12 @@ export default function SoapTissueFactoryPage() {
                   <p className="font-sans text-white/60 text-sm leading-relaxed mb-8 max-w-sm">
                     We care about people and the planet. Our production processes are designed to reduce waste, conserve resources and create a healthier environment for future generations.
                   </p>
-                  <Link
+                  <Button
                     href="/#projects"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-gold text-dark hover:opacity-90 transition-opacity"
+                    variant="gold"
                   >
                     Our Sustainability Goals <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </Button>
                 </motion.div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -361,7 +337,7 @@ export default function SoapTissueFactoryPage() {
         </section>
 
         {/* ── 7. IMPACT ── */}
-        <section className="bg-white py-20 border-b border-border">
+        <section className="bg-white py-24border-b border-border">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -396,56 +372,7 @@ export default function SoapTissueFactoryPage() {
           </Container>
         </section>
 
-        {/* ── 8. SUSTAINABILITY SPLIT ── */}
-        <section className="border-b border-border overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[420px]">
-
-            <motion.div {...fadeUp()} className="relative min-h-[320px] lg:min-h-0">
-              <Image
-                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=1200"
-                alt="Natural ingredients and Kuyash product"
-                fill className="object-cover object-center"
-                sizes="(max-width:1024px) 100vw, 50vw"
-              />
-            </motion.div>
-
-            <motion.div
-              {...fadeUp(0.12)}
-              className="flex flex-col justify-center px-8 md:px-14 lg:px-16 py-14 bg-cream"
-            >
-              <p className="text-[9px] font-mono uppercase tracking-[0.28em] mb-3 text-muted">Sustainability</p>
-              <h2
-                className="font-serif font-bold text-dark leading-[1.06] mb-5"
-                style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)" }}
-              >
-                Better everyday care.<br />A lighter footprint.
-              </h2>
-              <p className="font-sans text-sm text-gray-600 leading-relaxed mb-10 max-w-sm">
-                We are committed to more responsible manufacturing through considered resource use, responsible packaging choices and waste-conscious operations.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { icon: Leaf,     label: "Conscious resource use" },
-                  { icon: Recycle,  label: "Responsible packaging choices" },
-                  { icon: Droplets, label: "Waste-conscious operations" },
-                ].map((p, i) => {
-                  const Icon = p.icon;
-                  return (
-                    <motion.div key={p.label} {...fadeUp(i * 0.08)} className="flex flex-col items-center text-center gap-2">
-                      <div className="w-10 h-10 rounded-full border border-border flex items-center justify-center">
-                        <Icon className="w-4 h-4 text-brand" />
-                      </div>
-                      <p className="font-sans text-xs text-dark leading-snug">{p.label}</p>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── 9. LET'S CONNECT ── */}
+        {/* ── 8. LET'S CONNECT ── */}
         <section className="overflow-hidden bg-dark2">
           <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-[400px]">
 
@@ -464,7 +391,7 @@ export default function SoapTissueFactoryPage() {
                 We work with distributors, retailers and institutional buyers to make everyday essentials more accessible across Nigeria.
               </p>
               <a
-                href="mailto:info@kuyashfarm.com"
+                href="mailto:kuyashfarmltd@gmail.com"
                 className="self-start inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors duration-200"
               >
                 Start a conversation <ArrowRight className="h-4 w-4" />

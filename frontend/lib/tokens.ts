@@ -52,11 +52,37 @@ export const shadows = {
 } as const;
 
 // Animation
+// Framer Motion respects prefers-reduced-motion automatically — animations using
+// initial/animate/whileInView will be skipped for users who opt out.
 export const ease = [0.16, 1, 0.3, 1] as const;
 
+// Scroll-triggered section reveal — standard content blocks, stat grids, cards
 export const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.6, delay, ease },
 });
+
+// Mount-triggered hero entrance — larger travel, longer duration, fires on load not scroll
+export const heroEntrance = (delay = 0) => ({
+  initial: { opacity: 0, y: 40 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, delay, ease },
+});
+
+// Dense list / icon grid stagger — tighter travel, snappier, for repeated small items
+export const listItem = (delay = 0) => ({
+  initial: { opacity: 0, y: 12 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 0.4, delay, ease },
+});
+
+// Spring easing for interactive accordion/disclosure panels
+export const springReveal = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 32,
+  mass: 0.8,
+};

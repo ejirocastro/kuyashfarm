@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -9,20 +9,11 @@ import { SERVICES } from "@/lib/constants";
 import { SERVICE_CONTENT } from "@/lib/data/services";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  Leaf,
-  PlayCircle,
-} from "lucide-react";
-import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, CheckCircle2, Leaf, PlayCircle } from "lucide-react";
 import { ease as EASE } from "@/lib/tokens";
 import { Container } from "@/components/ui";
 
-interface ServicePageProps {
-  params: Promise<{ slug: string }>;
-}
+const SLUG = "palm-oil-production";
 
 const FADE_UP = {
   initial: { opacity: 0, y: 20 },
@@ -31,14 +22,11 @@ const FADE_UP = {
   transition: { duration: 0.55, ease: EASE },
 } as const;
 
-export default function ServicePage({ params }: ServicePageProps) {
-  const { slug } = use(params);
+export default function PalmOilProductionPage() {
   const [showVideo, setShowVideo] = useState(false);
 
-  const service = SERVICES.find((s) => s.slug === slug);
-  const content = SERVICE_CONTENT[slug];
-
-  if (!service || !content) notFound();
+  const service = SERVICES.find((s) => s.slug === SLUG)!;
+  const content = SERVICE_CONTENT[SLUG];
 
   return (
     <>
@@ -46,7 +34,7 @@ export default function ServicePage({ params }: ServicePageProps) {
       <main className="min-h-screen bg-cream">
 
         {/* ── HERO ── */}
-        <section className="relative h-[75vh] min-h-[560px] overflow-hidden">
+        <section className="relative h-screen min-h-[560px] overflow-hidden">
           {showVideo && content.heroVideo ? (
             <video autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover">
               <source src={content.heroVideo} type="video/mp4" />
@@ -55,16 +43,9 @@ export default function ServicePage({ params }: ServicePageProps) {
             <Image src={content.heroImage} alt={service.title} fill className="object-cover" priority />
           )}
           <div className="absolute inset-0 bg-dark/65" />
-          <div className="absolute inset-0"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          <div className="relative z-10 flex h-full flex-col justify-end pb-16">
-            <Container>
-              <motion.div {...FADE_UP}>
+          <div className="relative z-10 flex h-full flex-col justify-center pt-16">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div {...FADE_UP} className="max-w-xl">
                 <Link
                   href="/#services"
                   className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 font-sans text-sm text-white backdrop-blur-md hover:bg-white/10 transition-colors"
@@ -72,23 +53,19 @@ export default function ServicePage({ params }: ServicePageProps) {
                   <ArrowLeft className="h-4 w-4" />
                   All Services
                 </Link>
-
                 <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted mb-4">
-                  Kuyash Integrated Farm
+                  {service.title}
                 </p>
-
                 <h1
                   className="font-serif font-bold text-white leading-[1.05] max-w-3xl mb-5"
                   style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
                 >
                   {service.title}
                 </h1>
-
                 <p className="font-sans text-white/60 leading-relaxed max-w-xl mb-7"
                   style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)" }}>
                   {service.description}
                 </p>
-
                 <div className="flex items-center gap-3 flex-wrap">
                   <Link
                     href={content.shopHref}
@@ -107,7 +84,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                   )}
                 </div>
               </motion.div>
-            </Container>
+            </div>
           </div>
         </section>
 
@@ -129,7 +106,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                   {content.overview}
                 </p>
               </motion.div>
-
               <motion.div
                 initial={{ opacity: 0, x: 24 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -144,51 +120,48 @@ export default function ServicePage({ params }: ServicePageProps) {
         </section>
 
         {/* ── STATS ── */}
-        {slug !== "livestock" && (
-          <section className="bg-dark py-20">
-            <Container>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5 }}
-                className="mb-12"
+        <section className="bg-dark py-20">
+          <Container>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-12"
+            >
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
+                Impact by the Numbers
+              </p>
+              <h2
+                className="font-serif font-bold text-white leading-tight"
+                style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)" }}
               >
-                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted mb-3">
-                  Impact by the Numbers
-                </p>
-                <h2
-                  className="font-serif font-bold text-white leading-tight"
-                  style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)" }}
+                Measurable results from our practice
+              </h2>
+            </motion.div>
+            <div className="grid gap-px bg-dark2 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden border border-dark2">
+              {content.stats.map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="bg-dark px-8 py-10"
                 >
-                  Measurable results from our practice
-                </h2>
-              </motion.div>
-
-              <div className="grid gap-px bg-dark2 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden border border-dark2">
-                {content.stats.map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.08 }}
-                    className="bg-dark px-8 py-10"
-                  >
-                    <p className="font-serif font-bold text-white mb-1"
-                      style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}>
-                      {stat.value}
-                    </p>
-                    <p className="font-sans text-sm font-semibold text-white/80 mb-1">{stat.label}</p>
-                    {stat.description && (
-                      <p className="font-sans text-xs text-white/40 leading-relaxed">{stat.description}</p>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </Container>
-          </section>
-        )}
+                  <p className="font-serif font-bold text-white mb-1"
+                    style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}>
+                    {stat.value}
+                  </p>
+                  <p className="font-sans text-sm font-semibold text-white/80 mb-1">{stat.label}</p>
+                  {stat.description && (
+                    <p className="font-sans text-xs text-white/40 leading-relaxed">{stat.description}</p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </Container>
+        </section>
 
         {/* ── PRODUCTS ── */}
         {content.products && content.products.length > 0 && (
@@ -213,7 +186,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                   Shop All Products <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {content.products.map((product, i) => (
                   <motion.div
@@ -273,7 +245,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                 Our Farming Process
               </h2>
             </motion.div>
-
             <div className="space-y-4">
               {content.farmingProcess.map((phase, i) => {
                 const Icon = phase.icon;
@@ -292,12 +263,10 @@ export default function ServicePage({ params }: ServicePageProps) {
                       </div>
                       <span className="text-[9px] font-mono text-muted tracking-[0.15em]">{phase.phase}</span>
                     </div>
-
                     <div className="flex-1 min-w-0">
                       <h3 className="font-serif font-bold text-dark text-lg mb-1.5">{phase.title}</h3>
                       <p className="font-sans text-sm text-gray-500 leading-relaxed">{phase.description}</p>
                     </div>
-
                     <div className="shrink-0 text-right">
                       <p className="text-[9px] font-mono uppercase tracking-[0.15em] text-muted mb-0.5">Duration</p>
                       <p className="font-sans text-sm font-semibold text-dark">{phase.duration}</p>
@@ -323,7 +292,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                 Technology Driving Excellence
               </h2>
             </motion.div>
-
             <div className="grid gap-5 md:grid-cols-2">
               {content.technology.map((tech, i) => {
                 const Icon = tech.icon;
@@ -376,7 +344,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                 What Sets Us Apart
               </h2>
             </motion.div>
-
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {content.features.map((feature, i) => {
                 const Icon = feature.icon;
@@ -405,7 +372,6 @@ export default function ServicePage({ params }: ServicePageProps) {
         <section className="bg-cream py-24 border-b border-border">
           <Container>
             <div className="grid items-start gap-16 lg:grid-cols-2">
-
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -423,7 +389,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                   </div>
                 ))}
               </motion.div>
-
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -469,7 +434,6 @@ export default function ServicePage({ params }: ServicePageProps) {
                 See Our Farm in Action
               </h2>
             </motion.div>
-
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {content.gallery.map((image, i) => (
                 <motion.div
@@ -497,12 +461,6 @@ export default function ServicePage({ params }: ServicePageProps) {
 
         {/* ── CTA ── */}
         <section className="bg-dark py-24 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
           <div className="relative z-10">
             <Container>
               <motion.div {...FADE_UP}>
@@ -513,10 +471,10 @@ export default function ServicePage({ params }: ServicePageProps) {
                   className="font-serif font-bold text-white leading-[1.06] max-w-2xl mb-5"
                   style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
                 >
-                  Experience Premium<br />Organic Produce
+                  Experience Premium<br />Palm Oil Products
                 </h2>
                 <p className="font-sans text-white/50 text-sm leading-relaxed max-w-md mb-10">
-                  Browse our selection of fresh, sustainably-grown products. Farm-to-table delivery within 24 hours.
+                  Browse our selection of high-quality crude and refined palm oil — processed fresh and delivered to your door.
                 </p>
                 <div className="flex flex-col sm:flex-row items-start gap-3">
                   <Link

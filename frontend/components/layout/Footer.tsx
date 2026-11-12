@@ -146,14 +146,14 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="h-3.5 w-3.5 shrink-0 text-muted" />
-                <a href="tel:+2348000000000" className="font-sans text-sm text-white/45 hover:text-white transition-colors duration-200">
-                  +234 800 000 0000
+                <a href="tel:+2349028991521" className="font-sans text-sm text-white/45 hover:text-white transition-colors duration-200">
+                  +234 902 899 1521
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="h-3.5 w-3.5 shrink-0 text-muted" />
-                <a href="mailto:hello@kuyashfarm.com" className="font-sans text-sm text-white/45 hover:text-white transition-colors duration-200">
-                  hello@kuyashfarm.com
+                <a href="mailto:kuyashfarmltd@gmail.com" className="font-sans text-sm text-white/45 hover:text-white transition-colors duration-200">
+                  kuyashfarmltd@gmail.com
                 </a>
               </li>
             </ul>

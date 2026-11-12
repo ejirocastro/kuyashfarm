@@ -19,6 +19,7 @@ function MobileLink({
   return (
     <Link
       href={href}
+      prefetch={false}
       onClick={onClick}
       className={cn(
         "flex items-center gap-2.5 px-2 py-2.5 text-sm font-medium transition-colors",
@@ -65,7 +66,7 @@ export function NavMobileMenu({
                   key={link.label}
                   href={link.href}
                   onClick={onClose}
-                  className="self-start mt-1 inline-flex items-center bg-gold text-dark2 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gold-hover transition-colors"
+                  className="self-start mt-1 inline-flex items-center border border-gold/60 text-gold px-4 py-2 rounded-full text-sm font-semibold hover:bg-gold/10 transition-colors"
                 >
                   {link.label}
                 </Link>

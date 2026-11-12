@@ -87,8 +87,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="mb-1 font-sans text-[15px] font-semibold text-dark">Phone</p>
-                      <a href="tel:+2348031234567" className="block font-sans text-sm text-gray-500 hover:text-brand transition-colors">+234 803 123 4567</a>
-                      <a href="tel:+2349069876543" className="block font-sans text-sm text-gray-500 hover:text-brand transition-colors">+234 906 987 6543</a>
+                      <a href="tel:+2349028991521" className="block font-sans text-sm text-gray-500 hover:text-brand transition-colors">+234 902 899 1521</a>
                     </div>
                   </div>
 
@@ -98,8 +97,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="mb-1 font-sans text-[15px] font-semibold text-dark">Email</p>
-                      <a href="mailto:hello@kuyashfarms.com" className="block font-sans text-sm text-gray-500 hover:text-brand transition-colors">hello@kuyashfarms.com</a>
-                      <a href="mailto:info@kuyashfarms.com" className="block font-sans text-sm text-gray-500 hover:text-brand transition-colors">info@kuyashfarms.com</a>
+                      <a href="mailto:kuyashfarmltd@gmail.com" className="block font-sans text-sm text-gray-500 hover:text-brand transition-colors">kuyashfarmltd@gmail.com</a>
                     </div>
                   </div>
 

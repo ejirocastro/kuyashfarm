@@ -152,7 +152,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
 
   "livestock": {
-    heroImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070",
+    heroImage: "/images/backgrounds/khalahari.jpg",
     shopHref: "/shop/all",
     overview:
       "At Kuyash Integrated Farm, we raise healthy, high-quality cattle, sheep, and goats using modern animal husbandry practices. Every animal is cared for in a clean, humane, and stress-free environment — ensuring premium quality meat and dairy products for our customers.",
@@ -231,7 +231,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
       "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2070",
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070",
       "https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=2074",
-      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=2070",
+      "/images/backgrounds/khalahari.jpg",
       "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2070",
       "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070",
     ],
@@ -294,7 +294,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
 
   "palm-oil-production": {
-    heroImage: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=2070",
+    heroImage: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=2070",
     shopHref: "/shop",
     overview:
       "Kuyash Integrated Farm cultivates oil palm plantations using responsible, high-yield agronomic practices. We produce premium-grade crude palm oil (CPO) and palm kernel oil (PKO) through modern milling and extraction processes — balancing productivity with environmental stewardship and community development.",

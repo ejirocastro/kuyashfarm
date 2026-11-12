@@ -44,7 +44,7 @@ export function AcademyFAQ() {
               Can&apos;t find what you&apos;re looking for? Reach out to our admissions team directly.
             </motion.p>
             <a
-              href="mailto:academy@kuyashfarm.com"
+              href="mailto:kuyashfarmltd@gmail.com"
               className="inline-flex items-center gap-2 bg-brand text-white font-semibold px-6 py-3.5 rounded-full hover:bg-brand-hover transition-colors duration-300 text-sm"
             >
               Contact Admissions

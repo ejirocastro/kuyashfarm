@@ -83,6 +83,7 @@ export function NavWorkMenu({ pathname, services, projects }: NavWorkMenuProps) 
                     <li key={p.label}>
                       <Link
                         href={p.href}
+                        prefetch={false}
                         onClick={() => setIsOpen(false)}
                         className={cn(
                           "block py-1.5 font-sans text-[13px] transition-all duration-150 hover:translate-x-0.5",
@@ -103,6 +104,7 @@ export function NavWorkMenu({ pathname, services, projects }: NavWorkMenuProps) 
                     <li key={p.label}>
                       <Link
                         href={p.href}
+                        prefetch={false}
                         onClick={() => setIsOpen(false)}
                         className="block py-1.5 font-sans text-[13px] text-white/50 hover:text-white/80 transition-all duration-150 hover:translate-x-0.5"
                       >

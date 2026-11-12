@@ -651,7 +651,7 @@ export default function BecomeDistributorPage() {
           {/* Footer Note */}
           <p className="text-center text-sm text-gray-500 mt-8">
             Questions? Email us at{' '}
-            <a href="mailto:distributors@kuyashfarm.com" className="text-primary hover:underline">
+            <a href="mailto:kuyashfarmltd@gmail.com" className="text-primary hover:underline">
               distributors@kuyashfarm.com
             </a>
           </p>

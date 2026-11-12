@@ -159,13 +159,6 @@ export default function CropProductionPage() {
           />
           <div className="absolute inset-0 bg-dark/55" />
           <div className="absolute inset-0 bg-linear-to-t from-dark/90 via-dark/20 to-transparent" />
-          <div
-            className="absolute inset-0 opacity-[0.035]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
 
           <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
             <Container>
@@ -430,13 +423,6 @@ export default function CropProductionPage() {
 
         {/* ── CTA ──────────────────────────────────────────────────────── */}
         <section className="bg-dark py-24 relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
           <div className="relative z-10">
             <Container>
               <motion.div {...fadeUp()}>

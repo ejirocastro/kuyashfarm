@@ -741,7 +741,7 @@ function QuickActionGrid({ setSection }: { setSection: (s: Section) => void }) {
     { icon: BookOpen, label: "Browse Courses", onClick: () => window.location.href = "/academy/programs" },
     { icon: Download, label: "Download Certificate", onClick: () => setSection("certificates") },
     { icon: CalendarDays, label: "View Timetable", onClick: () => setSection("classes") },
-    { icon: Mail, label: "Contact Academy", onClick: () => window.location.href = "mailto:academy@kuyashfarm.com" },
+    { icon: Mail, label: "Contact Academy", onClick: () => window.location.href = "mailto:kuyashfarmltd@gmail.com" },
     { icon: User, label: "Update Profile", onClick: () => setSection("profile") },
   ];
   return (
